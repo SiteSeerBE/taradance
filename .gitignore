@@ -71,3 +71,4 @@ out/
 
 # Ignore Next.js telemetry
 .next-telemetry/
+.vercel
