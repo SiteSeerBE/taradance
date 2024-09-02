@@ -5,6 +5,7 @@ import "./globals.scss";
 import "./flexboxgrid.scss";
 import MegaMenu from "@/components/menu/MegaMenu";
 import MobileNavigationDrawer from "@/components/menu/MobileNavigationDrawer";
+import OpenDrawer from "@/components/menu/OpenDrawer";
 
 const raleway = Raleway({ weight: ["400", "500"], subsets: ["latin"] });
 
@@ -54,7 +55,7 @@ export default function RootLayout({
             </label>
           </div>
         </header>
-        <input type="checkbox" id="aside" className="hidden-xs hidden-sm" />
+        <OpenDrawer />
         <label htmlFor="aside" className="overlay" />
         <aside className="hidden-sm">
           <label htmlFor="aside" className="close">
