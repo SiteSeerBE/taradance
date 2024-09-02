@@ -1,0 +1,145 @@
+$background-color: #f7f4ee;
+$taradance-color: #01a162;
+
+.header {
+  background-color: $background-color;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  li {
+    display: inline-block;
+    list-style: none;
+    margin: 0 1.5em;
+    padding: 0;
+
+    a {
+      display: block;
+      padding: 0.5em 0;
+      position: relative;
+      font-weight: 500;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+      &:not(:has(button)) {
+        &:before,
+        &:after {
+          position: absolute;
+          transition: all 0.35s ease;
+        }
+
+        &:before {
+          content: "";
+          bottom: 0;
+          left: 0;
+          right: 0;
+          display: block;
+          height: 2px;
+          width: 0%;
+          background-color: $taradance-color;
+        }
+
+        &:after {
+          top: 0;
+          left: 0;
+          padding: 0.5em 0;
+          content: attr(data-hover);
+          white-space: nowrap;
+          max-width: 0%;
+          overflow: hidden;
+        }
+
+        &:hover:before,
+        &.current:before {
+          opacity: 1;
+          width: 100%;
+        }
+
+        &:hover:after,
+        &.current:after {
+          max-width: 100%;
+        }
+      }
+    }
+    [role="button"] {
+      margin: inherit;
+    }
+  }
+
+  .menuDisplay {
+    display: none;
+    position: absolute;
+    right: 1em;
+    top: 0.7em;
+    z-index: 1000;
+  }
+
+  #menuId {
+    display: none;
+    &:checked ~ #burger > div:nth-child(1) {
+      transform: translateY(16px) rotate(43deg);
+    }
+    &:checked ~ #burger > div:nth-child(2) {
+      opacity: 0;
+    }
+    &:checked ~ #burger > div:nth-child(3) {
+      transform: translateY(-16px) rotate(-43deg);
+    }
+    &:checked ~ nav {
+      height: auto;
+    }
+  }
+
+  #burger {
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    width: 34px;
+    height: 34px;
+    right: 12px;
+    top: 27px;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
+  #burger > div {
+    height: 2px;
+    background-color: $taradance-color;
+    transition: 0.5s;
+    z-index: 999;
+  }
+
+  @media screen and (max-width: 768px) {
+    nav {
+      height: 3.5em;
+      overflow: hidden;
+      transition: height 0.5s ease; // Add transition property for smooth animation
+    }
+
+    nav,
+    ol,
+    ul,
+    li {
+      display: block;
+      margin-left: 0px !important;
+      margin-right: 0px !important;
+    }
+
+    li {
+      padding: 0.5em;
+      &:not(:has(button)) {
+        border-bottom: 1px solid $taradance-color;
+      }
+    }
+
+    #burger {
+      display: flex;
+    }
+  }
+}
