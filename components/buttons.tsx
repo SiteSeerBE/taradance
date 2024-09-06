@@ -1,48 +1,83 @@
 "use client";
 
-import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useContext } from "react";
 
-export function SignInButton() {
-  const { data: session, status } = useSession();
-  console.log(session, status);
+import { UserContext } from "@/lib/context";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleAuthProvider } from "@/lib/firebase";
+import { AuthContext } from "@/lib/authProvider";
+import { useUserData } from "@/lib/hooks";
 
-  if (status === "loading") {
-    return <button aria-busy="true" aria-label="Please wait..." />;
+const DashboardButton = () => {
+  const { user, loading } = useContext(AuthContext);
+
+  if (loading) {
+    return (
+      <button
+        className="secondary"
+        aria-busy="true"
+        aria-label="Aan het laden..."
+      />
+    );
   }
 
-  if (status === "authenticated") {
+  if (!user) {
     return (
       <Link href={"/dashboard"}>
-        <button>
+        <button className="secondary">
           <Image
             src="/icons/account-circle.svg"
             width={24}
             height={24}
-            alt="Member login"
+            alt="Aanmelden"
           />
         </button>
       </Link>
     );
   }
 
-  return (
-    <button onClick={() => signIn()} className="secondary">
-      <Image
-        src="/icons/account-circle.svg"
-        width={24}
-        height={24}
-        alt="Member login"
-      />
-    </button>
-  );
-}
+  if (user) {
+    const dbUser = useUserData();
+    return (
+      <Link href={"/dashboard"}>
+        <button>
+          {dbUser && dbUser.initials ? (
+            <span>{dbUser.initials}</span>
+          ) : (
+            <Image
+              src="/icons/account-circle.svg"
+              width={24}
+              height={24}
+              alt="Registreren"
+            />
+          )}
+        </button>
+      </Link>
+    );
+  }
+};
 
-export function SignOutButton() {
+const SignInButton = () => {
+  const signInWithGoogle = async () => {
+    await signInWithPopup(auth, googleAuthProvider);
+  };
   return (
-    <button className="contrast" onClick={() => signOut()}>
-      Afmelden
-    </button>
+    <>
+      <button className="outline" onClick={signInWithGoogle}>
+        <img src={"/icons/google.svg"} width="26px" /> Aanmelden met Google
+      </button>
+    </>
   );
-}
+};
+
+const SignOutButton = () => {
+  return (
+    <>
+      <button onClick={() => auth.signOut()}>Afmelden</button>
+    </>
+  );
+};
+
+export { DashboardButton, SignInButton, SignOutButton };

@@ -238,3 +238,23 @@ header {
   width: 100%;
   z-index: -1;
 }
+
+// helpers
+.top-margin {
+  margin-top: 1em;
+}
+.float-right {
+  float: right;
+}
+small.error {
+  color: red;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  &.show {
+    opacity: 1;
+  }
+}
+input.error {
+  border: 1px solid red;
+  transition: border 0.5s ease;
+}
