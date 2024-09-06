@@ -6,6 +6,8 @@ import "./flexboxgrid.scss";
 import MegaMenu from "@/components/menu/MegaMenu";
 import MobileNavigationDrawer from "@/components/menu/MobileNavigationDrawer";
 import OpenDrawer from "@/components/menu/OpenDrawer";
+import AuthProvider from "./AuthProvider";
+import { SignInButton } from "@/components/buttons";
 
 const raleway = Raleway({ weight: ["400", "500"], subsets: ["latin"] });
 
@@ -20,58 +22,58 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
-      <body className={raleway.className}>
-        <header>
-          <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
-            <Image
-              src="/taradance.svg"
-              width={150}
-              height={46}
-              alt="NextSpace Logo"
-            />
-          </Link>
-          <div className="nav-container">
-            <MegaMenu />
-          </div>
-          <div className="flex flex-right first-xs last-sm">
-            <Link href={"/login"}>
-              <button>Boek&nbsp;ons!</button>
+    <AuthProvider>
+      <html lang="en" data-theme="light">
+        <body className={raleway.className}>
+          <header>
+            <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
+              <Image
+                src="/taradance.svg"
+                width={150}
+                height={46}
+                alt="NextSpace Logo"
+              />
             </Link>
-            <Link className="hidden-xs" href={"/"}>
-              <button className="secondary">
+            <div className="nav-container">
+              <MegaMenu />
+            </div>
+            <div className="flex flex-right first-xs last-sm">
+              <Link href={"/login"}>
+                <button>Boek&nbsp;ons!</button>
+              </Link>
+              <span className="hidden-xs">
+                <SignInButton />
+              </span>
+            </div>
+            <div className="hidden-sm last-xs">
+              <label className="hamburger" htmlFor="aside">
                 <Image
-                  src="/icons/account-circle.svg"
-                  width={24}
-                  height={24}
-                  alt="Member login"
+                  src="/icons/menu.svg"
+                  width={46}
+                  height={46}
+                  alt="Menu"
                 />
-              </button>
-            </Link>
-          </div>
-          <div className="hidden-sm last-xs">
-            <label className="hamburger" htmlFor="aside">
-              <Image src="/icons/menu.svg" width={46} height={46} alt="Menu" />
+              </label>
+            </div>
+          </header>
+          <OpenDrawer />
+          <label htmlFor="aside" className="overlay" />
+          <aside className="hidden-sm">
+            <label htmlFor="aside" className="close">
+              <Image
+                src="/icons/close.svg"
+                width={46}
+                height={46}
+                alt="Member login"
+              />
             </label>
-          </div>
-        </header>
-        <OpenDrawer />
-        <label htmlFor="aside" className="overlay" />
-        <aside className="hidden-sm">
-          <label htmlFor="aside" className="close">
-            <Image
-              src="/icons/close.svg"
-              width={46}
-              height={46}
-              alt="Member login"
-            />
-          </label>
-          <nav className="mobileNavigationDrawer">
-            <MobileNavigationDrawer />
-          </nav>
-        </aside>
-        {children}
-      </body>
-    </html>
+            <nav className="mobileNavigationDrawer">
+              <MobileNavigationDrawer />
+            </nav>
+          </aside>
+          {children}
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
