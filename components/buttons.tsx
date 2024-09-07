@@ -59,8 +59,8 @@ const DashboardButton = () => {
 };
 
 const SignInButton = () => {
-  const signInWithGoogle = async () => {
-    await signInWithPopup(auth, googleAuthProvider);
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, googleAuthProvider);
   };
   return (
     <>

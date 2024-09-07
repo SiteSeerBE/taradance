@@ -6,7 +6,7 @@ import { AuthContext } from "@/lib/authProvider";
 import Registration from "./Registration";
 
 const Authentication = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   return (
     <div>
       <article className="container">

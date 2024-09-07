@@ -20,11 +20,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  async function setClaims(user: User) {
-    const idTokenResult = await user.getIdTokenResult(true);
-    console.log(idTokenResult.claims);
-  }
-
   useEffect(() => {
     const auth = getAuth();
 
