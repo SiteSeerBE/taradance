@@ -1,4 +1,3 @@
-import React from "react";
 import ActiveLink from "./ActiveLink";
 import { MenuChildProps } from "@/data/dataTypes";
 

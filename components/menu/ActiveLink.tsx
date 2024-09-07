@@ -1,7 +1,7 @@
 "use client";
 
 import Link, { LinkProps } from "next/link";
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const getLinkUrl = (href: LinkProps["href"], as?: LinkProps["as"]): string => {

@@ -1,12 +1,7 @@
 "use client";
 
-import {
-  getAuth,
-  initializeAuth,
-  onAuthStateChanged,
-  User,
-} from "firebase/auth";
-import { createContext, use, useContext, useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
 
 interface TaradanceUser {
   uid: User | null;

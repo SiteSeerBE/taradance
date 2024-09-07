@@ -1,4 +1,4 @@
-import { React, Link, Image } from "@/components/baseImport";
+import { Link, Image } from "@/components/baseImport";
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import "./globals.scss";
@@ -7,8 +7,6 @@ import MegaMenu from "@/components/menu/MegaMenu";
 import MobileNavigationDrawer from "@/components/menu/MobileNavigationDrawer";
 import OpenDrawer from "@/components/menu/OpenDrawer";
 import { DashboardButton } from "@/components/buttons";
-import { UserContext } from "@/lib/context";
-import { useContext } from "react";
 import { AuthProvider } from "@/lib/authProvider";
 
 const raleway = Raleway({ weight: ["400", "500"], subsets: ["latin"] });

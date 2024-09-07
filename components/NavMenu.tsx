@@ -1,4 +1,4 @@
-import { React, Link, Image } from "./baseImport";
+import { Link, Image } from "./baseImport";
 import styles from "./NavMenu.module.scss";
 
 const NavMenu: React.FC = () => {

@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
 
-import { UserContext } from "@/lib/context";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "@/lib/firebase";
 import { AuthContext } from "@/lib/authProvider";

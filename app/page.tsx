@@ -1,5 +1,3 @@
-import { React } from "@/components/baseImport";
-
 export default function Home() {
   return (
     <main>
