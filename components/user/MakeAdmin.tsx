@@ -1,5 +1,5 @@
 import { addCollectionItem } from "@/lib/CRUD/addCollectionItem";
-import { User } from "@/lib/dataTypes";
+import { DbUser } from "@/lib/dataTypes";
 
 interface Props {
   userId: string;
@@ -7,7 +7,7 @@ interface Props {
 
 const Authentication: React.FC<Props> = ({ userId }) => {
   const buttonClickHandler = () => {
-    const params: User = {
+    const params: DbUser = {
       roles: ["admin"],
     };
     const newDocRef = addCollectionItem("users", params, userId);
