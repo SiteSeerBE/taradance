@@ -1,23 +1,50 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SignInButton, SignOutButton } from "@/components/buttons";
 import { AuthContext } from "@/lib/authProvider";
 import Registration from "./Registration";
+import { getCollectionItem } from "@/lib/CRUD/getCollectionItem";
+import DataCard from "./DataCard";
+import EmailPassword from "./EmailPassword";
+import type { DocumentData } from "@/lib/dataTypes";
 
 const Authentication = () => {
+  const [userData, setUserData] = useState<DocumentData | null>(null);
+  const [showRegistration, setShowRegistration] = useState<boolean>(false);
+
   const { user } = useContext(AuthContext);
+  useEffect(() => {
+    if (user) {
+      getCollectionItem("people", user.uid).then((data) => {
+        if (data && data.id) {
+          setUserData(data);
+        } else {
+          setUserData(null);
+        }
+      });
+    }
+  }, [user]);
   return (
-    <div>
-      <article className="container">
+    <div className="container">
+      <article className="row center-xs">
         {!user && (
-          <div className="row center-xs">
-            <p className="col-xs-11">
+          <div className="col-xs-11 col-sm-8 col-md-6">
+            <h1>Welkom</h1>
+            <p>
               Op je dashbord kan je als danser je agenda volgen en allerlei
               andere interessante informatie raadplegen. Log in via één van de
               volgende opties:
             </p>
-            <SignInButton />
+            <div className="row center-xs">
+              <SignInButton />
+              <small className="mt1">
+                Om aan te melden met Google of Facebook hoef je niet eerst een
+                account te maken.
+              </small>
+            </div>
+            <hr className="col-xs-11" />
+            <EmailPassword />
           </div>
         )}
 
@@ -28,7 +55,20 @@ const Authentication = () => {
           </div>
         )}
       </article>
-      {user && <Registration userId={user.uid} />}
+      {user && (!userData || showRegistration) && (
+        <Registration
+          userId={user.uid}
+          data={userData}
+          onClick={() => setShowRegistration(false)}
+        />
+      )}
+      {user && userData && !showRegistration && (
+        <DataCard
+          user={user}
+          data={userData}
+          onClick={() => setShowRegistration(true)}
+        />
+      )}
     </div>
   );
 };

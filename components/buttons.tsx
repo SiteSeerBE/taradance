@@ -38,12 +38,11 @@ const DashboardButton = () => {
   }
 
   if (user) {
-    const dbUser = useUserData();
     return (
       <Link href={"/dashboard"}>
         <button>
-          {dbUser && dbUser.initials ? (
-            <span>{dbUser.initials}</span>
+          {user ? (
+            <span>IL</span>
           ) : (
             <Image
               src="/icons/account-circle.svg"

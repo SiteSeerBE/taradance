@@ -2,7 +2,7 @@ import Authentication from "@/components/user/Authentication";
 
 const Dashboard: React.FC = async () => {
   return (
-    <div className="top-margin">
+    <div className="mt1">
       <Authentication />
     </div>
   );

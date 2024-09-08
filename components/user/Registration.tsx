@@ -1,17 +1,20 @@
 import { useState } from "react";
 import classNames from "classnames";
-import { writeToFireStore } from "@/lib/writeToFirestore";
+import { addCollectionItem } from "@/lib/CRUD/addCollectionItem";
+import { Person, DocumentData } from "@/lib/dataTypes";
 
 interface Props {
   userId: string;
+  data: DocumentData | null;
+  onClick: () => void;
 }
 
-const Registration: React.FC<Props> = ({ userId }) => {
-  const [firstName, setFirstName] = useState("");
+const Registration: React.FC<Props> = ({ userId, data, onClick }) => {
+  const [firstName, setFirstName] = useState(data?.firstName || "");
   const [firstNameError, setFirstNameError] = useState(false);
-  const [lastName, setLastName] = useState("");
+  const [lastName, setLastName] = useState(data?.lastName || "");
   const [lastNameError, setLastNameError] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(data?.email || "");
   const [emailError, setEmailError] = useState(false);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -42,11 +45,15 @@ const Registration: React.FC<Props> = ({ userId }) => {
     if (!valid) {
       return;
     }
-    writeToFireStore("people", userId, {
+    const params: Person = {
       firstName: firstName,
       lastName: lastName,
       email: email,
-    });
+    };
+    const newDocRef = await addCollectionItem("people", params, userId);
+    if (newDocRef) {
+      onClick();
+    }
   };
   return (
     <article className="container">
@@ -97,7 +104,7 @@ const Registration: React.FC<Props> = ({ userId }) => {
             />
           </label>
           <label>
-            E-mail{" "}
+            E-mail
             <small
               className={classNames("error", "float-right", {
                 show: emailError,

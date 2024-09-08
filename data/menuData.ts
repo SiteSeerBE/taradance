@@ -1,4 +1,4 @@
-import { MenuItemProps } from "@/data/dataTypes";
+import type { MenuItemProps } from "@/lib/dataTypes";
 
 export const menuData: MenuItemProps[] = [
   {

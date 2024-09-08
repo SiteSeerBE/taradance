@@ -25,7 +25,7 @@ export default function RootLayout({
     <AuthProvider>
       <html lang="en" data-theme="light">
         <body className={raleway.className}>
-          <header>
+          <header className="menu">
             <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
               <Image
                 src="/taradance.svg"
@@ -69,6 +69,10 @@ export default function RootLayout({
             </label>
             <nav className="mobileNavigationDrawer">
               <MobileNavigationDrawer />
+              <div className="row end-xs">
+                <DashboardButton />
+                <div className="col-xs-1" />
+              </div>
             </nav>
           </aside>
           {children}
