@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 
 import ActiveLink from "./ActiveLink";
 import DropdownContent from "./DropdownContent";
-import { MenuItemProps } from "@/data/dataTypes";
+import { MenuItemProps } from "@/lib/dataTypes";
 
 const MenuItem: React.FC<MenuItemProps> = ({ label, href, children }) => {
   const [dropdownFor, setDropdownFor] = useState<string | null>(null);

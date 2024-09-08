@@ -1,5 +1,5 @@
 import ActiveLink from "./ActiveLink";
-import { MenuChildProps } from "@/data/dataTypes";
+import { MenuChildProps } from "@/lib/dataTypes";
 
 type DropdownContentProps = {
   submenuscontent: Array<MenuChildProps>;
