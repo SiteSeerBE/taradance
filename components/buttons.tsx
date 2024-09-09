@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleAuthProvider } from "@/lib/firebase";
 import { AuthContext } from "@/lib/authProvider";
-import { useUserData } from "@/lib/hooks";
+import { LinkButtonProps } from "@/lib/dataTypes";
 
 const DashboardButton = () => {
   const { user, loading } = useContext(AuthContext);
@@ -57,6 +57,14 @@ const DashboardButton = () => {
   }
 };
 
+const LinkButton: React.FC<LinkButtonProps> = ({ label, href }) => {
+  return (
+    <Link href={href}>
+      <button>{label}</button>
+    </Link>
+  );
+};
+
 const SignInButton = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, googleAuthProvider);
@@ -78,4 +86,4 @@ const SignOutButton = () => {
   );
 };
 
-export { DashboardButton, SignInButton, SignOutButton };
+export { DashboardButton, LinkButton, SignInButton, SignOutButton };

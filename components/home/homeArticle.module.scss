@@ -12,14 +12,6 @@
   }
 }
 
-.mainContent {
-  /* you need to assign a min-height to the main content so that the children can inherit it*/
-  height: 100%;
-  padding: 0px !important;
-  position: relative;
-  z-index: 1;
-}
-
 .scrollingBg {
   position: relative;
   min-height: 50%;

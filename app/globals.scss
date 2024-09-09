@@ -5,6 +5,10 @@
 $background-color: #f7f4ee;
 $taradance-color: #01a162;
 
+:root {
+  --pico-font-family: inherit;
+}
+
 a {
   cursor: pointer;
 }
@@ -31,6 +35,17 @@ aside {
   }
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.backgroundColor {
+  background-color: $background-color;
+}
+
 .hamburger {
   cursor: pointer !important;
 }
@@ -52,6 +67,7 @@ aside {
   padding: 1em;
   position: sticky;
   top: 0;
+  z-index: 2;
 
   a {
     display: block;
@@ -244,8 +260,14 @@ aside {
 }
 
 // helpers
+.center {
+  text-align: center;
+}
 .float-right {
   float: right;
+}
+.g1 {
+  gap: 1em;
 }
 small.error {
   color: red;

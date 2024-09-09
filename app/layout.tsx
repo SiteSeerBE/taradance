@@ -1,4 +1,5 @@
-import { Link, Image } from "@/components/baseImport";
+import Link from "next/link";
+import Image from "next/image";
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import "./globals.scss";
@@ -30,7 +31,7 @@ export default function RootLayout({
               <Image
                 src="/taradance.svg"
                 width={150}
-                height={46}
+                height={46.5}
                 alt="NextSpace Logo"
               />
             </Link>

@@ -13,7 +13,7 @@ const Authentication = () => {
   const [userData, setUserData] = useState<DocumentData | null>(null);
   const [showRegistration, setShowRegistration] = useState<boolean>(false);
 
-  const { user } = useContext(AuthContext);
+  const { roles, user } = useContext(AuthContext);
   useEffect(() => {
     if (user) {
       getCollectionItem("people", user.uid).then((data) => {
@@ -24,7 +24,7 @@ const Authentication = () => {
         }
       });
     }
-  }, [user]);
+  }, [user, showRegistration]);
   return (
     <div className="container">
       <article className="row center-xs">
@@ -64,8 +64,9 @@ const Authentication = () => {
       )}
       {user && userData && !showRegistration && (
         <DataCard
-          user={user}
           data={userData}
+          roles={roles}
+          user={user}
           onClick={() => setShowRegistration(true)}
         />
       )}
