@@ -1,6 +1,14 @@
 import { User } from "firebase/auth";
 import { DocumentData } from "firebase/firestore";
 
+export type AriaInvalid =
+  | boolean
+  | "false"
+  | "true"
+  | "grammar"
+  | "spelling"
+  | undefined;
+
 export interface LinkButtonProps {
   label: string;
   href: string;

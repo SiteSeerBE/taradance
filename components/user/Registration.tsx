@@ -1,7 +1,8 @@
 import { useState } from "react";
 import classNames from "classnames";
 import { addCollectionItem } from "@/lib/CRUD/addCollectionItem";
-import { Person, DocumentData } from "@/lib/dataTypes";
+import { Person, DocumentData, AriaInvalid } from "@/lib/dataTypes";
+import { AriaAttributes } from "react";
 
 interface Props {
   userId: string;
@@ -11,11 +12,11 @@ interface Props {
 
 const Registration: React.FC<Props> = ({ userId, data, onClick }) => {
   const [firstName, setFirstName] = useState(data?.firstName || "");
-  const [firstNameError, setFirstNameError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState<AriaInvalid>(undefined);
   const [lastName, setLastName] = useState(data?.lastName || "");
-  const [lastNameError, setLastNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState<AriaInvalid>(undefined);
   const [email, setEmail] = useState(data?.email || "");
-  const [emailError, setEmailError] = useState(false);
+  const [emailError, setEmailError] = useState<AriaInvalid>(undefined);
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -75,10 +76,12 @@ const Registration: React.FC<Props> = ({ userId, data, onClick }) => {
               Vul je voornaam in.
             </small>
             <input
+              aria-invalid={firstNameError}
               autoComplete="off"
-              className={classNames({ error: firstNameError })}
               value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={(e) => (
+                setFirstName(e.target.value), setFirstNameError(undefined)
+              )}
               name="firstName"
               placeholder="Voornaam"
               type="text"
@@ -94,10 +97,12 @@ const Registration: React.FC<Props> = ({ userId, data, onClick }) => {
               Vul je familienaam in.
             </small>
             <input
+              aria-invalid={lastNameError}
               autoComplete="off"
-              className={classNames({ error: lastNameError })}
               name="lastName"
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={(e) => {
+                setLastName(e.target.value), setLastNameError(undefined);
+              }}
               placeholder="Familienaam"
               type="text"
               value={lastName}
@@ -113,10 +118,12 @@ const Registration: React.FC<Props> = ({ userId, data, onClick }) => {
               Vul een geldig e-mailadres in.
             </small>
             <input
+              aria-invalid={emailError}
               autoComplete="off"
-              className={classNames({ error: emailError })}
               name="email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value), setEmailError(undefined);
+              }}
               placeholder="E-mail"
               type="text"
               value={email}
