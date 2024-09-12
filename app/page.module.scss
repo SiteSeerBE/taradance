@@ -1,6 +1,6 @@
 .fixedBg {
   position: relative;
-  min-height: 75vh;
+  min-height: 40vh;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -14,7 +14,7 @@
 
 .mainContent {
   /* you need to assign a min-height to the main content so that the children can inherit it*/
-  height: 100%;
+
   padding: 0px !important;
   position: relative;
   z-index: 1;
@@ -22,15 +22,16 @@
 
 .scrollingBg {
   position: relative;
-  min-height: 50%;
+  min-height: 40vh; // TODO: Could be removed ?
   padding: 4em 0;
   line-height: 1.6;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
 
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 48em) {
   .fixedBg {
     background-attachment: fixed;
+    min-height: 75vh;
   }
 }

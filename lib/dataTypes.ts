@@ -18,11 +18,15 @@ export interface DbUser {
   roles: string[];
 }
 
-export interface HomeArticleProps {
+export interface HomeArticleData {
   buttons: LinkButtonProps[];
   content: string;
   image: string;
   title: string;
+}
+
+export interface HomeArticleProps extends HomeArticleData {
+  id: string;
 }
 
 export interface MenuChildProps {

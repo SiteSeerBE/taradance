@@ -1,21 +1,25 @@
 import { HomeArticleProps } from "@/lib/dataTypes";
-import styles from "./homeArticle.module.scss";
+import styles from "./HomeArticle.module.scss";
 import classNames from "classnames";
 import { LinkButton } from "../buttons";
 
 const HomeArticle: React.FC<HomeArticleProps> = ({
   buttons,
   content,
+  id,
   image,
   title,
 }) => {
   return (
     <>
       <div
-        className={classNames("row", "center-xs", "middle-xs", styles.fixedBg)}
-        style={{
-          backgroundImage: `url(${image})`,
-        }}
+        className={classNames(
+          "row",
+          "center-xs",
+          "middle-xs",
+          styles.fixedBg,
+          styles[id]
+        )}
       />
       <div className={classNames("backgroundColor", styles.scrollingBg)}>
         <div className="container">

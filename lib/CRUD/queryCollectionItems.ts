@@ -1,5 +1,4 @@
 import {
-  Firestore,
   DocumentData,
   QueryConstraint,
   query,
@@ -7,6 +6,7 @@ import {
   QuerySnapshot,
 } from "firebase/firestore";
 import { createCollectionRef } from "./createCollectionRef";
+import { firestore } from "../firebase";
 
 /**
  * Asynchronously queries a Firestore collection based on the provided query constraints.
@@ -24,7 +24,7 @@ import { createCollectionRef } from "./createCollectionRef";
  * ```typescript
  * const db: Firestore = getFirestore();
  * const conditions: QueryConstraint[] = [where('age', '>=', 21), orderBy('age')];
- * const snapshot = await queryCollectionItems<User>(db, 'users', conditions);
+ * const snapshot = await queryCollectionItems<User>('users', conditions);
  * snapshot.forEach(doc => {
  *   console.log(doc.id, '=>', doc.data());
  * });
@@ -32,13 +32,12 @@ import { createCollectionRef } from "./createCollectionRef";
  */
 
 export const queryCollectionItems = async <T extends DocumentData>(
-  db: Firestore,
   collectionPath: string,
   conditions: QueryConstraint[]
 ): Promise<QuerySnapshot<T>> => {
   console.log("queryCollectionItems");
   try {
-    const collectionRef = createCollectionRef<T>(db, collectionPath);
+    const collectionRef = createCollectionRef<T>(firestore, collectionPath);
 
     const q = query(collectionRef, ...conditions);
 

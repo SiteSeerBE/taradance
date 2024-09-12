@@ -182,7 +182,7 @@ body {
 
 .nav-container {
   display: none;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 48em) {
     display: block;
   }
 }
@@ -285,9 +285,15 @@ input.error {
   border: 1px solid red;
   transition: border 0.5s ease;
 }
+.m1 {
+  margin: 1em;
+}
 .mt1 {
   margin-top: 1em;
 }
 .p1 {
   padding: 1em;
+}
+.pointer {
+  cursor: pointer;
 }

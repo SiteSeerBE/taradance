@@ -25,7 +25,7 @@ import { firestore } from "../firebase";
  * @example
  * ```typescript
  * const params: UserData = { name: 'John', age: 30 };
- * const newDocRef = await addCollectionItem(db, 'users', params);
+ * const newDocRef = await addCollectionItem('users', params);
  * console.log('New document added with ID:', newDocRef.id);
  * ```
  */

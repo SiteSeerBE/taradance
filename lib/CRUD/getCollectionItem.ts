@@ -16,7 +16,7 @@ import { firestore } from "../firebase";
  *
  * @example
  * ```typescript
- * const userData = await getCollectionItem<UserData>(db, 'users', 'user123');
+ * const userData = await getCollectionItem<UserData>('users', 'user123');
  * ```
  */
 
