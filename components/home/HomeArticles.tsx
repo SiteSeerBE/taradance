@@ -17,6 +17,7 @@ const HomeArticles: React.FC = async () => {
           content={doc.data().content}
           image={doc.data().image}
           id={doc.id}
+          key={doc.id}
           title={doc.data().title}
         />
       ))}
