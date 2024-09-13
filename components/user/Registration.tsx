@@ -2,7 +2,6 @@ import { useState } from "react";
 import classNames from "classnames";
 import { addCollectionItem } from "@/lib/CRUD/addCollectionItem";
 import { Person, DocumentData, AriaInvalid } from "@/lib/dataTypes";
-import { AriaAttributes } from "react";
 
 interface Props {
   userId: string;

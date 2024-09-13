@@ -27,15 +27,11 @@ const Authentication = () => {
   }, [user, showRegistration]);
   return (
     <div className="container">
-      <article className="row center-xs">
+      <article className="row center-xs mt1">
         {!user && (
           <div className="col-xs-11 col-sm-8 col-md-6">
-            <h1>Welkom</h1>
-            <p>
-              Op je dashbord kan je als danser je agenda volgen en allerlei
-              andere interessante informatie raadplegen. Log in via één van de
-              volgende opties:
-            </p>
+            <h1>Aanmelden</h1>
+            <p>Log in via één van de volgende opties:</p>
             <div className="row center-xs">
               <SignInButton />
               <small className="mt1">
