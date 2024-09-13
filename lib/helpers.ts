@@ -1,3 +1,5 @@
+import { getCollectionItem } from "./CRUD/getCollectionItem";
+
 /**
  * Extract the pathname from an internal url.
  * @param {string} url - The url to extract from.
@@ -49,4 +51,50 @@ const getPathname = (url: string, imageKit?: boolean) => {
   }
 };
 
-export { getPathname };
+/**
+ * Create slug from a string.
+ * @param {string} title - The text to be converted.
+ *
+ *  * @example
+ * ```typescript
+ * const collectionPath: string = "blogposts";
+ * const title: string = "Mijn eerste blogpost";
+ * const slug = getSlug(collectionPath,title);
+ * console.log('slug', slug);
+ * ```
+ */
+const getSlug = async (collectionPath: string, title: string) => {
+  const slug = title
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^a-zA-Z0-9-]/g, "");
+  let newSlug = slug;
+  let counter = 1;
+  while (await isExistingSlug(collectionPath, newSlug)) {
+    newSlug = `${slug}-${counter}`;
+    counter++;
+  }
+  return newSlug;
+};
+
+/**
+ * Checks whether a string is a valid slug and does not already exist in the database.
+ * @param {string} slug - The string to check.
+ *
+ *  * @example
+ * ```typescript
+ * const collectionPath: string = "blogposts";
+ * const slug: string = "mijn-eerste-blogpost";
+ * const slugIsValid = isValidSlug(collectionPath,slug);
+ * console.log('slugIsValid', slugIsValid);
+ * ```
+ */
+const isExistingSlug = async (collectionPath: string, slug: string) => {
+  const response = await getCollectionItem(collectionPath, slug);
+  if (response) {
+    return true;
+  }
+  return false;
+};
+
+export { getPathname, getSlug };
