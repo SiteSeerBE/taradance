@@ -8,7 +8,7 @@ import MegaMenu from "@/components/menu/MegaMenu";
 import MobileNavigationDrawer from "@/components/menu/MobileNavigationDrawer";
 import OpenDrawer from "@/components/menu/OpenDrawer";
 import { SignInButton } from "@/components/buttons";
-import AuthProvider from "@/lib/AuthProvider";
+import AuthProvider from "@/components/providers/AuthProvider";
 
 const raleway = Raleway({ weight: ["400", "500"], subsets: ["latin"] });
 
