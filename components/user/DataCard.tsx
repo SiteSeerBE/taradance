@@ -1,6 +1,4 @@
-import { DocumentData } from "firebase/firestore";
 import type { User } from "@prisma/client";
-import { Sign } from "crypto";
 import { SignOutButton } from "../buttons";
 
 type Props = { userData: Partial<User>; updateData: () => void };
