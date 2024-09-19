@@ -1,8 +1,7 @@
-import Image from "next/image";
-
 import styles from "./page.module.scss";
 import classNames from "classnames";
 import HomeArticles from "@/components/home/HomeArticles";
+import ImageSet from "@/components/ImageSet";
 
 export default function Home() {
   return (
@@ -15,12 +14,8 @@ export default function Home() {
         }}
       >
         <h1>
-          <img
-            src="https://ik.imagekit.io/taradance/UI/tr:w-300/Taradance-logo.webp"
-            srcSet="https://ik.imagekit.io/taradance/UI/tr:w-500/Taradance-logo.webp 500w,https://ik.imagekit.io/taradance/UI/tr:w-300/Taradance-logo.webp 300w"
-            sizes="(min-width: 1024px) 500px, 300px"
-            alt="logo"
-          />
+          <ImageSet image="/UI/Taradance-wit.png" altText="Taradance logo" />
+
           <div className="p1">Danslessen, competities & shows</div>
         </h1>
       </div>
