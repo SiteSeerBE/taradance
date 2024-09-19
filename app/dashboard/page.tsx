@@ -7,7 +7,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import AccessDenied from "@/components/user/AccessDenied";
-import Loading from "@/components/user/Loading";
+import LoadingAnimation from "@/components/LoadingAnimation";
 
 const Dashboard: React.FC = () => {
   const [userData, setUserData] = useState<User>();
@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      {isLoading && <Loading />}
+      {isLoading && <LoadingAnimation />}
       {status === "unauthenticated" && <AccessDenied />}
       {showRegistration && userData && (
         <Registration userData={userData} setPending={setPending} />
