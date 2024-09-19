@@ -12,7 +12,8 @@ const AccessDenied: React.FC = () => {
         <h2>Bezoekers</h2>
         <p>
           Als bezoeker heb je geen meerwaarde door aan te melden op de website.
-          Deze omgeving is enkel bedoelt voor dansers.
+          <br />
+          Deze omgeving is enkel voor dansers.
         </p>
         <h2>Dansers</h2>
         <p>

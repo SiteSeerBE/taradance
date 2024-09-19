@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import styles from "./LoadingAnimation.module.scss";
 import ImageSet from "./ImageSet";
 const Loading = () => {
