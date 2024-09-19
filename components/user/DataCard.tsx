@@ -1,5 +1,5 @@
 import type { User } from "@prisma/client";
-import { SignOutButton } from "../buttons";
+import { SignOutButton } from "@/components/user/AuthButtons";
 
 type Props = { userData: Partial<User>; updateData: () => void };
 

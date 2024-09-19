@@ -7,7 +7,7 @@ import "./flexboxgrid.scss";
 import MegaMenu from "@/components/menu/MegaMenu";
 import MobileNavigationDrawer from "@/components/menu/MobileNavigationDrawer";
 import OpenDrawer from "@/components/menu/OpenDrawer";
-import { SignInButton } from "@/components/buttons";
+import { DashboardButton } from "@/components/buttons";
 import AuthProvider from "@/components/providers/AuthProvider";
 
 const raleway = Raleway({ weight: ["400", "500"], subsets: ["latin"] });
@@ -43,7 +43,7 @@ export default function RootLayout({
                 <button>Boek&nbsp;ons!</button>
               </Link>
               <span className="hidden-xs">
-                <SignInButton />
+                <DashboardButton />
               </span>
             </div>
             <div className="hidden-sm last-xs">
@@ -71,7 +71,7 @@ export default function RootLayout({
             <nav className="mobileNavigationDrawer">
               <MobileNavigationDrawer />
               <div className="row end-xs">
-                <SignInButton />
+                <DashboardButton />
                 <div className="col-xs-1" />
               </div>
             </nav>

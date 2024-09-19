@@ -5,41 +5,50 @@ import Registration from "@/components/user/Registration";
 import { User } from "@prisma/client";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import AccessDenied from "@/components/user/AccessDenied";
+import Loading from "@/components/user/Loading";
 
 const Dashboard: React.FC = () => {
-  const router = useRouter();
   const [userData, setUserData] = useState<User>();
   const [showRegistration, setShowRegistration] = useState(false);
-  const { data: session, update } = useSession();
-  if (!session) {
-    router.push("/api/auth/signin");
-    return;
-  }
+  const [isLoading, setIsLoading] = useState(true);
+  const { data: session, update, status } = useSession();
+
   useEffect(() => {
-    axios
-      .get("/api/user")
-      .then((response) => {
-        if (response.data) {
-          return response.data;
-        }
-      })
-      .then((data: User) => {
-        setUserData(data);
-      });
-  }, []);
+    if (status === "authenticated") {
+      axios
+        .get("/api/user")
+        .then((response) => {
+          if (response.data) {
+            return response.data;
+          }
+        })
+        .then((data: User) => {
+          setUserData(data);
+          setIsLoading(false);
+        });
+    }
+    if (status === "unauthenticated") {
+      setIsLoading(false);
+    }
+  }, [status]);
+
   const setPending = () => {
-    if (session.user.roles.length === 0) {
+    if (session?.user.roles.length === 0) {
       update({ roles: ["PENDING"] });
     }
     setShowRegistration(false);
   };
-  if (session.user.roles.length === 0) {
+
+  if (session?.user.roles.length === 0) {
     setShowRegistration(true);
   }
+
   return (
     <>
+      {isLoading && <Loading />}
+      {status === "unauthenticated" && <AccessDenied />}
       {showRegistration && userData && (
         <Registration userData={userData} setPending={setPending} />
       )}
