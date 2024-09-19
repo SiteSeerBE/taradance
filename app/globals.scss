@@ -270,6 +270,11 @@ body {
 .float-right {
   float: right;
 }
+.flex-right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1em;
+}
 .g1 {
   gap: 1em;
 }

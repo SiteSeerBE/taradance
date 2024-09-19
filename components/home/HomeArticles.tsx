@@ -1,24 +1,25 @@
-import { queryCollectionItems } from "@/lib/CRUD/queryCollectionItems";
 import HomeArticle from "./HomeArticle";
-import { HomeArticleData } from "@/lib/dataTypes";
-import { orderBy, QuerySnapshot } from "firebase/firestore";
+import { prisma } from "@/lib/prisma";
 
 const HomeArticles: React.FC = async () => {
-  const snapshot: QuerySnapshot<HomeArticleData> = await queryCollectionItems(
-    "/home/",
-    [orderBy("order")]
-  );
+  const data = await prisma.home.findMany({
+    include: {
+      buttons: true,
+    },
+    orderBy: {
+      orderId: "asc",
+    },
+  });
 
   return (
     <>
-      {snapshot.docs.map((doc) => (
+      {data.map((item) => (
         <HomeArticle
-          buttons={doc.data().buttons}
-          content={doc.data().content}
-          image={doc.data().image}
-          id={doc.id}
-          key={doc.id}
-          title={doc.data().title}
+          buttons={item.buttons}
+          content={item.content}
+          id={item.id}
+          key={item.id}
+          title={item.title}
         />
       ))}
     </>

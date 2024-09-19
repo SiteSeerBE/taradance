@@ -1,0 +1,134 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+// NextAuth Schema
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   String
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
+  expires_at               Int?
+  refresh_token_expires_in Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  firstName     String?
+  lastName      String?
+  bio           String?   @db.Text
+  email         String?   @unique @default(cuid())
+  emailInput    String?
+  emailVerified DateTime?
+  image         String?
+  initials      String?
+  roles         Role[]
+  accounts      Account[]
+  sessions      Session[]
+  groups        Group[]
+  news          News[]
+}
+
+model Role {
+  id    String   @id @default(cuid())
+  role  RoleType
+  users User[]
+}
+
+//content
+model Button {
+  id     Int    @id @default(autoincrement())
+  href   String
+  label  String
+  homeId Int
+  home   Home   @relation(fields: [homeId], references: [id], onDelete: Cascade)
+}
+
+model Group {
+  id    Int    @id @default(autoincrement())
+  name  String
+  shoes String
+  users User[]
+}
+
+model Home {
+  id        Int      @id @default(autoincrement())
+  buttons   Button[]
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  imagePath String
+  orderId   Int      @default(0)
+  published Boolean  @default(true)
+  title     String
+  updatedAt DateTime @updatedAt
+}
+
+model News {
+  id             Int       @id @default(autoincrement())
+  author         User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId       String?
+  content        String    @db.Text
+  createdAt      DateTime  @default(now())
+  date           DateTime
+  isAnnouncement Boolean   @default(false)
+  isPublished    Boolean   @default(true)
+  mediaType      MediaType
+  quote          String?
+  slug           String    @unique
+  title          String
+  updatedAt      DateTime  @updatedAt
+}
+
+//types
+enum RoleType {
+  ADMIN
+  AUTHOR
+  PENDING
+  USER
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  QUOTE
+  LINK
+}

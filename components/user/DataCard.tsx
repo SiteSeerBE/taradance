@@ -1,35 +1,29 @@
 import { DocumentData } from "firebase/firestore";
-import type { User } from "@/lib/dataTypes";
+import type { User } from "@prisma/client";
+import { Sign } from "crypto";
+import { SignOutButton } from "../buttons";
 
-interface Props {
-  data: DocumentData;
-  roles: string[];
-  user: User;
-  onClick: () => void;
-}
+type Props = { userData: Partial<User>; updateData: () => void };
 
-const DataCard: React.FC<Props> = ({ data, roles, user, onClick }) => {
-  const handleClick = () => {
-    onClick();
-  };
+const DataCard: React.FC<Props> = ({ userData, updateData }) => {
   return (
-    <article>
-      <header>
-        <h1>
-          {data.firstName} {data.lastName}
-        </h1>
-      </header>
-      <p>
-        <b>E-mail</b>: {data.email}
-        <br />
-        <b>Wachtwoord</b>: {user.providerId}
-        <br />
-        <b>Rollen</b>: {roles.join(", ")}
-      </p>
-      <footer>
-        <button onClick={handleClick}>Wijzigen</button>
-      </footer>
-    </article>
+    <div className="container mt1">
+      <article className=" mt1">
+        <header>
+          <h1>
+            {userData.firstName} {userData.lastName}
+          </h1>
+        </header>
+        <p>
+          <b>E-mail</b>: {userData.emailInput}
+          <br />
+          <br />
+        </p>
+        <footer className="flex-right">
+          <button onClick={updateData}>Wijzigen</button> <SignOutButton />
+        </footer>
+      </article>
+    </div>
   );
 };
 

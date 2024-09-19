@@ -1,31 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import classNames from "classnames";
-import { addCollectionItem } from "@/lib/CRUD/addCollectionItem";
-import { Person, DocumentData, AriaInvalid } from "@/lib/dataTypes";
+import { checkIsValidEmail } from "@/lib/helpers";
+import type { User } from "@prisma/client";
+import type { AriaInvalid } from "@/lib/dataTypes";
 
-interface Props {
-  userId: string;
-  data: DocumentData | null;
-  onClick: () => void;
-}
+type props = { userData: Partial<User>; setPending: () => void };
 
-const Registration: React.FC<Props> = ({ userId, data, onClick }) => {
-  const [firstName, setFirstName] = useState(data?.firstName || "");
+const Registration: React.FC<props> = ({ userData, setPending }) => {
+  const [firstName, setFirstName] = useState(userData.firstName || "");
   const [firstNameError, setFirstNameError] = useState<AriaInvalid>(undefined);
-  const [lastName, setLastName] = useState(data?.lastName || "");
+  const [lastName, setLastName] = useState(userData.lastName || "");
   const [lastNameError, setLastNameError] = useState<AriaInvalid>(undefined);
-  const [email, setEmail] = useState(data?.email || "");
-  const [emailError, setEmailError] = useState<AriaInvalid>(undefined);
+  const [emailInput, setEmailInput] = useState(userData.emailInput || "");
+  const [emailInputError, setEmailInputError] =
+    useState<AriaInvalid>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+
+  if (
+    emailInput.length < 5 &&
+    userData.email &&
+    checkIsValidEmail(userData.email)
+  ) {
+    setEmailInput(userData.email);
+  }
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const emailRegex = new RegExp("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+    setIsLoading(true);
 
     setFirstNameError(false);
     setLastNameError(false);
-    setEmailError(false);
+    setEmailInputError(false);
     let valid = true;
+
     if (!firstName) {
       setFirstNameError(true);
       valid = false;
@@ -34,29 +42,30 @@ const Registration: React.FC<Props> = ({ userId, data, onClick }) => {
       setLastNameError(true);
       valid = false;
     }
-    if (!email) {
-      setEmailError(true);
+    if (!emailInput) {
+      setEmailInputError(true);
       valid = false;
     }
-    if (!emailRegex.test(email)) {
-      setEmailError(true);
+    const isValidEmail = checkIsValidEmail(emailInput);
+    if (!isValidEmail) {
+      setEmailInputError(true);
       valid = false;
     }
-    if (!valid) {
-      return;
-    }
-    const params: Person = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-    };
-    const newDocRef = await addCollectionItem("people", params, userId);
-    if (newDocRef) {
-      onClick();
+    if (valid) {
+      axios
+        .post("/api/user", {
+          firstName,
+          lastName,
+          emailInput,
+        })
+        .then(() => {
+          setPending();
+          setIsLoading(false);
+        });
     }
   };
   return (
-    <article className="container">
+    <article className="container mt1">
       <form className="row center-xs" onSubmit={submitHandler}>
         <fieldset className="col-xs-11 col-sm-8 col-md-6">
           <h1>Toegang vragen</h1>
@@ -77,6 +86,7 @@ const Registration: React.FC<Props> = ({ userId, data, onClick }) => {
             <input
               aria-invalid={firstNameError}
               autoComplete="off"
+              disabled={isLoading}
               value={firstName}
               onChange={(e) => (
                 setFirstName(e.target.value), setFirstNameError(undefined)
@@ -98,6 +108,7 @@ const Registration: React.FC<Props> = ({ userId, data, onClick }) => {
             <input
               aria-invalid={lastNameError}
               autoComplete="off"
+              disabled={isLoading}
               name="lastName"
               onChange={(e) => {
                 setLastName(e.target.value), setLastNameError(undefined);
@@ -111,24 +122,32 @@ const Registration: React.FC<Props> = ({ userId, data, onClick }) => {
             E-mail
             <small
               className={classNames("error", "float-right", {
-                show: emailError,
+                show: emailInputError,
               })}
             >
               Vul een geldig e-mailadres in.
             </small>
             <input
-              aria-invalid={emailError}
+              aria-invalid={emailInputError}
               autoComplete="off"
-              name="email"
+              disabled={isLoading}
+              name="emailInput"
               onChange={(e) => {
-                setEmail(e.target.value), setEmailError(undefined);
+                setEmailInput(e.target.value), setEmailInputError(undefined);
               }}
               placeholder="E-mail"
               type="text"
-              value={email}
+              value={emailInput}
             />
           </label>
-          <input type="submit" value="Aanmelden" />
+          <button
+            aria-busy={isLoading}
+            disabled={isLoading || !firstName || !lastName || !emailInput}
+            type="submit"
+            value="Aanmelden"
+          >
+            Aanmelden
+          </button>
         </fieldset>
       </form>
     </article>
