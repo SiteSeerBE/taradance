@@ -15,6 +15,17 @@ export async function GET() {
     );
   }
   const record = await prisma.user.findUnique({
+    select: {
+      email: true,
+      emailInput: true,
+      firstName: true,
+      lastName: true,
+      accounts: {
+        select: {
+          provider: true,
+        },
+      },
+    },
     where: { id },
   });
 

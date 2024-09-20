@@ -1,7 +1,14 @@
-import type { User } from "@prisma/client";
 import { SignOutButton } from "@/components/user/AuthButtons";
+import type { Account, User } from "@prisma/client";
 
-type Props = { userData: Partial<User>; updateData: () => void };
+interface UserAndAccount extends User {
+  accounts: Partial<Account>[];
+}
+
+export interface Props {
+  userData: Partial<UserAndAccount>;
+  updateData: () => void;
+}
 
 const DataCard: React.FC<Props> = ({ userData, updateData }) => {
   return (
@@ -15,6 +22,11 @@ const DataCard: React.FC<Props> = ({ userData, updateData }) => {
         <p>
           <b>E-mail</b>: {userData.emailInput}
           <br />
+          <b>Provider</b>:{" "}
+          <span style={{ textTransform: "capitalize" }}>
+            {userData.accounts &&
+              userData.accounts.map((account) => account.provider).join(", ")}
+          </span>
           <br />
         </p>
         <footer className="flex-right">
