@@ -11,6 +11,7 @@ $taradance-color: #01a162;
 
 a {
   cursor: pointer;
+  text-decoration: none;
 }
 
 aside {
@@ -267,8 +268,29 @@ body {
 .center {
   text-align: center;
 }
+.breadcrumb {
+  background-color: $background-color;
+  padding: 2em;
+}
+.dateBox {
+  background-color: $taradance-color;
+  color: white;
+  padding: 0.5em 1.5em;
+  position: absolute;
+  top: 2em;
+  left: -1.5em;
+  @media screen and (max-width: 48em) {
+    top: auto;
+    left: 0em;
+    bottom: 0em;
+  }
+}
 .float-right {
   float: right;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
 }
 .flex-right {
   display: flex;
@@ -277,6 +299,11 @@ body {
 }
 .g1 {
   gap: 1em;
+}
+.image100 {
+  img {
+    width: 100%;
+  }
 }
 small.error {
   color: red;
@@ -296,9 +323,15 @@ input.error {
 .mt1 {
   margin-top: 1em;
 }
+.mt7 {
+  margin-top: 7em;
+}
 .p1 {
   padding: 1em;
 }
 .pointer {
   cursor: pointer;
+}
+.relative {
+  position: relative;
 }

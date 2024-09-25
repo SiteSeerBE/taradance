@@ -66,8 +66,17 @@ const getUserIdWithAccess = async (roles?: string[]) => {
   }
   return null;
 };
-const getServerSessionWithAuthOptions = async () => {
+const getCurrentServerSession = async (roles?: string[]) => {
   const session = await getServerSession(authOptions);
-  return session;
+  if (!session) {
+    return null;
+  }
+  if (!roles) {
+    return session;
+  }
+  if (session?.user.roles.some((role: string) => roles.includes(role))) {
+    return session;
+  }
+  return null;
 };
-export { getUserIdWithAccess, getServerSessionWithAuthOptions };
+export { getCurrentServerSession, getUserIdWithAccess };

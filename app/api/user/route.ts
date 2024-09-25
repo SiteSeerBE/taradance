@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import {
-  getServerSessionWithAuthOptions,
+  getCurrentServerSession,
   getUserIdWithAccess,
 } from "@/lib/NextAuthFunctions";
 import { prisma } from "@/lib/prisma";
@@ -33,7 +33,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const session = await getServerSessionWithAuthOptions();
+  const session = await getCurrentServerSession();
   const id = session?.user.id!;
   const postData: User = await request.json();
   const { firstName, lastName, emailInput } = postData;

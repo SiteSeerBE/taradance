@@ -119,4 +119,20 @@ const checkIsValidEmail = (email: string) => {
   return emailRegex.test(email);
 };
 
-export { checkIsValidEmail, getPathname, getSlug };
+/**
+ * Returns date in string format for use in a form.
+ * @param {string} date - The value to convert.
+ *
+ *  * @example
+ * ```typescript
+ * const dbDate = "Wed May 15 2024 00:00:00 GMT+0200 (Central European Summer Time)";
+ * const formDate = dateFormFormat(dbDate); // 15-05-2024
+ * console.log('Date for form', formDate);
+ * ```
+ */
+const dateFormFormat = (date: Date) => {
+  const dateObject = new Date(date);
+  return dateObject.toISOString().split("T")[0];
+};
+
+export { checkIsValidEmail, dateFormFormat, getPathname, getSlug };

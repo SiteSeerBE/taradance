@@ -1,6 +1,7 @@
 interface ImageSetProps {
-  image: string;
   altText: string;
+  grid?: number;
+  image: string;
 }
 
 interface imageSize {
@@ -8,14 +9,14 @@ interface imageSize {
   width: number;
 }
 
-const ImageSet: React.FC<ImageSetProps> = ({ image, altText }) => {
+const ImageSet: React.FC<ImageSetProps> = ({ altText, image, grid = 1 }) => {
   const imageUrl = "https://ik.imagekit.io/taradance/";
   const imageSizeConfig: imageSize[] = [
-    { viewport: 2000, width: 900 },
-    { viewport: 1600, width: 800 },
-    { viewport: 1200, width: 600 },
-    { viewport: 800, width: 400 },
-    { viewport: 0, width: 300 },
+    { viewport: 2000, width: Math.round(900 / grid) },
+    { viewport: 1600, width: Math.round(800 / grid) },
+    { viewport: 1200, width: Math.round(600 / grid) },
+    { viewport: 800, width: Math.round(400 / grid) },
+    { viewport: 0, width: Math.round(300 / grid) },
   ];
   const srcSet = imageSizeConfig.map(
     (vw) => `${imageUrl}/tr:w-${vw.width}/${image} ${vw.width}w`
@@ -26,10 +27,10 @@ const ImageSet: React.FC<ImageSetProps> = ({ image, altText }) => {
 
   return (
     <img
+      alt={altText}
+      sizes={sizes.join(", ")}
       src={srcSet.at(-1)}
       srcSet={srcSet.join(", ")}
-      sizes={sizes.join(", ")}
-      alt={altText}
     />
   );
 };

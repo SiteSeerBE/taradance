@@ -5,7 +5,9 @@ const Loading = () => {
   return (
     <div className={styles.isLoading}>
       <div>
-        <ImageSet image="/UI/Taradance-zwart.png" altText="Taradance logo" />
+        <div className={styles.imageContainer}>
+          <ImageSet altText="Taradance logo" image="/UI/Taradance-zwart.png" />
+        </div>
       </div>
     </div>
   );

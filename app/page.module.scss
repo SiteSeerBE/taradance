@@ -10,6 +10,11 @@
     color: white;
     text-align: center;
   }
+
+  @media only screen and (min-width: 48em) {
+    background-attachment: fixed;
+    min-height: 75vh;
+  }
 }
 
 .mainContent {
@@ -20,6 +25,17 @@
   z-index: 1;
 }
 
+.news {
+  @media screen and (min-width: 68em) {
+    display: grid;
+    gap: 4em;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  img {
+    width: 100%;
+  }
+}
+
 .scrollingBg {
   position: relative;
   min-height: 40vh; // TODO: Could be removed ?
@@ -27,11 +43,4 @@
   line-height: 1.6;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
   z-index: 2;
-}
-
-@media only screen and (min-width: 48em) {
-  .fixedBg {
-    background-attachment: fixed;
-    min-height: 75vh;
-  }
 }

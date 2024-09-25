@@ -1,31 +1,42 @@
 "use client";
 
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import classNames from "classnames";
 import debounce from "lodash.debounce";
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import { AriaInvalid } from "@/lib/dataTypes";
-import { getPathname, getSlug } from "@/lib/helpers";
+import { dateFormFormat, getPathname, getSlug } from "@/lib/helpers";
 import axios from "axios";
-import { MediaType } from "@prisma/client";
+import type { MediaType, News } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
-type NewsUpdateFormProps = { id?: string };
+type NewsUpdateFormProps = { news?: News | null };
 
-const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ id }) => {
+const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
   const router = useRouter();
+  const { data: session } = useSession();
 
-  const [content, setContent] = useState("");
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
-  const [media, setMedia] = useState("");
-  const [mediaType, setMediaType] = useState<MediaType>("IMAGE");
-  const [quote, setQuote] = useState("");
-  const [isAnnouncement, setAnnouncement] = useState(false);
-  const [isPublished, setIsPublished] = useState(false);
-  const [slug, setSlug] = useState("");
-  const [title, setTitle] = useState("");
+  // content
+  const [content, setContent] = useState(news?.content || "");
+  const [date, setDate] = useState(
+    (news?.date && dateFormFormat(news.date)) ||
+      new Date().toISOString().split("T")[0]
+  );
+  const [media, setMedia] = useState(news?.media || "");
+  const [mediaType, setMediaType] = useState<MediaType>(
+    news?.mediaType || "IMAGE"
+  );
+  const [quote, setQuote] = useState(news?.quote || "");
+  const [isAnnouncement, setAnnouncement] = useState(
+    news?.isAnnouncement || false
+  );
+  const [isPublished, setIsPublished] = useState(news?.isPublished || false);
+  const [slug, setSlug] = useState(news?.slug || "");
+  const [title, setTitle] = useState(news?.title || "");
 
+  // error handling
   const [contentHasError, setContentHasError] =
     useState<AriaInvalid>(undefined);
   const [dateHasError, setDateHasError] = useState<AriaInvalid>(undefined);
@@ -33,18 +44,37 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ id }) => {
   const [mediaHasError, setMediaHasError] = useState<AriaInvalid>(undefined);
   const [titleHasError, setTitleHasError] = useState<AriaInvalid>(undefined);
 
+  // helpers
   const [isWaiting, setIsWaiting] = useState(false);
+  const [canDelete, setCanDelete] = useState(false);
+  const [requestDelete, setRequestDelete] = useState(false);
 
   useEffect(() => {
     slugUpdate(title);
   }, [title]);
 
+  useEffect(() => {
+    if (session?.user?.roles.includes("ADMIN")) {
+      setCanDelete(true);
+      return;
+    }
+    if (
+      session?.user?.roles.includes("WRITER") &&
+      news?.authorId === session.user.id
+    ) {
+      setCanDelete(true);
+      return;
+    }
+  }, [session]);
+
   const slugUpdate = useCallback(
     debounce(async (slugValue: string) => {
       setIsWaiting(true);
-      if (slugValue) {
+      if (slugValue && !news) {
         const newSlug = await getSlug("news", slugValue);
         setSlug(newSlug);
+        setIsWaiting(false);
+      } else {
         setIsWaiting(false);
       }
     }, 500),
@@ -83,11 +113,13 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ id }) => {
     }
     if (isValid) {
       axios
-        .post("/api/author/news", {
+        .put("/api/author/news", {
           content,
           date,
+          id: news?.id,
           isAnnouncement,
           isPublished,
+          media,
           mediaType,
           quote,
           slug,
@@ -324,10 +356,19 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ id }) => {
           </div>
         </form>
         <footer className="grid">
-          <Link href="/news">
+          <Link href="/nieuws">
             <button className="secondary">Annuleren</button>
           </Link>
-          {id && <button className="secondary">Verwijderen</button>}
+          {canDelete && (
+            <button
+              className="secondary"
+              onClick={() => {
+                setRequestDelete(true);
+              }}
+            >
+              Verwijderen
+            </button>
+          )}
           <button
             aria-busy={isWaiting}
             className="primary"
@@ -338,6 +379,43 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ id }) => {
           </button>
         </footer>
       </article>
+      {news && canDelete && (
+        <dialog open={requestDelete}>
+          <article>
+            <header>
+              <h1>⚠️ Artikel verwijderen</h1>
+            </header>
+            <p>
+              Ben je zeker dat je het artikel <strong>{title}</strong> wilt
+              verwijderen?
+            </p>
+            <footer className="grid">
+              <button
+                className="secondary"
+                onClick={() => {
+                  setRequestDelete(false);
+                }}
+              >
+                Annuleren
+              </button>
+              <button
+                className="primary"
+                onClick={() => {
+                  axios
+                    .delete("/api/author/news", {
+                      data: { id: news.id, authorId: session?.user.id },
+                    })
+                    .then(() => {
+                      router.push("/nieuws");
+                    });
+                }}
+              >
+                Verwijderen
+              </button>
+            </footer>
+          </article>
+        </dialog>
+      )}
     </div>
   );
 };
