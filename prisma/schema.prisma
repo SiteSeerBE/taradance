@@ -111,6 +111,7 @@ model News {
   date           DateTime
   isAnnouncement Boolean   @default(false)
   isPublished    Boolean   @default(true)
+  media          String?
   mediaType      MediaType
   quote          String?
   slug           String    @unique
