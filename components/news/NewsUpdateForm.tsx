@@ -180,44 +180,9 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                 dezelfde titel te gebruiken.
               </small>
             </label>
-            <fieldset>
-              <legend>Media type</legend>
-              <input
-                type="radio"
-                id="image"
-                name="mediaType"
-                checked={mediaType === "IMAGE"}
-                onChange={() => setMediaType("IMAGE")}
-              />
-              <label htmlFor="image">Foto</label>
-              <input
-                type="radio"
-                id="video"
-                name="mediaType"
-                checked={mediaType === "VIDEO"}
-                onChange={() => setMediaType("VIDEO")}
-              />
-              <label htmlFor="video">Youtube</label>
-              <input
-                type="radio"
-                id="quote"
-                name="mediaType"
-                checked={mediaType === "QUOTE"}
-                onChange={() => setMediaType("QUOTE")}
-              />
-              <label htmlFor="quote">Quote</label>
-              <input
-                type="radio"
-                id="link"
-                name="mediaType"
-                checked={mediaType === "LINK"}
-                onChange={() => setMediaType("LINK")}
-              />
-              <label htmlFor="link">Link</label>
-            </fieldset>
             {mediaType != "QUOTE" && (
               <label>
-                Media
+                Beeld
                 <small
                   className={classNames("error", "float-right", {
                     show: mediaHasError,
@@ -238,37 +203,6 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                   placeholder="Link naar de media"
                   type="url"
                 />
-              </label>
-            )}
-            {(mediaType === "QUOTE" || mediaType === "LINK") && (
-              <label>
-                Quote
-                <small
-                  className={classNames("error", "float-right", {
-                    show: labelError,
-                  })}
-                >
-                  Vul quote in.
-                </small>
-                <input
-                  aria-invalid={labelError}
-                  autoComplete="off"
-                  value={quote}
-                  onChange={(e) => (
-                    setQuote(e.target.value),
-                    setLabelError(undefined),
-                    setIsWaiting(false)
-                  )}
-                  name="label"
-                  placeholder="Quote tekst"
-                  type="text"
-                />
-                {mediaType === "LINK" && (
-                  <small>
-                    Voor link is er ook een quote nodig zodat bezoekers op deze
-                    tekst kunnen klikken.
-                  </small>
-                )}
               </label>
             )}
             <label>
