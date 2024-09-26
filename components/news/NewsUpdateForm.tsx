@@ -136,8 +136,11 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
     <div className="container mt1">
       <article>
         <header>
-          <h1>Nieuwsbericht toevoegen</h1>
-          <p>Voeg een nieuwsbericht toe aan de website.</p>
+          <h1>Nieuwsbericht toevoegen/bewerken</h1>
+          <p>
+            Voeg een nieuwsbericht toe aan de website of maak aanpassignen aan
+            een bestaand artikel.
+          </p>
         </header>
         <form>
           <fieldset>
@@ -290,7 +293,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
           </div>
         </form>
         <footer className="grid">
-          <Link href="/nieuws">
+          <Link href="/admin/nieuws">
             <button className="secondary">Annuleren</button>
           </Link>
           {canDelete && (

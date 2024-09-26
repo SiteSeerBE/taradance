@@ -28,12 +28,7 @@ export default function RootLayout({
         <body className={raleway.className}>
           <header className="menu">
             <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
-              <Image
-                src="/taradance.svg"
-                width={150}
-                height={46.5}
-                alt="NextSpace Logo"
-              />
+              <img src="/taradance.svg" width={150} alt="NextSpace Logo" />
             </Link>
             <div className="nav-container">
               <MegaMenu />

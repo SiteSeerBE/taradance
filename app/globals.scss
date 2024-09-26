@@ -4,6 +4,7 @@
 
 $background-color: #f7f4ee;
 $taradance-color: #01a162;
+$secondary-color: #ef402b;
 
 :root {
   --pico-font-family: inherit;
@@ -279,6 +280,9 @@ body {
   position: absolute;
   top: 2em;
   left: -1.5em;
+  &.update {
+    background-color: $secondary-color;
+  }
   @media screen and (max-width: 48em) {
     top: auto;
     left: 0em;

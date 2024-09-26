@@ -1,9 +1,11 @@
 import React from "react";
 import ImageSet from "../ImageSet";
 import Link from "next/link";
+import classNames from "classnames";
 
 interface NewsElementProps {
   date: Date;
+  isAnnouncement: boolean;
   media: string | null;
   slug: string;
   title: string;
@@ -13,8 +15,12 @@ const NewsElement: React.FC<NewsElementProps> = (props) => {
   return (
     <Link href={`/nieuws/${props.slug}`}>
       <div className="relative">
-        <span className="dateBox">
-          {props.date.toLocaleDateString("nl-BE")}
+        <span
+          className={classNames("dateBox", { update: props.isAnnouncement })}
+        >
+          {!props.isAnnouncement
+            ? props.date.toLocaleDateString("nl-BE")
+            : "AANKONDIGING"}
         </span>
         {props.media && (
           <ImageSet image={props.media} altText={`beeld voor ${props.title}`} />

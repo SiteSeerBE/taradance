@@ -1,5 +1,7 @@
 import { SignOutButton } from "@/components/user/AuthButtons";
 import type { Account, User } from "@prisma/client";
+import type { Session } from "next-auth";
+import Link from "next/link";
 
 interface UserAndAccount extends User {
   accounts: Partial<Account>[];
@@ -7,10 +9,11 @@ interface UserAndAccount extends User {
 
 export interface Props {
   userData: Partial<UserAndAccount>;
+  userSession: Session;
   updateData: () => void;
 }
 
-const DataCard: React.FC<Props> = ({ userData, updateData }) => {
+const DataCard: React.FC<Props> = ({ userData, userSession, updateData }) => {
   return (
     <div className="container mt1">
       <article className=" mt1">
@@ -22,15 +25,25 @@ const DataCard: React.FC<Props> = ({ userData, updateData }) => {
         <p>
           <b>E-mail</b>: {userData.emailInput}
           <br />
-          <b>Provider</b>:{" "}
+          <b>Geregistreerd met</b>:{" "}
           <span style={{ textTransform: "capitalize" }}>
             {userData.accounts &&
               userData.accounts.map((account) => account.provider).join(", ")}
           </span>
           <br />
+          <b>Toegang</b>: {userSession.user.roles.join(", ")}
         </p>
-        <footer className="flex-right">
-          <button onClick={updateData}>Wijzigen</button> <SignOutButton />
+        <footer className="grid">
+          {(userSession.user.roles.includes("ADMIN") ||
+            userSession.user.roles.includes("WRITER")) && (
+            <a href="/admin">
+              <button>Administratie</button>
+            </a>
+          )}
+          <button className="secondary" onClick={updateData}>
+            Wijzigen
+          </button>{" "}
+          <SignOutButton />
         </footer>
       </article>
     </div>

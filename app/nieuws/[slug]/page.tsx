@@ -1,6 +1,11 @@
+import FourOhFour from "@/components/FourOhFour";
 import ImageSet from "@/components/ImageSet";
+import AdminBox from "@/components/news/AdminBox";
+import { getCurrentServerSession } from "@/lib/NextAuthFunctions";
 import { prisma } from "@/lib/prisma";
+import classNames from "classnames";
 import { marked } from "marked";
+import Link from "next/link";
 
 interface Props {
   params: {
@@ -18,21 +23,36 @@ export default async function NewsArticle({ params }: Props) {
     select: {
       date: true,
       content: true,
+      isAnnouncement: true,
       media: true,
       title: true,
     },
     where: { slug: params.slug },
   });
-  const { date, content, media, title } = news ?? {};
+  const { date, content, isAnnouncement, media, title } = news ?? {};
+
+  if (!news) {
+    return <FourOhFour />;
+  }
 
   return (
     <>
       <div className="breadcrumb center container-flex">
-        <h1>NIEUWS</h1>
+        <h1>
+          <Link href="/nieuws">NIEUWS</Link>
+        </h1>
       </div>
       <div className="container mt7">
         <div className="relative center image100">
-          <span className="dateBox">{date?.toLocaleDateString("nl-BE")}</span>
+          <span
+            className={classNames("dateBox", {
+              update: date && date > new Date(),
+            })}
+          >
+            {!isAnnouncement
+              ? date?.toLocaleDateString("nl-BE")
+              : "AANKONDIGING"}
+          </span>
           {media && <ImageSet image={media} altText={`beeld voor ${title}`} />}
         </div>
         <h3 className="mt1">{title}</h3>

@@ -52,9 +52,10 @@ const Dashboard: React.FC = () => {
       {showRegistration && userData && (
         <Registration userData={userData} setPending={setPending} />
       )}
-      {!showRegistration && userData && (
+      {!showRegistration && userData && session && (
         <DataCard
           userData={userData}
+          userSession={session}
           updateData={() => {
             setShowRegistration(true);
           }}
