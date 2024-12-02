@@ -27,7 +27,6 @@ const NewsElement: React.FC<NewsElementProps> = (props) => {
         )}
       </div>
       <h5 className="mt1">{props.title}</h5>
-      <u>Meer lezen</u>
     </Link>
   );
 };

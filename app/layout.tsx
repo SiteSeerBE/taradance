@@ -26,7 +26,7 @@ export default function RootLayout({
     <AuthProvider>
       <html lang="en" data-theme="light">
         <body className={raleway.className}>
-          <header className="menu">
+          <header className="menu backgroundColor">
             <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
               <img src="/taradance.svg" width={150} alt="NextSpace Logo" />
             </Link>
