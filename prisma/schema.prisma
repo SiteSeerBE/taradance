@@ -63,9 +63,12 @@ model User {
   initials      String?
   roles         Role[]
   accounts      Account[]
+  events        Event[]
+  pages         Page[]
   sessions      Session[]
   groups        Group[]
   news          News[]
+  invites       Invite[]
 }
 
 model Role {
@@ -110,13 +113,83 @@ model News {
   createdAt      DateTime  @default(now())
   date           DateTime
   isAnnouncement Boolean   @default(false)
-  isPublished    Boolean   @default(true)
+  isPublished    Boolean   @default(false)
   media          String?
   mediaType      MediaType
   quote          String?
   slug           String    @unique
   title          String
   updatedAt      DateTime  @updatedAt
+}
+
+model Page {
+  id        Int      @id @default(autoincrement())
+  author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId  String?
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  slug      String   @unique
+  title     String
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id               Int                    @id @default(autoincrement())
+  eventId          String                 @unique @default(cuid())
+  title            String
+  authorId         String?
+  author           User?                  @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  date             DateTime
+  time             String
+  inviteUntil      DateTime?
+  media            String?
+  isPublic         Boolean                @default(false)
+  isPublished      Boolean                @default(false)
+  isRepeating      Boolean                @default(false)
+  repeatStart      DateTime
+  repeatEnd        DateTime
+  repeatInterval   Int
+  repeatType       Calendar
+  repeatExceptions EventRepeatException[]
+  invites          Invite[]
+  privateContent   String                 @db.Text
+  publicContent    String?                @db.Text
+  slug             String                 @unique
+  locationId       Int?
+  location         Location?              @relation(fields: [locationId], references: [id])
+  street           String
+  city             String
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+}
+
+model Invite {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accepted  Boolean  @default(false)
+  declined  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EventRepeatException {
+  id        Int      @id @default(autoincrement())
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  date      DateTime
+  exception String
+}
+
+model Location {
+  id         Int     @id @default(autoincrement())
+  locationId String  @unique @default(cuid())
+  events     Event[]
+  latitude   Float
+  longitude  Float
+  name       String
 }
 
 //types
@@ -132,4 +205,11 @@ enum MediaType {
   VIDEO
   QUOTE
   LINK
+}
+
+enum Calendar {
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
 }
