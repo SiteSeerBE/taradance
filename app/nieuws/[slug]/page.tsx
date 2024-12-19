@@ -37,9 +37,9 @@ export default async function NewsArticle({ params }: Props) {
 
   return (
     <>
-      <div className="breadcrumb center container-flex">
+      <div className="backgroundColor breadcrumb container-flex">
         <h1>
-          <Link href="/nieuws">NIEUWS</Link>
+          <Link href="/nieuws">&lt; NIEUWS</Link>
         </h1>
       </div>
       <div className="container mt7">

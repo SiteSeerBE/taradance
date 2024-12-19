@@ -10,7 +10,7 @@ import classNames from "classnames";
 export default async function News() {
   return (
     <>
-      <div className="breadcrumb center container-flex">
+      <div className="backgroundColor breadcrumb container-flex">
         <h1>NIEUWS</h1>
       </div>
       <div className={classNames("container mt7", styles.news)}>
