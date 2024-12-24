@@ -2,8 +2,8 @@
   $theme-color: "jade"
 );
 
-$background-color: #f7f4ee;
-$taradance-color: #01a162;
+$background-color: #fff;
+$taradance-color: #007a50;
 $secondary-color: #ef402b;
 
 :root {
@@ -17,7 +17,6 @@ a {
 
 aside {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-  background-color: $background-color;
   overflow: hidden;
 
   position: fixed;
@@ -48,7 +47,6 @@ body {
 
 .backgroundColor {
   background-color: $background-color;
-  background-image: url("/img/background.png");
   background-repeat: repeat;
 }
 
@@ -66,7 +64,6 @@ body {
 }
 
 .menu {
-  background-color: $background-color;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: space-between;
@@ -146,7 +143,6 @@ body {
   }
 
   .dropdown {
-    background-color: $background-color;
     border-top: 1px solid $taradance-color;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     display: flex;
@@ -344,4 +340,43 @@ input.error {
 }
 .relative {
   position: relative;
+}
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -100;
+}
+[data-theme="light"] {
+  .bg {
+    background-color: white;
+  }
+}
+[data-theme="dark"] {
+  .bg {
+    background-color: #13161e;
+  }
+}
+.bg-black {
+  background-color: black;
+}
+.td-color {
+  color: $taradance-color;
+}
+a {
+  h4 {
+    display: inline-block;
+  }
+  .link-indicator {
+    color: $taradance-color;
+    transition: padding-left 0.5s ease;
+  }
+  :hover {
+    text-shadow: $taradance-color 0px 0px 39px;
+    .link-indicator {
+      padding-left: 0.25em;
+    }
+  }
 }

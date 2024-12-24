@@ -8,7 +8,7 @@ import { MenuItemProps } from "@/lib/dataTypes";
 
 const MenuItem: React.FC<MenuItemProps> = ({ label, href, children }) => {
   const [dropdownFor, setDropdownFor] = useState<string | null>(null);
-  const dropdownClasses = `dropdown container-fluid ${
+  const dropdownClasses = `bg dropdown container-fluid ${
     dropdownFor === label ? "show" : "hide"
   }`;
   const menuItemRef = useRef<HTMLLIElement>(null);

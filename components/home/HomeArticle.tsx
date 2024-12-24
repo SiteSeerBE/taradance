@@ -16,7 +16,7 @@ const HomeArticle: React.FC<Partial<HomeWithButtons>> = ({
   title,
 }) => {
   return (
-    <>
+    <div id={"home" + id}>
       <div
         className={classNames(
           "row",
@@ -26,7 +26,7 @@ const HomeArticle: React.FC<Partial<HomeWithButtons>> = ({
           styles[`bg-${id}`]
         )}
       />
-      <div className={classNames("backgroundColor", styles.scrollingBg)}>
+      <div className={classNames("bg", styles.scrollingBg)}>
         <div className="container">
           <h2 className="center">{title}</h2>
           {buttons && buttons?.length > 0 && (
@@ -40,7 +40,7 @@ const HomeArticle: React.FC<Partial<HomeWithButtons>> = ({
           <p>{content}</p>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -7,8 +7,10 @@ import "./flexboxgrid.scss";
 import MegaMenu from "@/components/menu/MegaMenu";
 import MobileNavigationDrawer from "@/components/menu/MobileNavigationDrawer";
 import OpenDrawer from "@/components/menu/OpenDrawer";
-import { DashboardButton } from "@/components/buttons";
+import { DashboardButton, ThemeSwitchButton } from "@/components/buttons";
 import AuthProvider from "@/components/providers/AuthProvider";
+import ThemeProvider from "./context/theme-provider";
+import { useTheme } from "./context/use-theme";
 
 const raleway = Raleway({ weight: ["400", "500"], subsets: ["latin"] });
 
@@ -22,11 +24,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = "light";
   return (
-    <AuthProvider>
-      <html lang="en" data-theme="light">
+    <ThemeProvider>
+      <AuthProvider>
         <body className={raleway.className}>
-          <header className="menu backgroundColor">
+          <header className="bg menu">
             <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
               <img src="/taradance.svg" width={150} alt="NextSpace Logo" />
             </Link>
@@ -34,9 +37,9 @@ export default function RootLayout({
               <MegaMenu />
             </div>
             <div className="flex flex-right first-xs last-sm">
-              <Link href={"/login"}>
-                <button>Boek&nbsp;ons!</button>
-              </Link>
+              <span className="hidden-xs">
+                <ThemeSwitchButton />
+              </span>
               <span className="hidden-xs">
                 <DashboardButton />
               </span>
@@ -54,7 +57,7 @@ export default function RootLayout({
           </header>
           <OpenDrawer />
           <label htmlFor="aside" className="overlay" />
-          <aside className="hidden-sm">
+          <aside className="bg hidden-sm">
             <label htmlFor="aside" className="close">
               <Image
                 src="/icons/close.svg"
@@ -66,6 +69,8 @@ export default function RootLayout({
             <nav className="mobileNavigationDrawer">
               <MobileNavigationDrawer />
               <div className="row end-xs">
+                <ThemeSwitchButton />
+                &nbsp;
                 <DashboardButton />
                 <div className="col-xs-1" />
               </div>
@@ -73,7 +78,7 @@ export default function RootLayout({
           </aside>
           {children}
         </body>
-      </html>
-    </AuthProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

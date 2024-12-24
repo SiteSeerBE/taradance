@@ -1,0 +1,50 @@
+.preview {
+  /* box floating over content */
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  z-index: 3;
+  text-align: center;
+  padding: 1em 0;
+
+  h4 {
+    margin-top: 1em;
+  }
+
+  div {
+    padding: 0 1em 1em;
+    width: 100%;
+  }
+
+  @media screen and (min-width: 48em) {
+    border-radius: 0.25rem;
+    padding: 1em 0 0;
+    position: absolute;
+    top: -170px;
+    left: 0;
+    right: 0;
+
+    div {
+      padding: 0 1em 0.5em;
+    }
+  }
+
+  @media screen and (min-width: 120em) {
+    top: -150px;
+  }
+
+  @media only screen and (min-width: 48em) {
+    margin: auto;
+    width: 46rem;
+  }
+
+  @media only screen and (min-width: 68em) {
+    width: 58rem;
+  }
+
+  @media only screen and (min-width: 80em) {
+    width: 68rem;
+  }
+}
+
+.btnPreview {
+  background-color: rgba(1, 161, 98, 0.5);
+}
