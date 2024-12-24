@@ -7,7 +7,9 @@ export default function ThemeProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const defaultDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const defaultDark =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [theme, setTheme] = useState<"dark" | "light">(
     defaultDark ? "dark" : "light"
   );
