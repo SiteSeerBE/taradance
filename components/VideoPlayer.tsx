@@ -14,7 +14,10 @@ const VideoPlayer = () => {
         loop
         style={{ width: "auto", height: "100%" }}
       >
-        <source src="/img/taradance.mp4" type="video/mp4" />
+        <source
+          src="https://ik.imagekit.io/taradance/home/taradance.mp4"
+          type="video/mp4"
+        />
         Your browser does not support the video tag.
       </video>
     </div>
