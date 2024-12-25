@@ -7,8 +7,8 @@ const Preview = () => {
   return (
     <section className={classNames("bg", styles.preview)}>
       <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-3">
+        <div className="grid">
+          <div>
             <button
               className={styles.btnPreview}
               onClick={() => {
@@ -32,7 +32,7 @@ const Preview = () => {
               gevorderd.
             </small>
           </div>
-          <div className="col-sm-3">
+          <div>
             <button
               className={classNames(styles.btnPreview)}
               onClick={() => {
@@ -53,7 +53,7 @@ const Preview = () => {
             <h4>Events</h4>
             <small>Boek ons en maak uw event onvergetelijk!</small>
           </div>
-          <div className="col-sm-3">
+          <div>
             <button
               className={styles.btnPreview}
               onClick={() => {
@@ -77,7 +77,7 @@ const Preview = () => {
               vriendelijke competitie.
             </small>
           </div>
-          <div className="col-sm-3">
+          <div>
             <button
               className={styles.btnPreview}
               onClick={() => {

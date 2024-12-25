@@ -5,6 +5,7 @@
 $background-color: #fff;
 $taradance-color: #007a50;
 $secondary-color: #ef402b;
+$shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 
 :root {
   --pico-font-family: inherit;
@@ -16,7 +17,7 @@ a {
 }
 
 aside {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: $shadow;
   overflow: hidden;
 
   position: fixed;
@@ -45,6 +46,10 @@ body {
   padding: 0;
 }
 
+main {
+  overflow-x: hidden;
+}
+
 .backgroundColor {
   background-color: $background-color;
   background-repeat: repeat;
@@ -64,7 +69,7 @@ body {
 }
 
 .menu {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: $shadow;
   display: flex;
   justify-content: space-between;
   padding: 1em;
@@ -144,7 +149,7 @@ body {
 
   .dropdown {
     border-top: 1px solid $taradance-color;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: $shadow;
     display: flex;
     overflow: hidden;
     padding: 1em;
@@ -341,14 +346,6 @@ input.error {
 .relative {
   position: relative;
 }
-.video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  min-height: 100%;
-  z-index: -100;
-}
 [data-theme="light"] {
   .bg {
     background-color: white;
@@ -379,4 +376,7 @@ a {
       padding-left: 0.25em;
     }
   }
+}
+.full-width {
+  width: 100%;
 }

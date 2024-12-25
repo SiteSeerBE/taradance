@@ -19,6 +19,7 @@ export default function Home() {
           "bg-black",
           styles.fixedBg
         )}
+        style={{ position: "relative" }}
       >
         <VideoPlayer />
         <h1>

@@ -1,14 +1,9 @@
+import styles from "./VideoPlayer.module.scss";
 const VideoPlayer = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div>
       <video
-        className="video"
+        className={styles.video}
         autoPlay
         muted
         loop
