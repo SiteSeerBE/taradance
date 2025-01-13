@@ -5,7 +5,6 @@ import ImageSet from "@/components/ImageSet";
 import NewsList from "@/components/news/NewsList";
 import Link from "next/link";
 import VideoPlayer from "@/components/VideoPlayer";
-import Image from "next/image";
 import Preview from "@/components/home/Preview";
 
 export default function Home() {
@@ -13,6 +12,7 @@ export default function Home() {
     <main className={styles.mainContent}>
       <div
         className={classNames(
+          styles.hero,
           "row",
           "center-xs",
           "middle-xs",

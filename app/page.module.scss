@@ -13,7 +13,13 @@
 
   @media only screen and (min-width: 48em) {
     background-attachment: fixed;
-    min-height: 75vh;
+    height: 75vh;
+  }
+}
+
+.hero {
+  @media only screen and (min-width: 48em) {
+    min-height: 820px !important;
   }
 }
 

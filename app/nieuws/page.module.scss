@@ -11,4 +11,12 @@
   @media screen and (min-width: 48em) {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  @media screen and (min-width: 68em) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media screen and (min-width: 140em) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
