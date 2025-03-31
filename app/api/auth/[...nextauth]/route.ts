@@ -16,8 +16,8 @@ const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     GithubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
+      clientId: process.env.SECRET_GITHUB_ID!,
+      clientSecret: process.env.SECRET_GITHUB!,
     }),
   ],
   callbacks: {
