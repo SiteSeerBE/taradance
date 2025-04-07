@@ -1,2 +1,3 @@
-# taradance
-Website for an Irish dance troup.
+# Taradance
+
+Website for an Irish dance troupe.
