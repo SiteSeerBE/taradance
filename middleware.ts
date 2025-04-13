@@ -1,9 +1,9 @@
 import { logtoConfig } from "@/lib/logto";
-import { getLogtoContext } from "@logto/next/server-actions";
+import { getLogtoContext, signOut } from "@logto/next/server-actions";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const protectedRoutes = ["/dashboard", "/logintest"];
+const protectedRoutes = ["/dashboard", "/test", "/admin"];
 
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
@@ -11,11 +11,10 @@ export async function middleware(req: NextRequest) {
   const { isAuthenticated } = await getLogtoContext(logtoConfig);
 
   if (protectedRoutes.includes(pathname) && !isAuthenticated) {
-    console.log("User is not authenticated. Redirecting to /login.");
-    return NextResponse.redirect(new URL("/login", req.url));
+    return NextResponse.redirect(new URL("/aanmelden", req.url));
   }
 
-  if (pathname === "/signin" && isAuthenticated) {
+  if (pathname === "/aanmelden" && isAuthenticated) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
@@ -23,5 +22,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/logintest", "/signin"],
+  matcher: ["/dashboard", "/test", "/aanmelden", "/afmelden"],
 };

@@ -1,55 +1,39 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentServerSession } from "@/lib/NextAuthFunctions";
+import { getUserIdInRole, userHasRole } from "@/lib/helpers";
+import { getLogtoContext } from "@logto/next/server-actions";
+import { logtoConfig } from "@/lib/logto";
+import { RoleType } from "@prisma/client";
 
 export async function DELETE(request: Request) {
-  const session = await getCurrentServerSession(["ADMIN", "WRITER"]);
-  if (!session) {
+  const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
+  const logtoId = claims?.sub;
+  if (!isAuthenticated || !logtoId || !userHasRole(logtoId, ["ADMIN"])) {
     return NextResponse.json(
       { error: "You are not authorized on this route" },
       { status: 403 }
     );
   }
 
-  const { id, authorId } = await request.json();
-
-  if (session.user.roles.includes("ADMIN")) {
-    const record = await prisma.news.delete({
-      where: { id },
-    });
-    return NextResponse.json(record);
-  }
-
-  if (session.user.roles.includes("WRITER") && session.user.id === authorId) {
-    const record = await prisma.news.delete({
-      where: { id, authorId },
-    });
-    return NextResponse.json(record);
-  }
+  const { id } = await request.json();
+  const record = await prisma.news.delete({
+    where: { id },
+  });
+  return NextResponse.json(record);
 }
 
 export async function PUT(request: Request) {
-  const session = await getCurrentServerSession(["ADMIN", "WRITER"]);
-  if (!session) {
+  const userRole = "ADMIN" as RoleType;
+  const authorId = await getUserIdInRole(userRole);
+  if (!authorId) {
     return NextResponse.json(
       { error: "You are not authorized on this route" },
       { status: 403 }
     );
   }
-  const authorId = session.user.id;
 
-  const {
-    content,
-    date,
-    id,
-    isAnnouncement,
-    isPublished,
-    media,
-    mediaType,
-    quote,
-    slug,
-    title,
-  } = await request.json();
+  const { content, date, isAnnouncement, isPublished, media, slug, title } =
+    await request.json();
 
   const record = await prisma.news.upsert({
     create: {
@@ -58,8 +42,6 @@ export async function PUT(request: Request) {
       isAnnouncement,
       isPublished,
       media,
-      mediaType,
-      quote,
       slug,
       title,
       authorId,
@@ -70,9 +52,8 @@ export async function PUT(request: Request) {
       isAnnouncement,
       isPublished,
       media,
-      mediaType,
-      quote,
       title,
+      authorId,
     },
     where: { slug },
   });

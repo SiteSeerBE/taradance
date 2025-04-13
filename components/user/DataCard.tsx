@@ -1,49 +1,43 @@
-import { SignOutButton } from "@/components/user/AuthButtons";
-import type { Account, User } from "@prisma/client";
-import type { Session } from "next-auth";
-import Link from "next/link";
+import { LinkButton } from "../buttons";
+import type { Dispatch, SetStateAction } from "react";
+import type { User } from "@prisma/client";
 
-interface UserAndAccount extends User {
-  accounts: Partial<Account>[];
-}
+type Props = {
+  userData: Partial<User>;
+  setShowRegistration: Dispatch<SetStateAction<boolean>>;
+};
 
-export interface Props {
-  userData: Partial<UserAndAccount>;
-  userSession: Session;
-  updateData: () => void;
-}
-
-const DataCard: React.FC<Props> = ({ userData, userSession, updateData }) => {
+const DataCard: React.FC<Props> = ({ userData, setShowRegistration }) => {
   return (
     <div className="container mt1">
       <article className=" mt1">
         <header>
           <h1>
-            {userData.firstName} {userData.lastName}
+            Welkom {userData.firstName} {userData.lastName}
           </h1>
         </header>
         <p>
-          <b>E-mail</b>: {userData.emailInput}
+          <b>Voornaam</b>: {userData.firstName}
           <br />
-          <b>Geregistreerd met</b>:{" "}
-          <span style={{ textTransform: "capitalize" }}>
-            {userData.accounts &&
-              userData.accounts.map((account) => account.provider).join(", ")}
-          </span>
+          <b>Achternaam</b>: {userData.lastName}
           <br />
-          <b>Toegang</b>: {userSession.user.roles.join(", ")}
+          <b>E-mail</b>: {userData.email}
+          <br />
+          <br />
+          <b>Rol</b>:{" "}
+          {userData.role ? userData.role : "Wacht op goedkeuring teacher"}
         </p>
-        <footer className="grid">
-          {(userSession.user.roles.includes("ADMIN") ||
-            userSession.user.roles.includes("WRITER")) && (
-            <a href="/admin">
-              <button>Administratie</button>
-            </a>
+        <footer className="flex-right">
+          {userData.role === "ADMIN" && (
+            <LinkButton label="Administratie" href="/admin" />
           )}
-          <button className="secondary" onClick={updateData}>
+          <button
+            className="secondary"
+            onClick={() => setShowRegistration(true)}
+          >
             Wijzigen
-          </button>{" "}
-          <SignOutButton />
+          </button>
+          <LinkButton label="Afmelden" href="/afmelden" />
         </footer>
       </article>
     </div>

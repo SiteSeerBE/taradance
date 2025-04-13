@@ -1,7 +1,5 @@
 import FourOhFour from "@/components/FourOhFour";
 import ImageSet from "@/components/ImageSet";
-import AdminBox from "@/components/news/AdminBox";
-import { getCurrentServerSession } from "@/lib/NextAuthFunctions";
 import { prisma } from "@/lib/prisma";
 import classNames from "classnames";
 import { marked } from "marked";

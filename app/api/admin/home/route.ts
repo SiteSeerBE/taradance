@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { Button, Home } from "@prisma/client";
-import { getUserIdWithAccess } from "@/lib/NextAuthFunctions";
 
 interface requestData extends Partial<Home> {
   buttons: Partial<Button>[];

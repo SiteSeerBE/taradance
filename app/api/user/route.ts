@@ -1,85 +1,52 @@
 import { NextResponse } from "next/server";
-import {
-  getCurrentServerSession,
-  getUserIdWithAccess,
-} from "@/lib/NextAuthFunctions";
 import { prisma } from "@/lib/prisma";
+import { logtoConfig } from "@/lib/logto";
+import { getLogtoContext } from "@logto/next/server-actions";
 import type { User } from "@prisma/client";
 
 export async function GET() {
-  const id = await getUserIdWithAccess();
-  if (!id) {
-    return NextResponse.json(
-      { error: "You are not authorized on this route" },
-      { status: 403 }
-    );
-  }
-  const record = await prisma.user.findUnique({
-    select: {
-      email: true,
-      emailInput: true,
-      firstName: true,
-      lastName: true,
-      accounts: {
-        select: {
-          provider: true,
-        },
+  const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
+  if (isAuthenticated && claims) {
+    const record = await prisma.user.findUnique({
+      select: {
+        email: true,
+        firstName: true,
+        lastName: true,
+        role: true,
       },
-    },
-    where: { id },
-  });
+      where: { logtoId: claims.sub },
+    });
 
-  return NextResponse.json(record);
+    return NextResponse.json(record);
+  } else {
+    return NextResponse.json({ error: "User not logged in" }, { status: 403 });
+  }
 }
 
 export async function POST(request: Request) {
-  const session = await getCurrentServerSession();
-  const id = session?.user.id!;
   const postData: User = await request.json();
-  const { firstName, lastName, emailInput } = postData;
+  const { firstName, lastName, email } = postData;
 
-  if (!id) {
+  const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
+  const logtoId = claims?.sub;
+
+  if (!isAuthenticated) {
     return NextResponse.json({ error: "User not logged in" }, { status: 403 });
   }
 
-  if (firstName && lastName && emailInput) {
+  if (firstName && lastName && email) {
     let arrayNewRole = [];
-    if (session?.user.roles.length === 0) {
-      arrayNewRole.push({ role: "PENDING" });
-    }
-
-    const initials = `${firstName.charAt(0)}${lastName
-      .split(" ")
-      .pop()
-      ?.charAt(0)}`;
 
     try {
-      if (session?.user.roles.length === 0) {
-        await prisma.user.update({
-          where: { id },
-          data: {
-            emailInput,
-            firstName,
-            initials,
-            lastName,
-            roles: {
-              create: [{ role: "PENDING" }],
-            },
-          },
-        });
-        return NextResponse.json({ message: "User is now pending approval" });
-      } else {
-        await prisma.user.update({
-          where: { id },
-          data: {
-            emailInput,
-            firstName,
-            initials,
-            lastName,
-          },
-        });
-        return NextResponse.json({ message: "User updated" });
-      }
+      await prisma.user.update({
+        where: { logtoId },
+        data: {
+          email,
+          firstName,
+          lastName,
+        },
+      });
+      return NextResponse.json({ message: "User updated" });
     } catch (error) {
       return NextResponse.json({ error }, { status: 500 });
     }

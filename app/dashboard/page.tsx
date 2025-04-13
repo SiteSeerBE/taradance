@@ -1,64 +1,47 @@
 "use client";
 
 import DataCard from "@/components/user/DataCard";
-import Registration from "@/components/user/Registration";
-import { User } from "@prisma/client";
-import axios from "axios";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import AccessDenied from "@/components/user/AccessDenied";
 import LoadingAnimation from "@/components/LoadingAnimation";
+import Registration from "@/components/user/Registration";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import type { User } from "@prisma/client";
 
 const Dashboard: React.FC = () => {
-  const [userData, setUserData] = useState<User>();
+  const [userData, setUserData] = useState<Partial<User>>();
   const [showRegistration, setShowRegistration] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { data: session, update, status } = useSession();
 
   useEffect(() => {
-    if (status === "authenticated") {
-      axios
-        .get("/api/user")
-        .then((response) => {
-          if (response.data) {
-            return response.data;
-          }
-        })
-        .then((data: User) => {
-          setUserData(data);
-          setIsLoading(false);
-        });
-    }
-    if (status === "unauthenticated") {
-      setIsLoading(false);
-    }
-  }, [status]);
-
-  const setPending = () => {
-    if (session?.user.roles.length === 0) {
-      update({ roles: ["PENDING"] });
-    }
-    setShowRegistration(false);
-  };
-
-  if (session?.user.roles.length === 0) {
-    setShowRegistration(true);
-  }
+    axios
+      .get("/api/user")
+      .then((response) => {
+        if (response.data) {
+          return response.data;
+        }
+      })
+      .then((data: User) => {
+        setUserData(data);
+        setIsLoading(false);
+        if (!data.firstName || !data.lastName || !data.email) {
+          setShowRegistration(true);
+        }
+      });
+  }, [showRegistration]);
 
   return (
     <>
       {isLoading && <LoadingAnimation />}
-      {status === "unauthenticated" && <AccessDenied />}
-      {showRegistration && userData && (
-        <Registration userData={userData} setPending={setPending} />
+      {!isLoading && showRegistration && (
+        <Registration
+          userData={userData}
+          setShowRegistration={setShowRegistration}
+        />
       )}
-      {!showRegistration && userData && session && (
+      {!isLoading && !showRegistration && userData && (
         <DataCard
           userData={userData}
-          userSession={session}
-          updateData={() => {
-            setShowRegistration(true);
-          }}
+          setShowRegistration={setShowRegistration}
         />
       )}
     </>

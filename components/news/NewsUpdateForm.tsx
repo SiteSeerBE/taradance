@@ -9,14 +9,13 @@ import MDEditor, { commands } from "@uiw/react-md-editor";
 import { AriaInvalid } from "@/lib/dataTypes";
 import { dateFormFormat, getPathname, getSlug } from "@/lib/helpers";
 import axios from "axios";
-import type { MediaType, News } from "@prisma/client";
-import { useSession } from "next-auth/react";
+import type { News } from "@prisma/client";
+import toast from "react-hot-toast";
 
 type NewsUpdateFormProps = { news?: News | null };
 
 const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
   const router = useRouter();
-  const { data: session } = useSession();
 
   // content
   const [content, setContent] = useState(news?.content || "");
@@ -25,10 +24,6 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
       new Date().toISOString().split("T")[0]
   );
   const [media, setMedia] = useState(news?.media || "");
-  const [mediaType, setMediaType] = useState<MediaType>(
-    news?.mediaType || "IMAGE"
-  );
-  const [quote, setQuote] = useState(news?.quote || "");
   const [isAnnouncement, setAnnouncement] = useState(
     news?.isAnnouncement || false
   );
@@ -46,26 +41,11 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
 
   // helpers
   const [isWaiting, setIsWaiting] = useState(false);
-  const [canDelete, setCanDelete] = useState(false);
   const [requestDelete, setRequestDelete] = useState(false);
 
   useEffect(() => {
     slugUpdate(title);
   }, [title]);
-
-  useEffect(() => {
-    if (session?.user?.roles.includes("ADMIN")) {
-      setCanDelete(true);
-      return;
-    }
-    if (
-      session?.user?.roles.includes("WRITER") &&
-      news?.authorId === session.user.id
-    ) {
-      setCanDelete(true);
-      return;
-    }
-  }, [session]);
 
   const slugUpdate = useCallback(
     debounce(async (slugValue: string) => {
@@ -91,7 +71,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
       setDateHasError(true);
       isValid = false;
     }
-    if (!content) {
+    if (isPublished && !content) {
       setContentHasError(true);
       isValid = false;
     }
@@ -99,11 +79,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
       setTitleHasError(true);
       isValid = false;
     }
-    if (["quote", "link"].includes(mediaType) && !quote) {
-      setLabelError(true);
-      isValid = false;
-    }
-    if (mediaType != "QUOTE") {
+    if (isPublished) {
       try {
         const cleanMedia = getPathname(media);
       } catch (error) {
@@ -112,23 +88,30 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
       }
     }
     if (isValid) {
-      axios
-        .put("/api/author/news", {
-          content,
-          date,
-          id: news?.id,
-          isAnnouncement,
-          isPublished,
-          media,
-          mediaType,
-          quote,
-          slug,
-          title,
-        })
-        .then(() => {
-          setIsWaiting(false);
-          router.push(`/nieuws/${slug}`);
-        });
+      toast.promise(
+        axios
+          .put("/api/author/news", {
+            content,
+            date,
+            id: news?.id,
+            isAnnouncement,
+            isPublished,
+            media,
+            slug,
+            title,
+          })
+          .then(() => {
+            setIsWaiting(false);
+            isPublished
+              ? router.push(`/admin/${slug}`)
+              : router.push("/admin/nieuws");
+          }),
+        {
+          loading: "Opslaan...",
+          success: "Artikel opgeslagen",
+          error: "Er ging iets mis.",
+        }
+      );
     }
   };
 
@@ -177,37 +160,35 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                 type="text"
               />
               <small>
-                Een slug is een unieke identificatie voor de pagina waarop deze
-                tekst verschijnt. De slug wordt automatisch uniek gemaakt door
+                Een slug is een unieke identificatie voor de pagina waarop dit
+                nieuws verschijnt. De slug wordt automatisch uniek gemaakt door
                 een volgnummer toe te voegen. Probeer te vermijden om vaak
                 dezelfde titel te gebruiken.
               </small>
             </label>
-            {mediaType != "QUOTE" && (
-              <label>
-                Beeld
-                <small
-                  className={classNames("error", "float-right", {
-                    show: mediaHasError,
-                  })}
-                >
-                  Voeg een geldige medialink toe.
-                </small>
-                <input
-                  aria-invalid={mediaHasError}
-                  autoComplete="off"
-                  value={media}
-                  onChange={(e) => (
-                    setMedia(e.target.value),
-                    setMediaHasError(undefined),
-                    setIsWaiting(false)
-                  )}
-                  name="media"
-                  placeholder="Link naar de media"
-                  type="url"
-                />
-              </label>
-            )}
+            <label>
+              Beeld
+              <small
+                className={classNames("error", "float-right", {
+                  show: mediaHasError,
+                })}
+              >
+                Voeg een geldige medialink toe.
+              </small>
+              <input
+                aria-invalid={mediaHasError}
+                autoComplete="off"
+                value={media}
+                onChange={(e) => (
+                  setMedia(e.target.value),
+                  setMediaHasError(undefined),
+                  setIsWaiting(false)
+                )}
+                name="media"
+                placeholder="Link naar de media"
+                type="url"
+              />
+            </label>
             <label>
               Datum
               <small
@@ -296,16 +277,14 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
           <Link href="/admin/nieuws">
             <button className="secondary">Annuleren</button>
           </Link>
-          {canDelete && (
-            <button
-              className="secondary"
-              onClick={() => {
-                setRequestDelete(true);
-              }}
-            >
-              Verwijderen
-            </button>
-          )}
+          <button
+            className="secondary"
+            onClick={() => {
+              setRequestDelete(true);
+            }}
+          >
+            Verwijderen
+          </button>
           <button
             aria-busy={isWaiting}
             className="primary"
@@ -316,7 +295,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
           </button>
         </footer>
       </article>
-      {news && canDelete && (
+      {news && (
         <dialog open={requestDelete}>
           <article>
             <header>
@@ -338,13 +317,20 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
               <button
                 className="primary"
                 onClick={() => {
-                  axios
-                    .delete("/api/author/news", {
-                      data: { id: news.id, authorId: session?.user.id },
-                    })
-                    .then(() => {
-                      router.push("/nieuws");
-                    });
+                  toast.promise(
+                    axios
+                      .delete("/api/author/news", {
+                        data: { id: news.id },
+                      })
+                      .then(() => {
+                        router.push("/admin/nieuws");
+                      }),
+                    {
+                      loading: "Verwijderen...",
+                      success: "Artikel verwijderd",
+                      error: "Er ging iets mis.",
+                    }
+                  );
                 }}
               >
                 Verwijderen

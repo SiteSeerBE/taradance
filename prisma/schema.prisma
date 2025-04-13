@@ -13,68 +13,16 @@ datasource db {
   url      = env("POSTGRES_PRISMA_URL")
 }
 
-// NextAuth Schema
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-}
-
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model Account {
-  id                       String  @id @default(cuid())
-  userId                   String
-  type                     String
-  provider                 String
-  providerAccountId        String
-  refresh_token            String? @db.Text
-  access_token             String? @db.Text
-  expires_at               Int?
-  refresh_token_expires_in Int?
-  token_type               String?
-  scope                    String?
-  id_token                 String? @db.Text
-  session_state            String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  firstName     String?
-  lastName      String?
-  bio           String?   @db.Text
-  email         String?   @unique @default(cuid())
-  emailInput    String?
-  emailVerified DateTime?
-  image         String?
-  initials      String?
-  roles         Role[]
-  accounts      Account[]
-  events        Event[]
-  pages         Page[]
-  sessions      Session[]
-  groups        Group[]
-  news          News[]
-  invites       Invite[]
-}
-
-model Role {
-  id    String   @id @default(cuid())
-  role  RoleType
-  users User[]
+  id        String    @id @default(cuid())
+  firstName String?
+  lastName  String?
+  logtoId   String    @unique @default(cuid())
+  email     String?
+  role      RoleType?
+  pages     Page[]
+  groups    Group[]
+  news      News[]
 }
 
 //content
@@ -106,20 +54,18 @@ model Home {
 }
 
 model News {
-  id             Int       @id @default(autoincrement())
-  author         User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  id             Int      @id @default(autoincrement())
+  author         User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
   authorId       String?
-  content        String    @db.Text
-  createdAt      DateTime  @default(now())
+  content        String   @db.Text
+  createdAt      DateTime @default(now())
   date           DateTime
-  isAnnouncement Boolean   @default(false)
-  isPublished    Boolean   @default(false)
+  isAnnouncement Boolean  @default(false)
+  isPublished    Boolean  @default(false)
   media          String?
-  mediaType      MediaType
-  quote          String?
-  slug           String    @unique
+  slug           String   @unique
   title          String
-  updatedAt      DateTime  @updatedAt
+  updatedAt      DateTime @updatedAt
 }
 
 model Page {
@@ -133,71 +79,11 @@ model Page {
   updatedAt DateTime @updatedAt
 }
 
-model Event {
-  id               Int                    @id @default(autoincrement())
-  eventId          String                 @unique @default(cuid())
-  title            String
-  authorId         String?
-  author           User?                  @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  date             DateTime
-  time             String
-  inviteUntil      DateTime?
-  media            String?
-  isPublic         Boolean                @default(false)
-  isPublished      Boolean                @default(false)
-  isRepeating      Boolean                @default(false)
-  repeatStart      DateTime
-  repeatEnd        DateTime
-  repeatInterval   Int
-  repeatType       Calendar
-  repeatExceptions EventRepeatException[]
-  invites          Invite[]
-  privateContent   String                 @db.Text
-  publicContent    String?                @db.Text
-  slug             String                 @unique
-  locationId       Int?
-  location         Location?              @relation(fields: [locationId], references: [id])
-  street           String
-  city             String
-  createdAt        DateTime               @default(now())
-  updatedAt        DateTime               @updatedAt
-}
-
-model Invite {
-  id        Int      @id @default(autoincrement())
-  eventId   Int
-  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accepted  Boolean  @default(false)
-  declined  Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model EventRepeatException {
-  id        Int      @id @default(autoincrement())
-  eventId   Int
-  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  date      DateTime
-  exception String
-}
-
-model Location {
-  id         Int     @id @default(autoincrement())
-  locationId String  @unique @default(cuid())
-  events     Event[]
-  latitude   Float
-  longitude  Float
-  name       String
-}
-
 //types
 enum RoleType {
   ADMIN
-  AUTHOR
-  PENDING
-  USER
+  DANSER
+  SCHRIJVER
 }
 
 enum MediaType {

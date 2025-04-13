@@ -1,29 +1,23 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import axios from "axios";
 import classNames from "classnames";
 import { checkIsValidEmail } from "@/lib/helpers";
 import type { User } from "@prisma/client";
 import type { AriaInvalid } from "@/lib/dataTypes";
 
-type props = { userData: Partial<User>; setPending: () => void };
+type props = {
+  userData?: Partial<User>;
+  setShowRegistration: Dispatch<SetStateAction<boolean>>;
+};
 
-const Registration: React.FC<props> = ({ userData, setPending }) => {
-  const [firstName, setFirstName] = useState(userData.firstName || "");
+const Registration: React.FC<props> = ({ userData, setShowRegistration }) => {
+  const [firstName, setFirstName] = useState(userData?.firstName || "");
   const [firstNameError, setFirstNameError] = useState<AriaInvalid>(undefined);
-  const [lastName, setLastName] = useState(userData.lastName || "");
+  const [lastName, setLastName] = useState(userData?.lastName || "");
   const [lastNameError, setLastNameError] = useState<AriaInvalid>(undefined);
-  const [emailInput, setEmailInput] = useState(userData.emailInput || "");
-  const [emailInputError, setEmailInputError] =
-    useState<AriaInvalid>(undefined);
+  const [email, setemail] = useState(userData?.email || "");
+  const [emailError, setemailError] = useState<AriaInvalid>(undefined);
   const [isLoading, setIsLoading] = useState(false);
-
-  if (
-    emailInput.length < 5 &&
-    userData.email &&
-    checkIsValidEmail(userData.email)
-  ) {
-    setEmailInput(userData.email);
-  }
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,7 +25,7 @@ const Registration: React.FC<props> = ({ userData, setPending }) => {
 
     setFirstNameError(false);
     setLastNameError(false);
-    setEmailInputError(false);
+    setemailError(false);
     let valid = true;
 
     if (!firstName) {
@@ -42,13 +36,13 @@ const Registration: React.FC<props> = ({ userData, setPending }) => {
       setLastNameError(true);
       valid = false;
     }
-    if (!emailInput) {
-      setEmailInputError(true);
+    if (!email) {
+      setemailError(true);
       valid = false;
     }
-    const isValidEmail = checkIsValidEmail(emailInput);
+    const isValidEmail = checkIsValidEmail(email);
     if (!isValidEmail) {
-      setEmailInputError(true);
+      setemailError(true);
       valid = false;
     }
     if (valid) {
@@ -56,12 +50,14 @@ const Registration: React.FC<props> = ({ userData, setPending }) => {
         .post("/api/user", {
           firstName,
           lastName,
-          emailInput,
+          email,
         })
         .then(() => {
-          setPending();
           setIsLoading(false);
+          setShowRegistration(false);
         });
+    } else {
+      setIsLoading(false);
     }
   };
   return (
@@ -122,31 +118,31 @@ const Registration: React.FC<props> = ({ userData, setPending }) => {
             E-mail
             <small
               className={classNames("error", "float-right", {
-                show: emailInputError,
+                show: emailError,
               })}
             >
               Vul een geldig e-mailadres in.
             </small>
             <input
-              aria-invalid={emailInputError}
+              aria-invalid={emailError}
               autoComplete="off"
               disabled={isLoading}
-              name="emailInput"
+              name="email"
               onChange={(e) => {
-                setEmailInput(e.target.value), setEmailInputError(undefined);
+                setemail(e.target.value), setemailError(undefined);
               }}
               placeholder="E-mail"
               type="text"
-              value={emailInput}
+              value={email}
             />
           </label>
           <button
             aria-busy={isLoading}
-            disabled={isLoading || !firstName || !lastName || !emailInput}
+            disabled={isLoading || !firstName || !lastName || !email}
             type="submit"
-            value="Aanmelden"
+            value="Toegang vragen"
           >
-            Aanmelden
+            Toegang vragen
           </button>
         </fieldset>
       </form>

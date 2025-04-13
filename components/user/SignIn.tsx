@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 type Props = {
   onSignIn: () => Promise<void>;
@@ -11,7 +11,7 @@ const SignIn = ({ onSignIn }: Props) => {
         onSignIn();
       }}
     >
-      Sign In
+      Aanmelden
     </button>
   );
 };

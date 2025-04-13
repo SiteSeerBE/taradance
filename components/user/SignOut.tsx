@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 type Props = {
   onSignOut: () => Promise<void>;
@@ -11,7 +11,7 @@ const SignOut = ({ onSignOut }: Props) => {
         onSignOut();
       }}
     >
-      Sign Out
+      Afmelden
     </button>
   );
 };

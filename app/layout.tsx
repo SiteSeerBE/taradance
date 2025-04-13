@@ -1,16 +1,17 @@
-import Link from "next/link";
-import Image from "next/image";
-import type { Metadata } from "next";
-import { Raleway } from "next/font/google";
 import "./globals.scss";
 import "./flexboxgrid.scss";
+import Image from "next/image";
+import Link from "next/link";
 import MegaMenu from "@/components/menu/MegaMenu";
 import MobileNavigationDrawer from "@/components/menu/MobileNavigationDrawer";
 import OpenDrawer from "@/components/menu/OpenDrawer";
-import { DashboardButton, ThemeSwitchButton } from "@/components/buttons";
-import AuthProvider from "@/components/providers/AuthProvider";
 import ThemeProvider from "./context/theme-provider";
-import { useTheme } from "./context/use-theme";
+import type { Metadata } from "next";
+import { DashboardButton, ThemeSwitchButton } from "@/components/buttons";
+import { logtoConfig } from "@/lib/logto";
+import { getLogtoContext } from "@logto/next/server-actions";
+import { Raleway } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 const raleway = Raleway({ weight: ["400", "500"], subsets: ["latin"] });
 
@@ -19,69 +20,65 @@ export const metadata: Metadata = {
   description: "School voor Ierse dans in Kapelle-op-den-Bos",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const theme = "light";
+  const { isAuthenticated } = await getLogtoContext(logtoConfig);
   return (
     <ThemeProvider>
       <head>
         <meta name="viewport" content="width=device-width" />
       </head>
-      <AuthProvider>
-        <body className={raleway.className}>
-          <header className="bg menu">
-            <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
-              <img src="/taradance.svg" width={150} alt="NextSpace Logo" />
-            </Link>
-            <div className="nav-container">
-              <MegaMenu />
-            </div>
-            <div className="flex flex-right first-xs last-sm">
-              <span className="hidden-xs">
-                <ThemeSwitchButton />
-              </span>
-              <span className="hidden-xs">
-                <DashboardButton />
-              </span>
-            </div>
-            <div className="hidden-sm last-xs">
-              <label className="hamburger" htmlFor="aside">
-                <Image
-                  src="/icons/menu.svg"
-                  width={46}
-                  height={46}
-                  alt="Menu"
-                />
-              </label>
-            </div>
-          </header>
-          <OpenDrawer />
-          <label htmlFor="aside" className="overlay" />
-          <aside className="bg hidden-sm">
-            <label htmlFor="aside" className="close">
-              <Image
-                src="/icons/close.svg"
-                width={46}
-                height={46}
-                alt="Member login"
-              />
+
+      <body className={raleway.className}>
+        <header className="bg menu">
+          <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
+            <img src="/taradance.svg" width={150} alt="NextSpace Logo" />
+          </Link>
+          <div className="nav-container">
+            <MegaMenu />
+          </div>
+          <div className="flex flex-right first-xs last-sm">
+            <span className="hidden-xs">
+              <ThemeSwitchButton />
+            </span>
+            <span className="hidden-xs">
+              <DashboardButton isAuthenticated={isAuthenticated} />
+            </span>
+          </div>
+          <div className="hidden-sm last-xs">
+            <label className="hamburger" htmlFor="aside">
+              <Image src="/icons/menu.svg" width={46} height={46} alt="Menu" />
             </label>
-            <nav className="mobileNavigationDrawer">
-              <MobileNavigationDrawer />
-              <div className="row end-xs">
-                <ThemeSwitchButton />
-                &nbsp;
-                <DashboardButton />
-                <div className="col-xs-1" />
-              </div>
-            </nav>
-          </aside>
-          {children}
-        </body>
-      </AuthProvider>
+          </div>
+        </header>
+        <OpenDrawer />
+        <label htmlFor="aside" className="overlay" />
+        <aside className="bg hidden-sm">
+          <label htmlFor="aside" className="close">
+            <Image
+              src="/icons/close.svg"
+              width={46}
+              height={46}
+              alt="Member login"
+            />
+          </label>
+          <nav className="mobileNavigationDrawer">
+            <MobileNavigationDrawer />
+            <div className="row end-xs">
+              <ThemeSwitchButton />
+              &nbsp;
+              <DashboardButton isAuthenticated={isAuthenticated} />
+              <div className="col-xs-1" />
+            </div>
+          </nav>
+        </aside>
+        {children}
+        <Toaster position="bottom-center" reverseOrder={true} />
+      </body>
     </ThemeProvider>
   );
 }

@@ -1,53 +1,33 @@
 "use client";
-
+import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import { LinkButtonProps } from "@/lib/dataTypes";
-import { useSession } from "next-auth/react";
 import { useTheme } from "@/app/context/use-theme";
 
 const LinkButton: React.FC<LinkButtonProps> = ({ label, href }) => {
   return (
-    <Link href={href}>
+    <Link href={href} className="block">
       <button>{label}</button>
     </Link>
   );
 };
 
-const DashboardButton = () => {
-  const { status } = useSession();
-  switch (status) {
-    case "loading":
-      return <button aria-busy className="secondary" />;
-    case "unauthenticated":
-      return (
-        <Link href={`/dashboard`}>
-          <button className="secondary">
-            <Image
-              src="/icons/account-circle.svg"
-              width={24}
-              height={24}
-              alt="Dashboard"
-            />
-          </button>
-        </Link>
-      );
-    case "authenticated":
-      return (
-        <Link href={`/dashboard`}>
-          <button>
-            <Image
-              src="/icons/account-circle.svg"
-              width={24}
-              height={24}
-              alt="Dashboard"
-            />
-          </button>
-        </Link>
-      );
-    default:
-      return null;
-  }
+const DashboardButton: React.FC<{ isAuthenticated: boolean }> = ({
+  isAuthenticated,
+}) => {
+  return (
+    <Link href={`/dashboard`}>
+      <button className={classNames({ secondary: !isAuthenticated })}>
+        <Image
+          src="/icons/account-circle.svg"
+          width={24}
+          height={24}
+          alt="Dashboard"
+        />
+      </button>
+    </Link>
+  );
 };
 
 const ThemeSwitchButton = () => {
