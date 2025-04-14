@@ -12,13 +12,6 @@ interface assertedButtons {
 }
 
 export async function PUT(request: Request) {
-  const userIdWithAccess = await getUserIdWithAccess(["ADMIN"]);
-  if (!userIdWithAccess) {
-    return NextResponse.json(
-      { error: "You are not authorized on this route" },
-      { status: 403 }
-    );
-  }
   const data: requestData = await request.json();
   const { buttons, content, id, imagePath, orderId, title } = data;
   if (!orderId || !title || !buttons || !content || !imagePath) {

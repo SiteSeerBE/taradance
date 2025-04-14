@@ -11,7 +11,10 @@ type UserParameters = {
   take: number;
 };
 
-export async function GET(params: UserParameters) {
+export async function GET(request: Request) {
+  const getData: UserParameters = await request.json();
+  const { orderBy, direction, skip, take } = getData;
+
   const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
   if (isAuthenticated && claims && (await userHasRole(claims.sub, ["ADMIN"]))) {
     const records = await prisma.user.findMany({
@@ -26,10 +29,10 @@ export async function GET(params: UserParameters) {
         email: { not: null },
       },
       orderBy: {
-        [params.orderBy]: params.direction,
+        [orderBy]: direction,
       },
-      skip: params.skip,
-      take: params.take,
+      skip,
+      take,
     });
     return NextResponse.json(records);
   } else {

@@ -5,18 +5,16 @@ import classNames from "classnames";
 import { marked } from "marked";
 import Link from "next/link";
 
-interface Props {
-  params: {
-    slug: string;
-  };
-}
+type Params = Promise<{ slug: string }>;
 
 // export async function generateMetadata({ params }: Props): Promise<Metadata> {
 //   const user = await prisma.user.findUnique({ where: { id: params.slug } });
 //   return { title: `User profile of ${user?.name}` };
 // }
 
-export default async function NewsArticle({ params }: Props) {
+export default async function NewsArticle({ params }: { params: Params }) {
+  const { slug } = await params;
+
   const news = await prisma.news.findUnique({
     select: {
       date: true,
@@ -25,7 +23,7 @@ export default async function NewsArticle({ params }: Props) {
       media: true,
       title: true,
     },
-    where: { slug: params.slug },
+    where: { slug },
   });
   const { date, content, isAnnouncement, media, title } = news ?? {};
 

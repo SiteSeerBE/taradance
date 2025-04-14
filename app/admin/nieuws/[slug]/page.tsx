@@ -1,15 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import NewsUpdateForm from "@/components/news/NewsUpdateForm";
 
-interface Props {
-  params: {
-    slug: string;
-  };
-}
+type Params = Promise<{ slug: string }>;
 
-const NewsEdit = async ({ params }: Props) => {
-  const news = await prisma.news.findUnique({ where: { slug: params.slug } });
+export default async function NewsEdit({ params }: { params: Params }) {
+  const { slug } = await params;
+  const news = await prisma.news.findUnique({ where: { slug } });
   return <NewsUpdateForm news={news} />;
-};
-
-export default NewsEdit;
+}
