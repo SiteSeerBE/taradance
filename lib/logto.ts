@@ -1,5 +1,3 @@
-import { env } from "process";
-
 export const logtoConfig = {
   endpoint: "https://pohjzp.logto.app/",
   appId: process.env.LOGTO_APP_ID!,
