@@ -1,3 +1,4 @@
+import { LinkButton } from "@/components/buttons";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
@@ -35,18 +36,17 @@ const Admin: React.FC = async () => {
 
   return (
     <>
-      <div className="breadcrumb center container-flex">
-        <h1>
-          <Link href="/admin">ADMIN</Link>
-        </h1>
-      </div>
-      <div className="container mt7">
-        <h2>
-          Nieuws{" "}
-          <Link href="/admin/nieuws/toevoegen">
-            <img src="/icons/add.svg" />
-          </Link>
-        </h2>
+      <header className="container-fluid">
+        <hgroup>
+          <h1>Nieuws</h1>
+          <p>Beheer het nieuws op de website.</p>
+        </hgroup>{" "}
+        <LinkButton
+          label="Nieuwsbericht toevoegen"
+          href="/admin/nieuws/toevoegen"
+        />
+      </header>
+      <div className="overflow-auto">
         <table className="striped">
           <thead>
             <tr>

@@ -1,11 +1,17 @@
 .sort {
-  visibility: hidden;
+  a {
+    display: flex;
+    align-items: flex-end;
+  }
+  span {
+    visibility: hidden;
+  }
 }
-.asc {
+.asc span {
   visibility: visible;
   display: inline-block;
   transform: rotate(180deg);
 }
-.desc {
+.desc span {
   visibility: visible;
 }

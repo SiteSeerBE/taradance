@@ -3,10 +3,13 @@ import Link from "next/link";
 const Admin: React.FC = () => {
   return (
     <>
-      <div className="breadcrumb center container-flex">
-        <h1>Administratie</h1>
-      </div>
-      <div className="container mt7">
+      <header className="container">
+        <hgroup>
+          <h1>Administratie</h1>
+          <p>Beheer gebruikers, update nieuws,...</p>
+        </hgroup>
+      </header>
+      <div className="container">
         <ul>
           <li>
             <Link href="/admin/gebruikers">Gebruikers</Link>

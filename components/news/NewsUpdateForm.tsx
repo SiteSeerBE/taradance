@@ -103,7 +103,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
           .then(() => {
             setIsWaiting(false);
             isPublished
-              ? router.push(`/admin/${slug}`)
+              ? router.push(`/nieuws/${slug}`)
               : router.push("/admin/nieuws");
           }),
         {

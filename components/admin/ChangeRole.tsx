@@ -4,6 +4,8 @@ import { RoleType } from "@prisma/client";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import styles from "./ChangeRole.module.scss";
+import classNames from "classnames";
 
 type ChangeRoleProps = {
   id: string;
@@ -38,7 +40,7 @@ const ChangeRole: React.FC<ChangeRoleProps> = (props) => {
 
   return (
     <>
-      <details className="dropdown" style={{ marginBottom: 0 }}>
+      <details className={classNames("dropdown", styles.dropdown)}>
         <summary>{role || "Kies..."}</summary>
         <ul>
           {Object.values(RoleType).map((RoleTypeElement) => (

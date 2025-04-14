@@ -68,44 +68,35 @@ const Gebruikers: React.FC = () => {
 
   return (
     <>
-      <div className="breadcrumb center container-flex">
-        <h1>Gebruikers</h1>
-      </div>
+      <header className="container-fluid">
+        <hgroup>
+          <h1>Gebruikers</h1>
+          <p>Ledenlijst en rollen voor website.</p>
+        </hgroup>
+      </header>
       {userData && (
-        <div className="table-container">
+        <div className="overflow-auto">
           <table className="striped">
             <thead>
               <tr>
-                <th>
+                <th className={getSortIndicatorClassNames("firstName")}>
                   <a onClick={() => changeSort("firstName")}>
-                    Voornaam{" "}
-                    <span className={getSortIndicatorClassNames("firstName")}>
-                      &#9662;
-                    </span>
+                    Voornaam <span>&nbsp;&#9662;&nbsp;</span>
                   </a>
                 </th>
-                <th>
+                <th className={getSortIndicatorClassNames("lastName")}>
                   <a onClick={() => changeSort("lastName")}>
-                    Achternaam{" "}
-                    <span className={getSortIndicatorClassNames("lastName")}>
-                      &#9662;
-                    </span>
+                    Achternaam <span>&nbsp;&#9662;&nbsp;</span>
                   </a>
                 </th>
-                <th>
+                <th className={getSortIndicatorClassNames("email")}>
                   <a onClick={() => changeSort("email")}>
-                    E-mail{" "}
-                    <span className={getSortIndicatorClassNames("email")}>
-                      &#9662;
-                    </span>
+                    E-mail <span>&nbsp;&#9662;&nbsp;</span>
                   </a>
                 </th>
-                <th>
+                <th className={getSortIndicatorClassNames("role")}>
                   <a onClick={() => changeSort("role")}>
-                    Rol{" "}
-                    <span className={getSortIndicatorClassNames("role")}>
-                      &#9662;
-                    </span>
+                    Rol <span>&nbsp;&#9662;&nbsp;</span>
                   </a>
                 </th>
               </tr>

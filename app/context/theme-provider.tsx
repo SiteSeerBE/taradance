@@ -17,7 +17,7 @@ export default function ThemeProvider({
   return (
     <>
       <ThemeContext.Provider value={{ theme, setTheme }}>
-        <html lang="en" data-theme={theme}>
+        <html lang="en" data-theme={theme} data-color-mode={theme}>
           {children}
         </html>
       </ThemeContext.Provider>
