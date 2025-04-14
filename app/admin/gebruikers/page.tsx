@@ -5,24 +5,42 @@ import { User } from "@prisma/client";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import styles from "./page.module.scss";
+import classNames from "classnames";
 
 type UserParameters = {
   orderBy: string;
   direction: "asc" | "desc";
-  skip: number;
-  take: number;
 };
+
+type OrderByOptions = "firstName" | "lastName" | "email" | "role";
 
 const Gebruikers: React.FC = () => {
   const [userData, setUserData] = useState<Partial<User>[]>();
-  const [pageNumber, setPageNumber] = useState(0);
+  const [orderBy, setOrderBy] = useState<OrderByOptions>("role");
+  const [direction, setDirection] = useState<"asc" | "desc">("desc");
+
+  const getSortIndicatorClassNames = (column: OrderByOptions) =>
+    classNames({
+      [styles.sort]: true,
+      [styles.asc]: direction === "asc" && orderBy === column,
+      [styles.desc]: direction === "desc" && orderBy === column,
+    });
+
+  const changeSort = (column: OrderByOptions) => {
+    console.log("Column clicked:", column);
+    if (orderBy === column) {
+      setDirection(direction === "asc" ? "desc" : "asc");
+    } else {
+      setDirection("asc");
+    }
+    setOrderBy(column);
+  };
 
   const getUsers = async () => {
     const userParameters: UserParameters = {
-      orderBy: "firstName",
-      direction: "asc",
-      skip: pageNumber * 10,
-      take: 10,
+      orderBy: orderBy,
+      direction: direction,
     };
 
     const response = await axios.get("/api/users", { params: userParameters });
@@ -46,7 +64,7 @@ const Gebruikers: React.FC = () => {
       .catch((error) => {
         console.error("Error fetching users:", error);
       });
-  }, [pageNumber]);
+  }, [orderBy, direction]);
 
   return (
     <>
@@ -55,13 +73,41 @@ const Gebruikers: React.FC = () => {
       </div>
       {userData && (
         <div className="table-container">
-          <table>
+          <table className="striped">
             <thead>
               <tr>
-                <th>Voornaam</th>
-                <th>Naam</th>
-                <th>Email</th>
-                <th>Rol</th>
+                <th>
+                  <a onClick={() => changeSort("firstName")}>
+                    Voornaam{" "}
+                    <span className={getSortIndicatorClassNames("firstName")}>
+                      &#9662;
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a onClick={() => changeSort("lastName")}>
+                    Achternaam{" "}
+                    <span className={getSortIndicatorClassNames("lastName")}>
+                      &#9662;
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a onClick={() => changeSort("email")}>
+                    E-mail{" "}
+                    <span className={getSortIndicatorClassNames("email")}>
+                      &#9662;
+                    </span>
+                  </a>
+                </th>
+                <th>
+                  <a onClick={() => changeSort("role")}>
+                    Rol{" "}
+                    <span className={getSortIndicatorClassNames("role")}>
+                      &#9662;
+                    </span>
+                  </a>
+                </th>
               </tr>
             </thead>
             <tbody>

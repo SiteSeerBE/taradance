@@ -1,19 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { logtoConfig } from "@/lib/logto";
 import { getLogtoContext } from "@logto/next/server-actions";
 import { userHasRole } from "@/lib/helpers";
 
-type UserParameters = {
-  orderBy: string;
-  direction: "asc" | "desc";
-  skip: number;
-  take: number;
-};
-
-export async function GET(request: Request) {
-  const getData: UserParameters = await request.json();
-  const { orderBy, direction, skip, take } = getData;
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const orderBy = searchParams.get("orderBy") || "role";
+  const direction = searchParams.get("direction") || "desc";
 
   const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
   if (isAuthenticated && claims && (await userHasRole(claims.sub, ["ADMIN"]))) {
@@ -31,8 +25,6 @@ export async function GET(request: Request) {
       orderBy: {
         [orderBy]: direction,
       },
-      skip,
-      take,
     });
     return NextResponse.json(records);
   } else {

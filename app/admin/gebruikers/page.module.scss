@@ -1,0 +1,11 @@
+.sort {
+  visibility: hidden;
+}
+.asc {
+  visibility: visible;
+  display: inline-block;
+  transform: rotate(180deg);
+}
+.desc {
+  visibility: visible;
+}
