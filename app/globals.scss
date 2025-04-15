@@ -37,6 +37,10 @@ aside {
   }
 }
 
+button {
+  text-wrap: nowrap;
+}
+
 html {
   overflow-x: hidden;
 }
@@ -376,6 +380,6 @@ a {
     }
   }
 }
-.full-width {
+.w-full {
   width: 100%;
 }

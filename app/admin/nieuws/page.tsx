@@ -1,6 +1,6 @@
-import { LinkButton } from "@/components/buttons";
-import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
+import { LinkButton } from "@/components/buttons";
 
 const Admin: React.FC = async () => {
   const news = await prisma.news.findMany({
@@ -56,6 +56,7 @@ const Admin: React.FC = async () => {
               <th data-tooltip="Aankondiging">A</th>
               <th data-tooltip="Gepubliceerd">P</th>
               <th data-tooltip="Zichtbaar">Z</th>
+              <th>&nbsp;</th>
               <th>&nbsp;</th>
             </tr>
           </thead>
@@ -117,11 +118,12 @@ const Admin: React.FC = async () => {
                       checked={visible}
                     />
                   </td>
-                  <td>
+                  <td style={{ minWidth: "60px" }}>
                     <Link href={`/admin/nieuws/${item.slug}`}>
                       <img src="/icons/edit.svg" alt="Bewerken" />
                     </Link>
                   </td>
+                  <td style={{ minWidth: "65px" }}>&nbsp;</td>
                 </tr>
               );
             })}

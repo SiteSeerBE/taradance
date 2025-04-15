@@ -9,6 +9,7 @@ export type AriaInvalid =
 export interface LinkButtonProps {
   label: string;
   href: string;
+  full?: boolean;
 }
 
 export interface DbUser {

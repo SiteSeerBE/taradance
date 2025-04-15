@@ -75,7 +75,7 @@ const Gebruikers: React.FC = () => {
         </hgroup>
       </header>
       {userData && (
-        <div className="overflow-auto">
+        <div className="table-container overflow-auto">
           <table className="striped">
             <thead>
               <tr>

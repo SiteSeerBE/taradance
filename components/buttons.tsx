@@ -5,10 +5,10 @@ import Link from "next/link";
 import { LinkButtonProps } from "@/lib/dataTypes";
 import { useTheme } from "@/app/context/use-theme";
 
-const LinkButton: React.FC<LinkButtonProps> = ({ label, href }) => {
+const LinkButton: React.FC<LinkButtonProps> = ({ label, href, full }) => {
   return (
     <Link href={href} className="block">
-      <button>{label}</button>
+      <button className={classNames({ "w-full": full })}>{label}</button>
     </Link>
   );
 };

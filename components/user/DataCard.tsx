@@ -27,17 +27,20 @@ const DataCard: React.FC<Props> = ({ userData, setShowRegistration }) => {
           <b>Rol</b>:{" "}
           {userData.role ? userData.role : "Wacht op goedkeuring teacher"}
         </p>
-        <footer className="flex-right">
-          {userData.role === "ADMIN" && (
-            <LinkButton label="Administratie" href="/admin" />
+        <footer className="grid overflow-auto">
+          {userData.role === "ADMIN" ? (
+            <LinkButton label="Administratie" href="/admin" full />
+          ) : (
+            <div className="hidden-xs">&nbsp;</div>
           )}
+          <div className="hidden-xs">&nbsp;</div>
           <button
             className="secondary"
             onClick={() => setShowRegistration(true)}
           >
             Wijzigen
-          </button>
-          <LinkButton label="Afmelden" href="/afmelden" />
+          </button>{" "}
+          <LinkButton label="Afmelden" href="/afmelden" full />
         </footer>
       </article>
     </div>
