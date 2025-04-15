@@ -10,7 +10,9 @@ interface imageSize {
 }
 
 const ImageSet: React.FC<ImageSetProps> = ({ altText, image, grid = 1 }) => {
+  const ImageKitEndPoinht = "https://ik.imagekit.io/taradance/";
   const imageUrl = "https://ik.imagekit.io/taradance/";
+  const imagePath = image.replace(ImageKitEndPoinht, "");
   const imageSizeConfig: imageSize[] = [
     { viewport: 2000, width: Math.round(900 / grid) },
     { viewport: 1600, width: Math.round(800 / grid) },
@@ -19,7 +21,7 @@ const ImageSet: React.FC<ImageSetProps> = ({ altText, image, grid = 1 }) => {
     { viewport: 0, width: Math.round(300 / grid) },
   ];
   const srcSet = imageSizeConfig.map(
-    (vw) => `${imageUrl}/tr:w-${vw.width}/${image} ${vw.width}w`
+    (vw) => `${imageUrl}/tr:w-${vw.width}/${imagePath} ${vw.width}w`
   );
   const sizes = imageSizeConfig.map(
     (vw) => `(min-width: ${vw.viewport}px) ${vw.width}px`

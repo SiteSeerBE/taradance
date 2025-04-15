@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@imagekit/next": "^2.0.0",
     "@logto/next": "^4.2.2",
     "@picocss/pico": "^2.0.6",
     "@prisma/client": "^5.19.1",
@@ -16,6 +17,7 @@
     "@vercel/postgres": "^0.10.0",
     "axios": "^1.7.7",
     "classnames": "^2.5.1",
+    "imagekitio-react": "^4.3.0",
     "lodash.debounce": "^4.0.8",
     "marked": "^14.1.2",
     "next": "^15.2.4",

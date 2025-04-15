@@ -7,10 +7,11 @@ import classNames from "classnames";
 import debounce from "lodash.debounce";
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import { AriaInvalid } from "@/lib/dataTypes";
-import { dateFormFormat, getPathname, getSlug } from "@/lib/helpers";
+import { dateFormFormat, getSlug, isImageKitUrl } from "@/lib/helpers";
 import axios from "axios";
 import type { News } from "@prisma/client";
 import toast from "react-hot-toast";
+import { IKUpload } from "imagekitio-react";
 
 type NewsUpdateFormProps = { news?: News | null };
 
@@ -35,13 +36,37 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
   const [contentHasError, setContentHasError] =
     useState<AriaInvalid>(undefined);
   const [dateHasError, setDateHasError] = useState<AriaInvalid>(undefined);
-  const [labelError, setLabelError] = useState<AriaInvalid>(undefined);
   const [mediaHasError, setMediaHasError] = useState<AriaInvalid>(undefined);
   const [titleHasError, setTitleHasError] = useState<AriaInvalid>(undefined);
 
   // helpers
   const [isWaiting, setIsWaiting] = useState(false);
   const [requestDelete, setRequestDelete] = useState(false);
+
+  // ImageKit upload
+  const [progress, setProgress] = useState(0);
+  const authenticator = async () => {
+    try {
+      // Perform the request to the upload authentication endpoint.
+      const response = await fetch("/api/upload-auth");
+      if (!response.ok) {
+        // If the server response is not successful, extract the error text for debugging.
+        const errorText = await response.text();
+        throw new Error(
+          `Request failed with status ${response.status}: ${errorText}`
+        );
+      }
+
+      // Parse and destructure the response JSON for upload credentials.
+      const data = await response.json();
+      const { signature, expire, token, publicKey } = data;
+      return { signature, expire, token, publicKey };
+    } catch (error) {
+      // Log the original error for debugging before rethrowing a new error.
+      console.error("Authentication error:", error);
+      throw new Error("Authentication request failed");
+    }
+  };
 
   useEffect(() => {
     slugUpdate(title);
@@ -79,13 +104,9 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
       setTitleHasError(true);
       isValid = false;
     }
-    if (isPublished) {
-      try {
-        const cleanMedia = getPathname(media);
-      } catch (error) {
-        setMediaHasError(true);
-        isValid = false;
-      }
+    if (isPublished && !isImageKitUrl(media)) {
+      setMediaHasError(true);
+      isValid = false;
     }
     if (isValid) {
       toast.promise(
@@ -173,21 +194,43 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                   show: mediaHasError,
                 })}
               >
-                Voeg een geldige medialink toe.
+                Adres van beeld wordt niet herkend.
               </small>
-              <input
-                aria-invalid={mediaHasError}
-                autoComplete="off"
-                value={media}
-                onChange={(e) => (
-                  setMedia(e.target.value),
-                  setMediaHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                name="media"
-                placeholder="Link naar de media"
-                type="url"
-              />
+              <fieldset className="grid">
+                <input
+                  aria-invalid={mediaHasError}
+                  autoComplete="off"
+                  value={media}
+                  onChange={(e) => (
+                    setMedia(e.target.value),
+                    setMediaHasError(undefined),
+                    setIsWaiting(false)
+                  )}
+                  name="media"
+                  placeholder="Link naar de media"
+                  type="url"
+                />
+                <IKUpload
+                  urlEndpoint="https://ik.imagekit.io/taradance/nieuws"
+                  publicKey="public_tdITXb95HoA/x0wYx7MSmjW6AC8="
+                  folder="/nieuws"
+                  authenticator={authenticator}
+                  onUploadStart={() => {
+                    setIsWaiting(true);
+                  }}
+                  onSuccess={(data) => {
+                    setMedia(data.url);
+                    setIsWaiting(false);
+                  }}
+                  onUploadProgress={(progress) => {
+                    const progressPercentage = Math.round(
+                      (progress.loaded / progress.total) * 100
+                    );
+                    setProgress(progressPercentage);
+                  }}
+                />
+              </fieldset>
+              <progress value={progress} max="100" />
             </label>
             <label>
               Datum
