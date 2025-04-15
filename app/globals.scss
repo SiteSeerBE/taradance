@@ -16,7 +16,7 @@ a {
   text-decoration: none;
 }
 
-aside {
+aside#mobileMenu {
   box-shadow: $shadow;
   overflow: hidden;
 
@@ -54,6 +54,13 @@ main {
   overflow-x: hidden;
 }
 
+nav[aria-label="breadcrumb"] li {
+  max-width: 25%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .backgroundColor {
   background-color: $background-color;
   background-repeat: repeat;
@@ -63,7 +70,7 @@ main {
   cursor: pointer !important;
 }
 
-#aside:checked ~ aside {
+#aside:checked ~ aside#mobileMenu {
   transform: translateX(0);
 }
 

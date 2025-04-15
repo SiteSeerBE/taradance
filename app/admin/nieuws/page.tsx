@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { LinkButton } from "@/components/buttons";
+import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 
 const Admin: React.FC = async () => {
   const news = await prisma.news.findMany({
@@ -39,7 +40,12 @@ const Admin: React.FC = async () => {
       <header className="container-fluid">
         <hgroup>
           <h1>Nieuws</h1>
-          <p>Beheer het nieuws op de website.</p>
+          <Breadcrumbs>
+            <Breadcrumb href="/">Taradance</Breadcrumb>
+            <Breadcrumb href="/dashboard">Dashboard</Breadcrumb>
+            <Breadcrumb href="/admin">Administratie</Breadcrumb>
+            <Breadcrumb>Nieuws</Breadcrumb>
+          </Breadcrumbs>
         </hgroup>{" "}
         <LinkButton
           label="Nieuwsbericht toevoegen"

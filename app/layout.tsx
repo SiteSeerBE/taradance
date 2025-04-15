@@ -57,7 +57,7 @@ export default async function RootLayout({
         </header>
         <OpenDrawer />
         <label htmlFor="aside" className="overlay" />
-        <aside className="bg hidden-sm">
+        <aside id="mobileMenu" className="bg hidden-sm">
           <label htmlFor="aside" className="close">
             <Image
               src="/icons/close.svg"

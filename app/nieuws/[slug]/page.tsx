@@ -1,3 +1,4 @@
+import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 import FourOhFour from "@/components/FourOhFour";
 import ImageSet from "@/components/ImageSet";
 import { prisma } from "@/lib/prisma";
@@ -33,12 +34,18 @@ export default async function NewsArticle({ params }: { params: Params }) {
 
   return (
     <>
-      <div className="backgroundColor breadcrumb container-flex">
-        <h1>
-          <Link href="/nieuws">&lt; NIEUWS</Link>
-        </h1>
-      </div>
-      <div className="container mt7">
+      <header className="container mt1">
+        <hgroup>
+          <h1>Nieuws</h1>
+          <Breadcrumbs>
+            <Breadcrumb href="/">Taradance</Breadcrumb>
+            <Breadcrumb href="/nieuws">Nieuws</Breadcrumb>
+            <Breadcrumb>{title}</Breadcrumb>
+          </Breadcrumbs>
+          <hr />
+        </hgroup>
+      </header>
+      <div className="container">
         <div className="relative center image100">
           <span
             className={classNames("dateBox", {

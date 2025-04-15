@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import styles from "./page.module.scss";
 import classNames from "classnames";
+import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 
 type UserParameters = {
   orderBy: string;
@@ -71,7 +72,12 @@ const Gebruikers: React.FC = () => {
       <header className="container-fluid">
         <hgroup>
           <h1>Gebruikers</h1>
-          <p>Ledenlijst en rollen voor website.</p>
+          <Breadcrumbs>
+            <Breadcrumb href="/">Taradance</Breadcrumb>
+            <Breadcrumb href="/dashboard">Dashboard</Breadcrumb>
+            <Breadcrumb href="/admin">Administratie</Breadcrumb>
+            <Breadcrumb>Gebruikers</Breadcrumb>
+          </Breadcrumbs>
         </hgroup>
       </header>
       {userData && (
