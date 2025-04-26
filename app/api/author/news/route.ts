@@ -22,7 +22,7 @@ export async function PUT(request: Request) {
   const authorId = await getUserIdForRole(["ADMIN", "SCHRIJVER"]);
   if (!authorId) {
     return NextResponse.json(
-      { error: "You are not authorized on this route" },
+      { error: "U hebt geen toegang tot deze API" },
       { status: 403 }
     );
   }
@@ -30,27 +30,35 @@ export async function PUT(request: Request) {
   const { content, date, isAnnouncement, isPublished, media, slug, title } =
     await request.json();
 
-  const record = await prisma.news.upsert({
-    create: {
-      content,
-      date: new Date(date),
-      isAnnouncement,
-      isPublished,
-      media,
-      slug,
-      title,
-      authorId,
-    },
-    update: {
-      content,
-      date: new Date(date),
-      isAnnouncement,
-      isPublished,
-      media,
-      title,
-      authorId,
-    },
-    where: { slug },
-  });
-  return NextResponse.json(record);
+  try {
+    const record = await prisma.news.upsert({
+      create: {
+        content,
+        date: new Date(date),
+        isAnnouncement,
+        isPublished,
+        media,
+        slug,
+        title,
+        authorId,
+      },
+      update: {
+        content,
+        date: new Date(date),
+        isAnnouncement,
+        isPublished,
+        media,
+        title,
+        authorId,
+      },
+      where: { slug },
+    });
+    return NextResponse.json(record);
+  } catch (error) {
+    console.error("Error in PUT request:", error);
+    return NextResponse.json(
+      { error: "Nieuws bewaren gefaald" },
+      { status: 500 }
+    );
+  }
 }

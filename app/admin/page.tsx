@@ -1,5 +1,4 @@
 import { LinkButton } from "@/components/buttons";
-import Link from "next/link";
 import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 
 const Admin: React.FC = () => {

@@ -142,7 +142,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
         <header>
           <h1>Nieuwsbericht toevoegen/bewerken</h1>
           <p>
-            Voeg een nieuwsbericht toe aan de website of maak aanpassignen aan
+            Voeg een nieuwsbericht toe aan de website of maak aanpassingen aan
             een bestaand artikel.
           </p>
         </header>
@@ -194,12 +194,13 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                   show: mediaHasError,
                 })}
               >
-                Adres van beeld wordt niet herkend.
+                Laad een beeld op.
               </small>
               <fieldset className="grid">
                 <input
                   aria-invalid={mediaHasError}
                   autoComplete="off"
+                  disabled
                   value={media}
                   onChange={(e) => (
                     setMedia(e.target.value),
@@ -231,28 +232,6 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                 />
               </fieldset>
               <progress value={progress} max="100" />
-            </label>
-            <label>
-              Datum
-              <small
-                className={classNames("error", "float-right", {
-                  show: dateHasError,
-                })}
-              >
-                Vul een gelidge datum in.
-              </small>
-              <input
-                aria-invalid={dateHasError}
-                autoComplete="off"
-                value={date}
-                onChange={(e) => (
-                  setDate(e.target.value),
-                  setDateHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                name="date"
-                type="date"
-              />
             </label>
             <label>
               Tekst
@@ -301,7 +280,9 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                 />
                 Aankondiging
               </label>
-              <small>Een aankondiging verdwijnt na datum.</small>
+              <small>
+                Een aankondiging verdwijnt de dag na de datum die je invult.
+              </small>
             </fieldset>
             <fieldset>
               <label>
@@ -313,7 +294,32 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                 />
                 Publiek zichtbaar maken
               </label>
+              <small>
+                Laat die uit om voorlopig op te slaan zonder al te publiceren.
+              </small>
             </fieldset>
+            <label>
+              Datum
+              <small
+                className={classNames("error", "float-right", {
+                  show: dateHasError,
+                })}
+              >
+                Vul een gelidge datum in.
+              </small>
+              <input
+                aria-invalid={dateHasError}
+                autoComplete="off"
+                value={date}
+                onChange={(e) => (
+                  setDate(e.target.value),
+                  setDateHasError(undefined),
+                  setIsWaiting(false)
+                )}
+                name="date"
+                type="date"
+              />
+            </label>
           </div>
         </form>
         <footer className="grid">

@@ -9,7 +9,10 @@ export async function POST(request: Request) {
 
   const isAuthenticated = await getUserIdForRole(["ADMIN"]);
   if (!isAuthenticated) {
-    return NextResponse.json({ error: "User not logged in" }, { status: 403 });
+    return NextResponse.json(
+      { error: "U hebt geen toegang tot deze API" },
+      { status: 403 }
+    );
   }
 
   if (isAuthenticated) {
@@ -21,7 +24,9 @@ export async function POST(request: Request) {
             role,
           },
         });
-        return NextResponse.json({ message: "User updated" });
+        return NextResponse.json({
+          message: `Rol gewijzigd naar ${role}`,
+        });
       } catch (error) {
         return NextResponse.json({ error }, { status: 500 });
       }
