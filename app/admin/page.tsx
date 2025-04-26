@@ -23,7 +23,7 @@ const Admin: React.FC = () => {
                 <LinkButton href="/admin/gebruikers" label="Gebruikers" full />
               </li>
               <li>
-                <LinkButton href="/admin/nieuws" label="Nieuus" full />
+                <LinkButton href="/admin/nieuws" label="Nieuws" full />
               </li>
             </ul>
           </nav>

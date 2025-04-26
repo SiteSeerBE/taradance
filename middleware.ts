@@ -2,14 +2,17 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getLogtoId } from "./lib/auth";
 
-const protectedRoutes = ["/dashboard", "/test", "/admin"];
+const protectedRoutes = ["/admin", "/dashboard", "/afmelden"];
 
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
   const isAuthenticated = await getLogtoId();
 
-  if (protectedRoutes.includes(pathname) && !isAuthenticated) {
+  if (
+    protectedRoutes.some((route) => pathname.startsWith(route)) &&
+    !isAuthenticated
+  ) {
     return NextResponse.redirect(new URL("/aanmelden", req.url));
   }
 
@@ -21,5 +24,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard", "/test", "/aanmelden", "/afmelden"],
+  matcher: ["/admin/:path*", "/dashboard", "/aanmelden", "/afmelden"],
 };
