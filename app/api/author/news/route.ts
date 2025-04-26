@@ -1,14 +1,10 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getUserIdInRole, userHasRole } from "@/lib/helpers";
-import { getLogtoContext } from "@logto/next/server-actions";
-import { logtoConfig } from "@/lib/logto";
-import { RoleType } from "@prisma/client";
+import { getUserIdForRole } from "@/lib/auth";
 
 export async function DELETE(request: Request) {
-  const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
-  const logtoId = claims?.sub;
-  if (!isAuthenticated || !logtoId || !userHasRole(logtoId, ["ADMIN"])) {
+  const userId = await getUserIdForRole(["ADMIN"]);
+  if (!userId) {
     return NextResponse.json(
       { error: "You are not authorized on this route" },
       { status: 403 }
@@ -23,8 +19,7 @@ export async function DELETE(request: Request) {
 }
 
 export async function PUT(request: Request) {
-  const userRole = "ADMIN" as RoleType;
-  const authorId = await getUserIdInRole(userRole);
+  const authorId = await getUserIdForRole(["ADMIN", "SCHRIJVER"]);
   if (!authorId) {
     return NextResponse.json(
       { error: "You are not authorized on this route" },

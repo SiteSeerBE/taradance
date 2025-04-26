@@ -1,16 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { logtoConfig } from "@/lib/logto";
-import { getLogtoContext } from "@logto/next/server-actions";
-import { userHasRole } from "@/lib/helpers";
+import { getUserIdForRole } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const orderBy = searchParams.get("orderBy") || "role";
   const direction = searchParams.get("direction") || "desc";
 
-  const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
-  if (isAuthenticated && claims && (await userHasRole(claims.sub, ["ADMIN"]))) {
+  const isAuthenticated = await getUserIdForRole(["ADMIN"]);
+  if (!isAuthenticated) {
+    return NextResponse.json(
+      { error: "You are not authorized on this route" },
+      { status: 403 }
+    );
+  }
+
+  try {
     const records = await prisma.user.findMany({
       select: {
         id: true,
@@ -27,7 +32,7 @@ export async function GET(request: NextRequest) {
       },
     });
     return NextResponse.json(records);
-  } else {
-    return NextResponse.json({ error: "User not authorized" }, { status: 403 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

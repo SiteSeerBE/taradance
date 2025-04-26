@@ -1,18 +1,18 @@
-import { logtoConfig } from "@/lib/logto";
 import { prisma } from "@/lib/prisma";
-import { getLogtoContext } from "@logto/next/server-actions";
 import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
-import { userHasRole } from "@/lib/helpers";
+import { getUserIdForRole } from "@/lib/auth";
 
 export async function POST(request: Request) {
   const postData: User = await request.json();
   const { id, role } = postData;
 
-  const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
-  const logtoId = claims?.sub;
+  const isAuthenticated = await getUserIdForRole(["ADMIN"]);
+  if (!isAuthenticated) {
+    return NextResponse.json({ error: "User not logged in" }, { status: 403 });
+  }
 
-  if (isAuthenticated && logtoId && (await userHasRole(logtoId, ["ADMIN"]))) {
+  if (isAuthenticated) {
     if (role) {
       try {
         await prisma.user.update({

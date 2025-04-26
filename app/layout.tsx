@@ -8,10 +8,9 @@ import OpenDrawer from "@/components/menu/OpenDrawer";
 import ThemeProvider from "./context/theme-provider";
 import type { Metadata } from "next";
 import { DashboardButton, ThemeSwitchButton } from "@/components/buttons";
-import { logtoConfig } from "@/lib/logto";
-import { getLogtoContext } from "@logto/next/server-actions";
 import { Raleway } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import { getLogtoId } from "@/lib/auth";
 
 const raleway = Raleway({ weight: ["400", "500"], subsets: ["latin"] });
 
@@ -25,8 +24,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const theme = "light";
-  const { isAuthenticated } = await getLogtoContext(logtoConfig);
+  const isAuthenticated = await getLogtoId();
   return (
     <ThemeProvider>
       <head>
@@ -46,7 +44,7 @@ export default async function RootLayout({
               <ThemeSwitchButton />
             </span>
             <span className="hidden-xs">
-              <DashboardButton isAuthenticated={isAuthenticated} />
+              <DashboardButton isAuthenticated={!!isAuthenticated} />
             </span>
           </div>
           <div className="hidden-sm last-xs">
@@ -71,7 +69,7 @@ export default async function RootLayout({
             <div className="row end-xs">
               <ThemeSwitchButton />
               &nbsp;
-              <DashboardButton isAuthenticated={isAuthenticated} />
+              <DashboardButton isAuthenticated={!!isAuthenticated} />
               <div className="col-xs-1" />
             </div>
           </nav>

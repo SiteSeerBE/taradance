@@ -1,8 +1,6 @@
 import axios from "axios";
 import { prisma } from "@/lib/prisma";
 import { RoleType } from "@prisma/client";
-import { getLogtoContext } from "@logto/next/server-actions";
-import { logtoConfig } from "./logto";
 
 /**
  * Create slug from a string.
@@ -89,66 +87,6 @@ const dateFormFormat = (date: Date) => {
 };
 
 /**
- * Returns boolean whether user has a specific role.
- * @param {string} logtoId - The logtoId of the user.
- * @param {RoleType[]} role - The role(s) to check.
- *
- *  * @example
- * ```typescript
- * const logtoId = "1234567890";
- * const role = ["ADMIN", "WRITER"];
- * const hasRole = userHasRole(logtoId, role);
- * console.log('User has role', hasRole);
- * ```
- */
-const userHasRole = async (logtoId: string, role: RoleType[]) => {
-  const record = await prisma.user.findUnique({
-    select: {
-      role: true,
-    },
-    where: { logtoId: logtoId },
-  });
-  if (record?.role && role.includes(record.role)) {
-    return true;
-  }
-  return false;
-};
-
-export default userHasRole;
-
-/**
- * Returns id for the logged on user if their role matches.
- * @param {RoleType[]} role - The role(s) to check.
- *
- *  * @example
- * ```typescript
- * const role = ["ADMIN", "WRITER"];
- * const userId = getUserIdInRole(role);
- * console.log('User has access with id', userId);
- * ```
- */
-const getUserIdInRole = async (role: RoleType) => {
-  const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
-  if (!isAuthenticated || !claims) {
-    return null;
-  }
-  const logtoId = claims?.sub;
-  const user = await prisma.user.findUnique({
-    where: {
-      role,
-      logtoId,
-    },
-    select: {
-      id: true,
-    },
-  });
-  if (user) {
-    return user.id;
-  }
-  return null;
-};
-
-/**
  * Returns boolean whether url is an imageKit url.
  * @param {string} url - The value to check.
  *
@@ -164,11 +102,4 @@ const isImageKitUrl = (url: string) => {
   return url.startsWith(ImageKitEndPoinht);
 };
 
-export {
-  checkIsValidEmail,
-  dateFormFormat,
-  getSlug,
-  getUserIdInRole,
-  userHasRole,
-  isImageKitUrl,
-};
+export { checkIsValidEmail, dateFormFormat, getSlug, isImageKitUrl };
