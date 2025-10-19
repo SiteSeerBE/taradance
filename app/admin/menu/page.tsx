@@ -2,10 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
+import MenuOrderSelect from "@/components/admin/MenuOrderSelect";
 
 const Menu: React.FC = async () => {
   const menu = await prisma.menu.findMany({
-    orderBy: { orderId: "asc" },
+    orderBy: [{ orderId: "asc" }, { id: "asc" }],
     select: {
       id: true,
       title: true,
@@ -50,12 +51,8 @@ const Menu: React.FC = async () => {
                     </td>
                     <td>{parent.description}</td>
                     <td>Hoofdmenu</td>
-                    <td>{parent.orderId}</td>
-                    <td style={{ minWidth: "60px" }}>
-                      <Link href={`/admin/nieuws/${parent.id}`}>
-                        <img src="/icons/edit.svg" alt="Bewerken" />
-                      </Link>
-                    </td>
+                    <td>&nbsp;</td>
+                    <td style={{ minWidth: "60px" }}>&nbsp;</td>
                     <td style={{ minWidth: "65px" }}>&nbsp;</td>
                   </tr>
                   {menu
@@ -66,13 +63,10 @@ const Menu: React.FC = async () => {
                         <td>{child.description}</td>
                         <td>Submenu</td>
                         <td>
-                          <select defaultValue={child.orderId}>
-                            {[...Array(10)].map((_, i) => (
-                              <option key={i + 1} value={i + 1}>
-                                {i + 1}
-                              </option>
-                            ))}
-                          </select>
+                          <MenuOrderSelect
+                            id={child.id}
+                            initial={child.orderId}
+                          />
                         </td>
                         <td style={{ minWidth: "60px" }}>
                           <Link href={`/admin/nieuws/${child.id}`}>

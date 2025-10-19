@@ -35,13 +35,11 @@ export async function POST(request: Request) {
         title,
         description,
         orderId,
-        page: pageId || null,
       },
       update: {
         title,
         description,
         orderId,
-        page: pageId || null,
       },
       where: { id: id || 0 }, // Use a non-existing id for creation
     });
