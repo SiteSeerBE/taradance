@@ -58,10 +58,10 @@ model Home {
 
 model Menu {
   id          Int      @id @default(autoincrement())
+  contentPath String?
   createdAt   DateTime @default(now())
   description String?
   orderId     Int      @default(0)
-  page        Page?
   parentId    Int?
   title       String
   updatedAt   DateTime @updatedAt
@@ -88,8 +88,6 @@ model Page {
   authorId  String?
   parts     Part[]
   createdAt DateTime @default(now())
-  menu      Menu?    @relation(fields: [menuId], references: [id], onDelete: SetNull)
-  menuId    Int?     @unique
   slug      String   @unique
   title     String
   updatedAt DateTime @updatedAt
