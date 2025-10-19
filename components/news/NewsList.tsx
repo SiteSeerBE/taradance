@@ -17,7 +17,6 @@ const NewsElement: React.FC<Props> = async (props) => {
       slug: true,
       title: true,
     },
-    take: props.count || 5,
     where: {
       date: { gt: new Date() },
       isAnnouncement: true,
