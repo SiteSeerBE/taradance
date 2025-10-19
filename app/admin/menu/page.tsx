@@ -3,6 +3,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 import MenuOrderSelect from "@/components/admin/MenuOrderSelect";
+import { LinkButton } from "@/components/buttons";
 
 const Menu: React.FC = async () => {
   const menu = await prisma.menu.findMany({
@@ -27,6 +28,7 @@ const Menu: React.FC = async () => {
             <Breadcrumb>Menu</Breadcrumb>
           </Breadcrumbs>
         </hgroup>
+        <LinkButton label="Menu item toevoegen" href="/admin/menu/0" />
       </header>
       <div className="overflow-auto">
         <table className="striped">
@@ -69,7 +71,7 @@ const Menu: React.FC = async () => {
                           />
                         </td>
                         <td style={{ minWidth: "60px" }}>
-                          <Link href={`/admin/nieuws/${child.id}`}>
+                          <Link href={`/admin/menu/${child.id}`}>
                             <img src="/icons/edit.svg" alt="Bewerken" />
                           </Link>
                         </td>

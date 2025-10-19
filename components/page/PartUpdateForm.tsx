@@ -131,7 +131,7 @@ const PartUpdateForm: React.FC<Props> = ({
             type="radio"
             id={`part-${orderId}-position-center`}
             name={`part-${orderId}-position`}
-            value="1"
+            value="0"
             checked={mediaLocation === 0}
             onChange={() =>
               setParts((prevParts) =>
@@ -148,7 +148,7 @@ const PartUpdateForm: React.FC<Props> = ({
             type="radio"
             id={`part-${orderId}-position-left`}
             name={`part-${orderId}-position`}
-            value="0"
+            value="1"
             checked={mediaLocation === 1}
             onChange={() =>
               setParts((prevParts) =>
