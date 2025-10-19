@@ -267,16 +267,18 @@ nav[aria-label="breadcrumb"] li {
 .overlay {
   background-color: rgba(0, 0, 0, 0);
   height: 100%;
-
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-
   transition: $background-color 450ms ease 50ms;
   width: 100%;
   z-index: -1;
+
+  @media screen and (min-width: 48em) {
+    display: none !important;
+  }
 }
 
 .textColor {
@@ -344,6 +346,9 @@ input.error {
 }
 .mt1 {
   margin-top: 1em;
+}
+.mb1 {
+  margin-bottom: 1em;
 }
 .mt7 {
   margin-top: 7em;

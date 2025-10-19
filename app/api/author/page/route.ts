@@ -12,7 +12,7 @@ export async function DELETE(request: Request) {
   }
 
   const { id } = await request.json();
-  const record = await prisma.news.delete({
+  const record = await prisma.page.delete({
     where: { id },
   });
   return NextResponse.json(record);
@@ -27,37 +27,50 @@ export async function PUT(request: Request) {
     );
   }
 
-  const { content, date, isAnnouncement, isPublished, media, slug, title } =
-    await request.json();
+  const { id, title, slug, parts } = await request.json();
 
   try {
-    const record = await prisma.news.upsert({
+    // Upsert the page
+    const record = await prisma.page.upsert({
       create: {
-        content,
-        date: new Date(date),
-        isAnnouncement,
-        isPublished,
-        media,
         slug,
         title,
         authorId,
       },
       update: {
-        content,
-        date: new Date(date),
-        isAnnouncement,
-        isPublished,
-        media,
         title,
         authorId,
       },
       where: { slug },
     });
-    return NextResponse.json(record);
+
+    // Upsert parts if provided
+    if (Array.isArray(parts)) {
+      // Remove existing parts for this page (optional: for full replace)
+      await prisma.part.deleteMany({ where: { pageId: record.id } });
+      // Add new parts
+      await prisma.part.createMany({
+        data: parts.map((part) => ({
+          content: part.content || "",
+          mediaLocation: part.mediaLocation ?? 1,
+          mediaPath: part.mediaPath ?? null,
+          orderId: part.orderId ?? 0,
+          pageId: record.id,
+          authorId,
+        })),
+      });
+    }
+
+    // Return the updated page with its parts
+    const updatedPage = await prisma.page.findUnique({
+      where: { id: record.id },
+      include: { parts: true },
+    });
+    return NextResponse.json(updatedPage);
   } catch (error) {
     console.error("Error in PUT request:", error);
     return NextResponse.json(
-      { error: "Nieuws bewaren gefaald" },
+      { error: "Pagina bewaren gefaald" },
       { status: 500 }
     );
   }

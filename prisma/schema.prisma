@@ -4,6 +4,7 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// database
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,6 +14,7 @@ datasource db {
   url      = env("POSTGRES_PRISMA_URL")
 }
 
+// users
 model User {
   id        String    @id @default(cuid())
   firstName String?
@@ -23,6 +25,14 @@ model User {
   pages     Page[]
   groups    Group[]
   news      News[]
+  parts     Part[]
+}
+
+model Group {
+  id    Int    @id @default(autoincrement())
+  name  String
+  shoes String
+  users User[]
 }
 
 //content
@@ -32,13 +42,6 @@ model Button {
   label  String
   homeId Int
   home   Home   @relation(fields: [homeId], references: [id], onDelete: Cascade)
-}
-
-model Group {
-  id    Int    @id @default(autoincrement())
-  name  String
-  shoes String
-  users User[]
 }
 
 model Home {
@@ -51,6 +54,17 @@ model Home {
   published Boolean  @default(true)
   title     String
   updatedAt DateTime @updatedAt
+}
+
+model Menu {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  description String?
+  orderId     Int      @default(0)
+  page        Page?
+  parentId    Int?
+  title       String
+  updatedAt   DateTime @updatedAt
 }
 
 model News {
@@ -72,11 +86,27 @@ model Page {
   id        Int      @id @default(autoincrement())
   author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
   authorId  String?
-  content   String   @db.Text
+  parts     Part[]
   createdAt DateTime @default(now())
+  menu      Menu?    @relation(fields: [menuId], references: [id], onDelete: SetNull)
+  menuId    Int?     @unique
   slug      String   @unique
   title     String
   updatedAt DateTime @updatedAt
+}
+
+model Part {
+  id            Int      @id @default(autoincrement())
+  author        User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId      String?
+  content       String   @db.Text
+  createdAt     DateTime @default(now())
+  mediaLocation Int      @default(0)
+  mediaPath     String?
+  orderId       Int      @default(100)
+  page          Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  pageId        Int
+  updatedAt     DateTime @updatedAt
 }
 
 //types
@@ -84,18 +114,4 @@ enum RoleType {
   ADMIN
   DANSER
   SCHRIJVER
-}
-
-enum MediaType {
-  IMAGE
-  VIDEO
-  QUOTE
-  LINK
-}
-
-enum Calendar {
-  DAILY
-  WEEKLY
-  MONTHLY
-  YEARLY
 }
