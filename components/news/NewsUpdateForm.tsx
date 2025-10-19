@@ -181,10 +181,10 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                 type="text"
               />
               <small>
-                Een slug is een unieke identificatie voor de pagina waarop dit
-                nieuws verschijnt. De slug wordt automatisch uniek gemaakt door
+                De slug is een deel van de URL van deze pagina. De slug wordt
+                afgeleid van de titel en wordt automatisch uniek gemaakt door
                 een volgnummer toe te voegen. Probeer te vermijden om vaak
-                dezelfde titel te gebruiken.
+                dezelfde titel te gebruiken zodat url's uniek blijven.
               </small>
             </label>
             <label>

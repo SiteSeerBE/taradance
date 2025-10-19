@@ -155,8 +155,9 @@ const PageUpdateForm: React.FC<Props> = ({ page }) => {
               />
               <small>
                 De slug is een deel van de URL van deze pagina. De slug wordt
-                automatisch uniek gemaakt door een volgnummer toe te voegen.
-                Probeer te vermijden om vaak dezelfde titel te gebruiken.
+                afgeleid van de titel en wordt automatisch uniek gemaakt door
+                een volgnummer toe te voegen. Probeer te vermijden om vaak
+                dezelfde titel te gebruiken zodat url's uniek blijven.
               </small>
             </label>
           </fieldset>
