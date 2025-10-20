@@ -1,9 +1,9 @@
+import { Menu } from "@prisma/client";
 import ActiveLink from "./ActiveLink";
-import { MenuChildProps } from "@/lib/dataTypes";
 
 type DropdownContentProps = {
-  submenuscontent: Array<MenuChildProps>;
-  onChangePage: (href: string) => void;
+  submenuscontent: Array<Partial<Menu>>;
+  onChangePage: (contentPath: string) => void;
 };
 
 const DropdownContent: React.FC<DropdownContentProps> = ({
@@ -16,12 +16,12 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
         <div className="col-xs-6 col-md-4 col-lg-3 col-xl-2" key={index}>
           <ActiveLink
             activeClassName="active"
-            href={item.href}
-            onClick={() => onChangePage(item.href)}
+            href={item.contentPath!}
+            onClick={() => onChangePage(item.contentPath!)}
           >
-            <b>{item.label}</b>
+            <b>{item.title}</b>
           </ActiveLink>
-          <small>{item.info}</small>
+          <small>{item.description}</small>
         </div>
       ))}
     </div>

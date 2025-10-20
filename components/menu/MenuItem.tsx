@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-
+import type { Menu } from "@prisma/client";
 import ActiveLink from "./ActiveLink";
 import DropdownContent from "./DropdownContent";
-import { MenuItemProps } from "@/lib/dataTypes";
 
-const MenuItem: React.FC<MenuItemProps> = ({ label, href, children }) => {
+const MenuItem: React.FC<
+  Partial<Menu> & { children?: Array<Partial<Menu> | undefined> }
+> = ({ title, contentPath, children }) => {
   const [dropdownFor, setDropdownFor] = useState<string | null>(null);
   const dropdownClasses = `bg dropdown container-fluid ${
-    dropdownFor === label ? "show" : "hide"
+    dropdownFor === title ? "show" : "hide"
   }`;
   const menuItemRef = useRef<HTMLLIElement>(null);
 
@@ -33,22 +34,26 @@ const MenuItem: React.FC<MenuItemProps> = ({ label, href, children }) => {
       <div className="nav-item-content">
         <ActiveLink
           activeClassName="active"
-          className={dropdownFor === label ? "active" : ""}
-          href={href}
+          className={dropdownFor === title ? "active" : ""}
+          href={contentPath!}
           onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setDropdownFor((prev) => (prev === label ? null : label));
+            if (children && children.length > 0) {
+              e.preventDefault();
+              e.stopPropagation();
+              setDropdownFor((prev) => (prev === title! ? null : title!));
+            }
           }}
         >
-          {label}
+          {title}
         </ActiveLink>
       </div>
-      {children && (
+      {children && children.length > 0 && (
         <div className={dropdownClasses}>
           <DropdownContent
-            onChangePage={() => setDropdownFor(null)}
-            submenuscontent={children}
+            onChangePage={(contentPath: string) => setDropdownFor(null)}
+            submenuscontent={children.filter(
+              (c): c is Partial<Menu> => c !== undefined
+            )}
           />
         </div>
       )}

@@ -60,7 +60,7 @@ model Menu {
   id          Int      @id @default(autoincrement())
   children    Menu[]   @relation("MenuToMenu")
   parent      Menu?    @relation("MenuToMenu", fields: [parentId], references: [id])
-  contentPath String?
+  contentPath String
   createdAt   DateTime @default(now())
   description String?
   orderId     Int      @default(0)

@@ -1,42 +1,61 @@
 import React from "react";
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
-import { menuData } from "@/data/menuData";
+const MobileNavigationDrawer = async () => {
+  const menuData = await prisma.menu.findMany({
+    where: { parentId: null },
+    orderBy: [{ orderId: "asc" }, { id: "asc" }],
+    select: {
+      id: true,
+      contentPath: true,
+      title: true,
+      children: {
+        orderBy: [{ orderId: "asc" }, { id: "asc" }],
+        select: {
+          id: true,
+          contentPath: true,
+          description: true,
+          title: true,
+        },
+      },
+    },
+  });
 
-const MobileNavigationDrawer: React.FC = () => {
   return (
     <section className="accordion">
-      {menuData.map(({ label, href, children }, index) => {
+      {menuData.map(({ id, title, contentPath, children }) => {
         return (
-          <React.Fragment key={index}>
-            {children && (
+          <React.Fragment key={id}>
+            {children && children.length > 0 ? (
               <div className="tab">
-                <input type="checkbox" id={`cb-${index}`} />
+                <input type="checkbox" id={`cb-${id}`} />
                 <label
-                  htmlFor={`cb-${index}`}
+                  htmlFor={`cb-${id}`}
                   className="tab__label"
                   style={{ width: "100%" }}
                 >
-                  <a>{label}</a>
+                  <a>{title}</a>
                   <span className="rotatable">&gt;</span>
                 </label>
                 <div className="tab__content">
                   <ul>
-                    {children.map(({ label, href }, index) => {
-                      return (
-                        <li key={index}>
-                          <Link href={href}>{label}</Link>
-                        </li>
-                      );
-                    })}
+                    {children.map(
+                      ({ id: cid, title: ctitle, contentPath: chref }) => {
+                        return (
+                          <li key={cid}>
+                            <Link href={chref ?? "#"}>{ctitle}</Link>
+                          </li>
+                        );
+                      }
+                    )}
                   </ul>
                 </div>
               </div>
-            )}
-            {!children && (
+            ) : (
               <div className="tab">
                 <label className="tab__label">
-                  <Link href={href}>{label}</Link>
+                  <Link href={contentPath ?? "#"}>{title}</Link>
                 </label>
               </div>
             )}
