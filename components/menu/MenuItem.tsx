@@ -40,7 +40,12 @@ const MenuItem: React.FC<
             if (children && children.length > 0) {
               e.preventDefault();
               e.stopPropagation();
-              setDropdownFor((prev) => (prev === title! ? null : title!));
+              // if the link points to the current URL, prevent navigation and do nothing
+              const currentPath =
+                typeof window !== "undefined" ? window.location.pathname : "";
+              if (contentPath && contentPath != currentPath) {
+                setDropdownFor((prev) => (prev === title! ? null : title!));
+              }
             }
           }}
         >
