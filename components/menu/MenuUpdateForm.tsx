@@ -18,6 +18,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({ item }) => {
   const [contentPath, setContentPath] = useState(item?.contentPath || "");
   const [description, setDescription] = useState(item?.description || "");
   const [title, setTitle] = useState(item?.title || "");
+  const [parentId, setParentId] = useState(item?.parentId || 4);
 
   // error handeling
   const [contentHasError, setContentHasError] =
@@ -74,6 +75,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({ item }) => {
             title,
             description,
             contentPath: normalizedPath,
+            parentId,
           })
           .then(() => {
             router.push("/admin/menu");
@@ -98,6 +100,19 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({ item }) => {
           </p>
         </header>
         <form>
+          <fieldset>
+            <label>
+              Hoofdmenu
+              <select
+                value={parentId}
+                onChange={(e) => setParentId(Number(e.target.value))}
+              >
+                <option value="4">Over ons</option>
+                <option value="5">Danslessen</option>
+                <option value="6">Kalender</option>
+              </select>
+            </label>
+          </fieldset>
           <fieldset>
             <label>
               Titel

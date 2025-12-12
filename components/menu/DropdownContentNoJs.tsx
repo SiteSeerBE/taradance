@@ -16,10 +16,10 @@ const DropdownContentNoJs: React.FC<DropdownContentProps> = ({
           <li>
             <div className="nav-item-content">
               <div className="bg dropdown container-fluid show">
-                <div className="row">
+                <div className="row w-full">
                   {submenuscontent.map((item, index) => (
                     <div
-                      className="col-xs-6 col-md-4 col-lg-3 col-xl-2"
+                      className="col-xs-12 col-md-4 col-lg-3 col-xl-2"
                       key={index}
                     >
                       <ActiveLink

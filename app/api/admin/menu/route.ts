@@ -27,7 +27,8 @@ export async function PUT(request: Request) {
     );
   }
 
-  const { id, title, description, contentPath } = await request.json();
+  const { id, title, description, contentPath, parentId } =
+    await request.json();
 
   try {
     const record = await prisma.menu.upsert({
@@ -35,12 +36,13 @@ export async function PUT(request: Request) {
         title,
         description,
         contentPath,
-        parentId: 4,
+        parentId,
       },
       update: {
         title,
         description,
         contentPath,
+        parentId,
       },
       where: { id: id || 0 }, // Use a non-existing id for creation
     });
