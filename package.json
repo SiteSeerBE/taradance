@@ -20,7 +20,7 @@
     "imagekitio-react": "^4.3.0",
     "lodash.debounce": "^4.0.8",
     "marked": "^14.1.2",
-    "next": "^15.2.4",
+    "next": "15.2.8",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.5.2",
