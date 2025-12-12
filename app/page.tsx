@@ -23,7 +23,11 @@ export default function Home() {
       >
         <VideoPlayer />
         <h1>
-          <ImageSet image="/UI/Taradance-wit.png" altText="Taradance logo" />
+          <ImageSet
+            image="/UI/Taradance-wit.png"
+            altText="Taradance logo"
+            maxViewport={1200}
+          />
 
           <div className="p1">
             <Link href={"/login"}>
