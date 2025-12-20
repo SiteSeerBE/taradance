@@ -26,6 +26,7 @@ model User {
   groups    Group[]
   news      News[]
   parts     Part[]
+  events    Event[]
 }
 
 model Group {
@@ -107,6 +108,23 @@ model Part {
   page          Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
   pageId        Int
   updatedAt     DateTime @updatedAt
+}
+
+model Event {
+  id             Int      @id @default(autoincrement())
+  author         User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId       String?
+  content        String   @db.Text
+  createdAt      DateTime @default(now())
+  date           DateTime
+  important      Boolean  @default(false)
+  location       String?
+  membersContent String?  @db.Text
+  membersOnly    Boolean  @default(false)
+  repeatId       String   @default(uuid())
+  updatedAt      DateTime @updatedAt
+  time           String?
+  title          String
 }
 
 //types
