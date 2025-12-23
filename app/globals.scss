@@ -92,7 +92,7 @@ nav[aria-label="breadcrumb"] li {
 
   small {
     // this line creates a deprication warning for scss
-    color: var(--pico-contrast);
+    color: light-dark(#373c44, #c2c7d0);
   }
 
   a:first-child {
