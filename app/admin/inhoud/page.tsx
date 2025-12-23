@@ -13,6 +13,16 @@ const Inhoud: React.FC = async () => {
       author: true,
     },
   });
+  const menu = await prisma.menu.findMany({
+    select: {
+      id: true,
+      contentPath: true,
+    },
+  });
+  const menuSlugs = menu.map((item) => {
+    const parts = item.contentPath.split("/");
+    return parts[parts.length - 1];
+  });
   return (
     <>
       <header className="container-fluid">
@@ -24,7 +34,7 @@ const Inhoud: React.FC = async () => {
             <Breadcrumb href="/admin">Administratie</Breadcrumb>
             <Breadcrumb>Inhoud</Breadcrumb>
           </Breadcrumbs>
-        </hgroup>{" "}
+        </hgroup>
         <LinkButton label="Pagina toevoegen" href="/admin/inhoud/toevoegen" />
       </header>
       <div className="overflow-auto">
@@ -33,6 +43,7 @@ const Inhoud: React.FC = async () => {
             <tr>
               <th>Titel</th>
               <th>Auteur</th>
+              <th>&nbsp;</th>
               <th>&nbsp;</th>
               <th>&nbsp;</th>
             </tr>
@@ -46,8 +57,25 @@ const Inhoud: React.FC = async () => {
                 <td>{page.author?.firstName}</td>
                 <td style={{ minWidth: "60px" }}>
                   <Link href={`/admin/inhoud/${page.slug}`}>
-                    <img src="/icons/edit.svg" alt="Bewerken" />
+                    <img
+                      src="/icons/edit.svg"
+                      alt="Bewerken"
+                      title="Bewerken"
+                    />
                   </Link>
+                </td>
+                <td style={{ minWidth: "60px" }}>
+                  {!menuSlugs.includes(page.slug) && (
+                    <Link
+                      href={`/admin/menu/0?title=${page.title}&slug=${page.slug}`}
+                    >
+                      <img
+                        src="/icons/add.svg"
+                        alt="Toevoegen aan menu"
+                        title="Toevoegen aan menu"
+                      />
+                    </Link>
+                  )}
                 </td>
                 <td style={{ minWidth: "65px" }}>&nbsp;</td>
               </tr>

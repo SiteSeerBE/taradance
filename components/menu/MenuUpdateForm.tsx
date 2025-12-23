@@ -4,21 +4,46 @@ import type { Menu } from "@prisma/client";
 import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { AriaInvalid } from "@/lib/dataTypes";
 
-type MenuUpdateFormProps = { item?: Menu | null };
+type MenuUpdateFormProps = {
+  item?: Menu | null;
+  urlSlug?: string;
+  urlTitle?: string;
+};
 
-const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({ item }) => {
+const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({
+  item,
+  urlSlug,
+  urlTitle,
+}) => {
   const router = useRouter();
 
   //content
-  const [contentPath, setContentPath] = useState(item?.contentPath || "");
+  const [contentPath, setContentPath] = useState(
+    urlSlug || item?.contentPath || ""
+  );
   const [description, setDescription] = useState(item?.description || "");
-  const [title, setTitle] = useState(item?.title || "");
+  const [title, setTitle] = useState(urlTitle || item?.title || "");
   const [parentId, setParentId] = useState(item?.parentId || 4);
+
+  // listen for changes in parentId and change contentPath accordingly
+  useEffect(() => {
+    if (urlSlug !== undefined) {
+      let newPath = contentPath;
+      if (parentId === 4) {
+        newPath = `/over-ons/${urlSlug}`;
+      } else if (parentId === 5) {
+        newPath = `/danslessen/${urlSlug}`;
+      } else if (parentId === 6) {
+        newPath = `/kalender/${urlSlug}`;
+      }
+      setContentPath(newPath);
+    }
+  }, [parentId]);
 
   // error handeling
   const [contentHasError, setContentHasError] =
@@ -90,7 +115,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({ item }) => {
   };
 
   return (
-    <div className="container mt-1">
+    <div className="container mt1">
       <article>
         <header>
           <h1>Menu toevoegen/bewerken</h1>
@@ -147,6 +172,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({ item }) => {
                 Vul een beschrijving in.
               </small>
               <input
+                aria-invalid={descriptionHasError}
                 autoComplete="off"
                 value={description}
                 onChange={(e) => (
@@ -177,6 +203,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({ item }) => {
                 name="contentPath"
                 placeholder="Adres waar deze link heen gaat (bijv. /about)"
                 type="text"
+                disabled={urlSlug !== undefined}
               />
             </label>
           </fieldset>

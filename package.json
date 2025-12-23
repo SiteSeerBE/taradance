@@ -11,7 +11,7 @@
   "dependencies": {
     "@imagekit/next": "^2.0.0",
     "@logto/next": "^4.2.2",
-    "@picocss/pico": "^2.0.6",
+    "@picocss/pico": "^2.1.1",
     "@prisma/client": "^6.17.1",
     "@uiw/react-md-editor": "^4.0.4",
     "@vercel/postgres": "^0.10.0",

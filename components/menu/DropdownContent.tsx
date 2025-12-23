@@ -1,5 +1,6 @@
 import { Menu } from "@prisma/client";
 import ActiveLink from "./ActiveLink";
+import Link from "next/link";
 
 type DropdownContentProps = {
   submenuscontent: Array<Partial<Menu>>;
@@ -21,7 +22,9 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
           >
             <b>{item.title}</b>
           </ActiveLink>
-          <small>{item.description}</small>
+          <Link href={item.contentPath!}>
+            <small>{item.description}</small>
+          </Link>
         </div>
       ))}
     </div>
