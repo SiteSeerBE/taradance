@@ -10,12 +10,12 @@ type props = {
   setShowRegistration: Dispatch<SetStateAction<boolean>>;
 };
 
-const Registration: React.FC<props> = ({ userData, setShowRegistration }) => {
-  const [firstName, setFirstName] = useState(userData?.firstName || "");
+const Registration: React.FC<props> = (props: props) => {
+  const [firstName, setFirstName] = useState(props.userData?.firstName || "");
   const [firstNameError, setFirstNameError] = useState<AriaInvalid>(undefined);
-  const [lastName, setLastName] = useState(userData?.lastName || "");
+  const [lastName, setLastName] = useState(props.userData?.lastName || "");
   const [lastNameError, setLastNameError] = useState<AriaInvalid>(undefined);
-  const [email, setemail] = useState(userData?.email || "");
+  const [email, setemail] = useState(props.userData?.email || "");
   const [emailError, setemailError] = useState<AriaInvalid>(undefined);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -54,7 +54,7 @@ const Registration: React.FC<props> = ({ userData, setShowRegistration }) => {
         })
         .then(() => {
           setIsLoading(false);
-          setShowRegistration(false);
+          props.setShowRegistration(false);
         });
     } else {
       setIsLoading(false);
@@ -84,9 +84,10 @@ const Registration: React.FC<props> = ({ userData, setShowRegistration }) => {
               autoComplete="off"
               disabled={isLoading}
               value={firstName}
-              onChange={(e) => (
-                setFirstName(e.target.value), setFirstNameError(undefined)
-              )}
+              onChange={(e) => {
+                setFirstName(e.target.value);
+                setFirstNameError(undefined);
+              }}
               name="firstName"
               placeholder="Voornaam"
               type="text"
@@ -107,7 +108,8 @@ const Registration: React.FC<props> = ({ userData, setShowRegistration }) => {
               disabled={isLoading}
               name="lastName"
               onChange={(e) => {
-                setLastName(e.target.value), setLastNameError(undefined);
+                setLastName(e.target.value);
+                setLastNameError(undefined);
               }}
               placeholder="Familienaam"
               type="text"
@@ -129,7 +131,8 @@ const Registration: React.FC<props> = ({ userData, setShowRegistration }) => {
               disabled={isLoading}
               name="email"
               onChange={(e) => {
-                setemail(e.target.value), setemailError(undefined);
+                setemail(e.target.value);
+                setemailError(undefined);
               }}
               placeholder="E-mail"
               type="text"

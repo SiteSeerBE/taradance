@@ -5,9 +5,9 @@ type DropdownContentProps = {
   submenuscontent: Array<Partial<Menu>>;
 };
 
-const DropdownContentNoJs: React.FC<DropdownContentProps> = ({
-  submenuscontent,
-}) => {
+const DropdownContentNoJs: React.FC<DropdownContentProps> = (
+  props: DropdownContentProps
+) => {
   return (
     <div className="nav__container menu">
       <nav>
@@ -17,7 +17,7 @@ const DropdownContentNoJs: React.FC<DropdownContentProps> = ({
             <div className="nav-item-content">
               <div className="bg dropdown container-fluid show">
                 <div className="row w-full">
-                  {submenuscontent.map((item, index) => (
+                  {props.submenuscontent.map((item, index) => (
                     <div
                       className="col-xs-12 col-md-4 col-lg-3 col-xl-2"
                       key={index}

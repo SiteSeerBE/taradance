@@ -15,31 +15,28 @@ type MenuUpdateFormProps = {
   urlTitle?: string;
 };
 
-const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({
-  item,
-  urlSlug,
-  urlTitle,
-}) => {
+const MenuUpdateForm: React.FC<MenuUpdateFormProps> = (
+  props: MenuUpdateFormProps
+) => {
   const router = useRouter();
 
   //content
   const [contentPath, setContentPath] = useState(
-    urlSlug || item?.contentPath || ""
+    props.urlSlug || props.item?.contentPath || ""
   );
-  const [description, setDescription] = useState(item?.description || "");
-  const [title, setTitle] = useState(urlTitle || item?.title || "");
-  const [parentId, setParentId] = useState(item?.parentId || 4);
-
+  const [description, setDescription] = useState(props.item?.description || "");
+  const [title, setTitle] = useState(props.urlTitle || props.item?.title || "");
+  const [parentId, setParentId] = useState(props.item?.parentId || 4);
   // listen for changes in parentId and change contentPath accordingly
   useEffect(() => {
-    if (urlSlug !== undefined) {
+    if (props.urlSlug !== undefined) {
       let newPath = contentPath;
       if (parentId === 4) {
-        newPath = `/over-ons/${urlSlug}`;
+        newPath = `/over-ons/${props.urlSlug}`;
       } else if (parentId === 5) {
-        newPath = `/danslessen/${urlSlug}`;
+        newPath = `/danslessen/${props.urlSlug}`;
       } else if (parentId === 6) {
-        newPath = `/kalender/${urlSlug}`;
+        newPath = `/kalender/${props.urlSlug}`;
       }
       setContentPath(newPath);
     }
@@ -93,7 +90,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({
       toast.promise(
         axios
           .put("/api/admin/menu", {
-            id: item?.id,
+            id: props.item?.id,
             title,
             description,
             contentPath: normalizedPath,
@@ -200,7 +197,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({
                 name="contentPath"
                 placeholder="Adres waar deze link heen gaat (bijv. /about)"
                 type="text"
-                disabled={urlSlug !== undefined}
+                disabled={props.urlSlug !== undefined}
               />
             </label>
           </fieldset>
@@ -227,7 +224,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({
           </button>
         </footer>
       </article>
-      {item && (
+      {props.item && (
         <dialog open={requestDelete}>
           <article>
             <header>
@@ -253,7 +250,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({
                   toast.promise(
                     axios
                       .delete("/api/admin/menu", {
-                        data: { id: item.id },
+                        data: { id: props.item?.id },
                       })
                       .then(() => {
                         router.push("/admin/menu");

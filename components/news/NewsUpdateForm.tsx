@@ -15,22 +15,26 @@ import { IKUpload } from "imagekitio-react";
 
 type NewsUpdateFormProps = { news?: News | null };
 
-const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
+const NewsUpdateForm: React.FC<NewsUpdateFormProps> = (
+  props: NewsUpdateFormProps
+) => {
   const router = useRouter();
 
   // content
-  const [content, setContent] = useState(news?.content || "");
+  const [content, setContent] = useState(props.news?.content || "");
   const [date, setDate] = useState(
-    (news?.date && dateFormFormat(news.date)) ||
+    (props.news?.date && dateFormFormat(props.news.date)) ||
       new Date().toISOString().split("T")[0]
   );
-  const [media, setMedia] = useState(news?.media || "");
+  const [media, setMedia] = useState(props.news?.media || "");
   const [isAnnouncement, setAnnouncement] = useState(
-    news?.isAnnouncement || false
+    props.news?.isAnnouncement || false
   );
-  const [isPublished, setIsPublished] = useState(news?.isPublished || false);
-  const [slug, setSlug] = useState(news?.slug || "");
-  const [title, setTitle] = useState(news?.title || "");
+  const [isPublished, setIsPublished] = useState(
+    props.news?.isPublished || false
+  );
+  const [slug, setSlug] = useState(props.news?.slug || "");
+  const [title, setTitle] = useState(props.news?.title || "");
 
   // error handling
   const [contentHasError, setContentHasError] =
@@ -75,7 +79,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
   const slugUpdate = useCallback(
     debounce(async (slugValue: string) => {
       setIsWaiting(true);
-      if (slugValue && !news) {
+      if (slugValue && !props.news) {
         const newSlug = await getSlug("news", slugValue);
         setSlug(newSlug);
         setIsWaiting(false);
@@ -114,7 +118,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
           .put("/api/author/news", {
             content,
             date,
-            id: news?.id,
+            id: props.news?.id,
             isAnnouncement,
             isPublished,
             media,
@@ -123,9 +127,11 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
           })
           .then(() => {
             setIsWaiting(false);
-            isPublished
-              ? router.push(`/nieuws/${slug}`)
-              : router.push("/admin/nieuws");
+            if (isPublished) {
+              router.push(`/nieuws/${slug}`);
+            } else {
+              router.push("/admin/nieuws");
+            }
           }),
         {
           loading: "Opslaan...",
@@ -162,7 +168,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                 autoComplete="off"
                 value={title}
                 onChange={(e) => (
-                  setTitle(e.target.value),
+                  setTitle(e.target.value.trim()),
                   setTitleHasError(undefined),
                   setIsWaiting(false)
                 )}
@@ -184,7 +190,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                 De slug is een deel van de URL van deze pagina. De slug wordt
                 afgeleid van de titel en wordt automatisch uniek gemaakt door
                 een volgnummer toe te voegen. Probeer te vermijden om vaak
-                dezelfde titel te gebruiken zodat url's uniek blijven.
+                dezelfde titel te gebruiken zodat url&apos;s uniek blijven.
               </small>
             </label>
             <label>
@@ -344,7 +350,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
           </button>
         </footer>
       </article>
-      {news && (
+      {props.news && (
         <dialog open={requestDelete}>
           <article>
             <header>
@@ -369,7 +375,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = ({ news }) => {
                   toast.promise(
                     axios
                       .delete("/api/author/news", {
-                        data: { id: news.id },
+                        data: { id: props.news?.id },
                       })
                       .then(() => {
                         router.push("/admin/nieuws");

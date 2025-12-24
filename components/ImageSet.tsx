@@ -1,34 +1,30 @@
-interface ImageSetProps {
+type ImageSetProps = {
   altText: string;
   grid?: number;
   image: string;
   maxViewport?: number;
-}
+};
 
 interface imageSize {
   viewport: number;
   width: number;
 }
 
-const ImageSet: React.FC<ImageSetProps> = ({
-  altText,
-  image,
-  grid = 1,
-  maxViewport,
-}) => {
+const ImageSet: React.FC<ImageSetProps> = (props: ImageSetProps) => {
   const ImageKitEndPoinht = "https://ik.imagekit.io/taradance/";
   const imageUrl = "https://ik.imagekit.io/taradance/";
-  const imagePath = image.replace(ImageKitEndPoinht, "");
+  const imagePath = props.image.replace(ImageKitEndPoinht, "");
   const baseImageSizeConfig: imageSize[] = [
-    { viewport: 2000, width: Math.round(900 / grid) },
-    { viewport: 1600, width: Math.round(800 / grid) },
-    { viewport: 1200, width: Math.round(600 / grid) },
-    { viewport: 800, width: Math.round(400 / grid) },
-    { viewport: 0, width: Math.round(300 / grid) },
+    { viewport: 2000, width: Math.round(900 / (props.grid || 1)) },
+    { viewport: 1600, width: Math.round(800 / (props.grid || 1)) },
+    { viewport: 1200, width: Math.round(600 / (props.grid || 1)) },
+    { viewport: 800, width: Math.round(400 / (props.grid || 1)) },
+    { viewport: 0, width: Math.round(300 / (props.grid || 1)) },
   ];
 
   let imageSizeConfig: imageSize[] = baseImageSizeConfig;
-  if (typeof maxViewport === "number") {
+  if (typeof props.maxViewport === "number") {
+    const maxViewport = props.maxViewport;
     const filtered = baseImageSizeConfig.filter(
       (cfg) => cfg.viewport <= maxViewport
     );
@@ -45,7 +41,7 @@ const ImageSet: React.FC<ImageSetProps> = ({
 
   return (
     <img
-      alt={altText}
+      alt={props.altText}
       sizes={sizes.join(", ")}
       src={srcSet.at(-1)}
       srcSet={srcSet.join(", ")}

@@ -35,8 +35,8 @@ const handleRoleChange = async (id: string, role: RoleType) => {
     });
 };
 
-const ChangeRole: React.FC<ChangeRoleProps> = (props) => {
-  const [role, setRole] = useState<String | undefined>(props.currentRole);
+const ChangeRole: React.FC<ChangeRoleProps> = (props: ChangeRoleProps) => {
+  const [role, setRole] = useState<string | undefined>(props.currentRole);
 
   return (
     <>
@@ -46,7 +46,7 @@ const ChangeRole: React.FC<ChangeRoleProps> = (props) => {
           {Object.values(RoleType).map((RoleTypeElement) => (
             <li key={RoleTypeElement}>
               <a
-                onClick={(e) => {
+                onClick={() => {
                   handleRoleChange(props.id, RoleTypeElement);
                   setRole(RoleTypeElement);
                 }}

@@ -1,6 +1,4 @@
 import axios from "axios";
-import { prisma } from "@/lib/prisma";
-import { RoleType } from "@prisma/client";
 
 /**
  * Create slug from a string.
@@ -16,6 +14,7 @@ import { RoleType } from "@prisma/client";
  */
 const getSlug = async (table: string, title: string) => {
   const slug = title
+    .trim()
     .toLowerCase()
     .replace(/ /g, "-")
     .replace(/[^a-zA-Z0-9-]/g, "");
@@ -42,14 +41,14 @@ const getSlug = async (table: string, title: string) => {
  */
 const isExistingSlug = async (table: string, slug: string) => {
   try {
-    const response = await axios.get("/api/author/slug", {
+    await axios.get("/api/author/slug", {
       params: {
         table,
         slug,
       },
     });
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

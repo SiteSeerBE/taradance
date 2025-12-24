@@ -5,7 +5,7 @@ interface Props {
   count?: number;
 }
 
-const NewsElement: React.FC<Props> = async (props) => {
+const NewsElement: React.FC<Props> = async (props: Props) => {
   const announcement = await prisma.news.findFirst({
     orderBy: { date: "asc" },
     select: {

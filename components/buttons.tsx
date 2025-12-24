@@ -5,16 +5,20 @@ import Link from "next/link";
 import { LinkButtonProps } from "@/lib/dataTypes";
 import { useTheme } from "@/app/context/use-theme";
 
-const LinkButton: React.FC<LinkButtonProps> = ({ label, href, full }) => {
+const LinkButton: React.FC<LinkButtonProps> = (props: LinkButtonProps) => {
   return (
-    <Link href={href} className="block">
-      <button className={classNames({ "w-full": full })}>{label}</button>
+    <Link href={props.href} className="block">
+      <button className={classNames({ "w-full": props.full })}>
+        {props.label}
+      </button>
     </Link>
   );
 };
 
 const DashboardButton: React.FC<{ isAuthenticated: boolean }> = ({
   isAuthenticated,
+}: {
+  isAuthenticated: boolean;
 }) => {
   return (
     <Link href={`/dashboard`}>

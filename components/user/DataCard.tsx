@@ -7,7 +7,10 @@ type Props = {
   setShowRegistration: Dispatch<SetStateAction<boolean>>;
 };
 
-const DataCard: React.FC<Props> = ({ userData, setShowRegistration }) => {
+const DataCard: React.FC<Props> = ({
+  userData,
+  setShowRegistration,
+}: Props) => {
   return (
     <div className="container mt1">
       <article className=" mt1">

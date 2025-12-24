@@ -47,7 +47,7 @@ export async function PUT(request: Request) {
       where: { id: id || 0 }, // Use a non-existing id for creation
     });
     return NextResponse.json(record);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Failed to update menu item" },
       { status: 500 }

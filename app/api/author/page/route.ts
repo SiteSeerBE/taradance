@@ -27,7 +27,7 @@ export async function PUT(request: Request) {
     );
   }
 
-  const { id, title, slug, parts } = await request.json();
+  const { title, slug, parts } = await request.json();
 
   try {
     // Upsert the page

@@ -21,7 +21,7 @@ type Props = {
   page?: ExtendedPage | null;
 };
 
-const PageUpdateForm: React.FC<Props> = ({ page }) => {
+const PageUpdateForm: React.FC<Props> = ({ page }: Props) => {
   const router = useRouter();
 
   // error handling
@@ -163,7 +163,6 @@ const PageUpdateForm: React.FC<Props> = ({ page }) => {
           {parts.map((part) => (
             <PartUpdateForm
               key={part.orderId}
-              id={part.id}
               orderId={part.orderId || 0}
               content={part.content || ""}
               mediaLocation={part.mediaLocation || 0}

@@ -1,7 +1,6 @@
 import NewsList from "@/components/news/NewsList";
 import styles from "./page.module.scss";
 import classNames from "classnames";
-import Link from "next/link";
 import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 
 // export async function generateMetadata({ params }: Props): Promise<Metadata> {

@@ -4,7 +4,6 @@ import ImageSet from "@/components/ImageSet";
 import { prisma } from "@/lib/prisma";
 import classNames from "classnames";
 import { marked } from "marked";
-import Link from "next/link";
 
 type Params = Promise<{ slug: string }>;
 

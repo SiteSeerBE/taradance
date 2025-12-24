@@ -21,7 +21,7 @@ export async function PUT(request: Request) {
     );
   }
 
-  let assertedButtons: assertedButtons[] = [];
+  const assertedButtons: assertedButtons[] = [];
   buttons.forEach((button) => {
     if (button.label && button.href) {
       assertedButtons.push({ label: button.label, href: button.href });
