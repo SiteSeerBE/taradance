@@ -46,8 +46,6 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({
   }, [parentId]);
 
   // error handeling
-  const [contentHasError, setContentHasError] =
-    useState<AriaInvalid>(undefined);
   const [contentPathHasError, setContentPathHasError] =
     useState<AriaInvalid>(undefined);
   const [descriptionHasError, setDescriptionHasError] =
@@ -60,7 +58,6 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({
 
   const handleSubmit = async () => {
     setIsWaiting(true);
-    setContentHasError(false);
     setDescriptionHasError(false);
     setTitleHasError(false);
     let isValid = true;
@@ -238,7 +235,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = ({
             </header>
             <p>
               Ben je zeker dat je het menu item <strong>{title}</strong> wilt
-              verwijderen? Eventuele onderliggende pagina's worden niet
+              verwijderen? Eventuele onderliggende pagina&apos;s worden niet
               verwijderd.
             </p>
             <footer className="grid">

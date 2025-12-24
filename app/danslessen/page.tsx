@@ -1,6 +1,5 @@
 import DropdownContentNoJs from "@/components/menu/DropdownContentNoJs";
 import { prisma } from "@/lib/prisma";
-import type { Menu } from "@prisma/client";
 
 const MENU_PARENT_ID = 5;
 

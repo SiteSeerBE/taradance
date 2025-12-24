@@ -9,5 +9,14 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
-  "plugin:react/jsx-runtime", // Add this line to extend the rule
+  {
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+    rules: {
+      "react/react-in-jsx-scope": "off", // Not needed with new JSX transform
+    },
+  },
 ];

@@ -5,13 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import classNames from "classnames";
 import debounce from "lodash.debounce";
-import MDEditor, { commands } from "@uiw/react-md-editor";
 import { AriaInvalid } from "@/lib/dataTypes";
-import { dateFormFormat, getSlug, isImageKitUrl } from "@/lib/helpers";
+import { getSlug } from "@/lib/helpers";
 import axios from "axios";
 import type { Page, Part } from "@prisma/client";
 import toast from "react-hot-toast";
-import { IKUpload } from "imagekitio-react";
 import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 import PartUpdateForm from "@/components/page/PartUpdateForm";
 
@@ -107,9 +105,10 @@ const PageUpdateForm: React.FC<Props> = ({ page }) => {
         <header>
           <h1>Pagina toevoegen/bewerken</h1>
           <p>
-            Maak nieuwe pagina's of pas bestaande pagina's aan voor de website.
-            Voor elke paragraaf kan je kiezen of je een beeld wilt toevoegen.
-            Wanneer je klaar bent, kan je de pagina toevoegen aan het menu.
+            Maak nieuwe pagina&apos;s of pas bestaande pagina&apos;s aan voor de
+            website. Voor elke paragraaf kan je kiezen of je een beeld wilt
+            toevoegen. Wanneer je klaar bent, kan je de pagina toevoegen aan het
+            menu.
           </p>
           <Breadcrumbs>
             <Breadcrumb href="/">Taradance</Breadcrumb>
@@ -157,7 +156,7 @@ const PageUpdateForm: React.FC<Props> = ({ page }) => {
                 De slug is een deel van de URL van deze pagina. De slug wordt
                 afgeleid van de titel en wordt automatisch uniek gemaakt door
                 een volgnummer toe te voegen. Probeer te vermijden om vaak
-                dezelfde titel te gebruiken zodat url's uniek blijven.
+                dezelfde titel te gebruiken zodat url&apos;s uniek blijven.
               </small>
             </label>
           </fieldset>

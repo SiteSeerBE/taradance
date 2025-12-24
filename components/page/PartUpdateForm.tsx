@@ -4,11 +4,9 @@ import { useState } from "react";
 import { Part } from "@prisma/client";
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import { IKUpload } from "imagekitio-react";
-import classNames from "classnames";
 
 // Props for a single paragraph editor
-interface Props {
-  id?: number;
+type Props = {
   orderId: number;
   content?: string;
   mediaLocation?: number;
@@ -16,10 +14,9 @@ interface Props {
   setParts: React.Dispatch<React.SetStateAction<Partial<Part>[]>>;
   setIsWaiting: React.Dispatch<React.SetStateAction<boolean>>;
   onRemove?: (orderId: number) => void;
-}
+};
 
-const PartUpdateForm: React.FC<Props> = ({
-  id,
+function PartUpdateForm({
   orderId,
   content,
   mediaLocation = 1,
@@ -27,7 +24,7 @@ const PartUpdateForm: React.FC<Props> = ({
   setParts,
   setIsWaiting,
   onRemove,
-}) => {
+}: Props) {
   // ImageKit upload
   const [progress, setProgress] = useState(0);
   const authenticator = async () => {
@@ -46,11 +43,6 @@ const PartUpdateForm: React.FC<Props> = ({
       console.error("Authentication error:", error);
       throw new Error("Authentication request failed");
     }
-  };
-
-  // Remove this paragraph
-  const handleRemove = () => {
-    setParts((prevParts) => prevParts.filter((part) => part.id !== id));
   };
 
   return (
@@ -75,7 +67,7 @@ const PartUpdateForm: React.FC<Props> = ({
         onChange={(val) => {
           setParts((prevParts) =>
             prevParts.map((part) =>
-              part.id === id ? { ...part, content: val || "" } : part
+              part.orderId === orderId ? { ...part, content: val || "" } : part
             )
           );
         }}
@@ -126,39 +118,44 @@ const PartUpdateForm: React.FC<Props> = ({
         <legend>
           <strong>Plaatsing paragraaf {orderId}</strong>
         </legend>
-        <div>
-          <input
-            type="radio"
-            id={`part-${orderId}-position-center`}
-            name={`part-${orderId}-position`}
-            value="0"
-            checked={mediaLocation === 0}
-            onChange={() =>
-              setParts((prevParts) =>
-                prevParts.map((part) =>
-                  part.id === id ? { ...part, mediaLocation: 0 } : part
-                )
-              )
-            }
-          />
-          <label htmlFor={`part-${orderId}-position-center`}>Gecentreerd</label>
-        </div>
+
         <div>
           <input
             type="radio"
             id={`part-${orderId}-position-left`}
             name={`part-${orderId}-position`}
             value="1"
-            checked={mediaLocation === 1}
+            checked={mediaLocation === 0}
             onChange={() =>
               setParts((prevParts) =>
                 prevParts.map((part) =>
-                  part.id === id ? { ...part, mediaLocation: 1 } : part
+                  part.orderId === orderId
+                    ? { ...part, mediaLocation: 0 }
+                    : part
                 )
               )
             }
           />
           <label htmlFor={`part-${orderId}-position-left`}>Links</label>
+        </div>
+        <div>
+          <input
+            type="radio"
+            id={`part-${orderId}-position-center`}
+            name={`part-${orderId}-position`}
+            value="0"
+            checked={mediaLocation === 1}
+            onChange={() =>
+              setParts((prevParts) =>
+                prevParts.map((part) =>
+                  part.orderId === orderId
+                    ? { ...part, mediaLocation: 1 }
+                    : part
+                )
+              )
+            }
+          />
+          <label htmlFor={`part-${orderId}-position-center`}>Gecentreerd</label>
         </div>
         <div>
           <input
@@ -170,7 +167,9 @@ const PartUpdateForm: React.FC<Props> = ({
             onChange={() =>
               setParts((prevParts) =>
                 prevParts.map((part) =>
-                  part.id === id ? { ...part, mediaLocation: 2 } : part
+                  part.orderId === orderId
+                    ? { ...part, mediaLocation: 2 }
+                    : part
                 )
               )
             }
@@ -188,6 +187,6 @@ const PartUpdateForm: React.FC<Props> = ({
       <hr />
     </div>
   );
-};
+}
 
 export default PartUpdateForm;
