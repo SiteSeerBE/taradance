@@ -30,8 +30,16 @@ export default async function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width" />
       </head>
-
       <body className={raleway.className}>
+        <div className="col-lg-8 col-lg-offset-2">
+          <a
+            rel="noreferrer"
+            target="_blank"
+            href="https://www.trooper.be/nl/trooperverenigingen/taradance/"
+          >
+            <img src="/banner/delhaize.png" alt="Delhaize Banner" />
+          </a>
+        </div>
         <header className="bg menu">
           <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
             <img src="/taradance.svg" width={150} alt="NextSpace Logo" />
@@ -75,6 +83,17 @@ export default async function RootLayout({
           </nav>
         </aside>
         {children}
+        <footer>
+          <div className="col-lg-8 col-lg-offset-3">
+            <a
+              rel="noreferrer"
+              target="_blank"
+              href="https://www.trooper.be/nl/trooperverenigingen/taradance/"
+            >
+              <img src="/banner/trooper.png" alt="Trooper Banner" />
+            </a>
+          </div>
+        </footer>
         <Toaster position="bottom-center" reverseOrder={true} />
       </body>
     </ThemeProvider>
