@@ -181,13 +181,19 @@ nav[aria-label="breadcrumb"] li {
     &.show {
       max-height: 600px;
       opacity: 1;
-      transition: max-height 0.75s ease-in, opacity 0.5s ease-in;
+      transition:
+        max-height 0.75s ease-in,
+        opacity 0.5s ease-in;
     }
 
     &.hide {
       max-height: 0;
       opacity: 0;
-      transition: max-height 0.75s ease-out, opacity 0.5s ease-in 0.25s;
+      transition:
+        max-height 0.75s ease-out,
+        opacity 0.5s ease-in 0.25s,
+        top 0.5s ease-out 1s;
+      top: -600px;
     }
   }
 }
