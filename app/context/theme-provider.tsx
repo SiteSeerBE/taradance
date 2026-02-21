@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ThemeContext from "./theme-context";
 
 export default function ThemeProvider({
@@ -7,20 +7,22 @@ export default function ThemeProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const defaultDark =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const [theme, setTheme] = useState<"dark" | "light">(
-    defaultDark ? "dark" : "light"
-  );
+  const [theme, setTheme] = useState<"dark" | "light">("light");
+
+  useEffect(() => {
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches;
+    setTheme(prefersDark ? "dark" : "light");
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.colorMode = theme;
+  }, [theme]);
 
   return (
-    <>
-      <ThemeContext.Provider value={{ theme, setTheme }}>
-        <html lang="en" data-theme={theme} data-color-mode={theme}>
-          {children}
-        </html>
-      </ThemeContext.Provider>
-    </>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
   );
 }

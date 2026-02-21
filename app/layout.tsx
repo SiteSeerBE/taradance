@@ -26,76 +26,83 @@ export default async function RootLayout({
 }>) {
   const isAuthenticated = await getLogtoId();
   return (
-    <ThemeProvider>
+    <html lang="en" data-theme="light" data-color-mode="light">
       <head>
         <meta name="viewport" content="width=device-width" />
       </head>
       <body className={raleway.className}>
-        <div className="col-lg-8 col-lg-offset-2">
-          <a
-            rel="noreferrer"
-            target="_blank"
-            href="https://www.trooper.be/nl/trooperverenigingen/taradance/"
-          >
-            <img src="/banner/delhaize.png" alt="Delhaize Banner" />
-          </a>
-        </div>
-        <header className="bg menu">
-          <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
-            <img src="/taradance.svg" width={150} alt="NextSpace Logo" />
-          </Link>
-          <div className="nav-container">
-            <MegaMenu />
-          </div>
-          <div className="flex flex-right first-xs last-sm">
-            <span className="hidden-xs">
-              <ThemeSwitchButton />
-            </span>
-            <span className="hidden-xs">
-              <DashboardButton isAuthenticated={!!isAuthenticated} />
-            </span>
-          </div>
-          <div className="hidden-sm last-xs">
-            <label className="hamburger" htmlFor="aside">
-              <Image src="/icons/menu.svg" width={46} height={46} alt="Menu" />
-            </label>
-          </div>
-        </header>
-        <OpenDrawer />
-        <label htmlFor="aside" className="overlay" />
-        <aside id="mobileMenu" className="bg hidden-sm">
-          <label htmlFor="aside" className="close">
-            <Image
-              src="/icons/close.svg"
-              width={46}
-              height={46}
-              alt="Member login"
-            />
-          </label>
-          <nav className="mobileNavigationDrawer">
-            <MobileNavigationDrawer />
-            <div className="row end-xs">
-              <ThemeSwitchButton />
-              &nbsp;
-              <DashboardButton isAuthenticated={!!isAuthenticated} />
-              <div className="col-xs-1" />
-            </div>
-          </nav>
-        </aside>
-        {children}
-        <footer>
-          <div className="col-lg-8 col-lg-offset-3">
+        <ThemeProvider>
+          <div className="col-lg-8 col-lg-offset-2">
             <a
               rel="noreferrer"
               target="_blank"
               href="https://www.trooper.be/nl/trooperverenigingen/taradance/"
             >
-              <img src="/banner/trooper.png" alt="Trooper Banner" />
+              <img src="/banner/delhaize.png" alt="Delhaize Banner" />
             </a>
           </div>
-        </footer>
-        <Toaster position="bottom-center" reverseOrder={true} />
+          <header className="bg menu">
+            <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
+              <img src="/taradance.svg" width={150} alt="NextSpace Logo" />
+            </Link>
+            <div className="nav-container">
+              <MegaMenu />
+            </div>
+            <div className="flex flex-right first-xs last-sm">
+              <span className="hidden-xs">
+                <ThemeSwitchButton />
+              </span>
+              <span className="hidden-xs">
+                <DashboardButton isAuthenticated={!!isAuthenticated} />
+              </span>
+            </div>
+            <div className="hidden-sm last-xs">
+              <label className="hamburger" htmlFor="aside">
+                <Image
+                  src="/icons/menu.svg"
+                  width={46}
+                  height={46}
+                  alt="Menu"
+                />
+              </label>
+            </div>
+          </header>
+          <OpenDrawer />
+          <label htmlFor="aside" className="overlay" />
+          <aside id="mobileMenu" className="bg hidden-sm">
+            <label htmlFor="aside" className="close">
+              <Image
+                src="/icons/close.svg"
+                width={46}
+                height={46}
+                alt="Member login"
+              />
+            </label>
+            <nav className="mobileNavigationDrawer">
+              <MobileNavigationDrawer />
+              <div className="row end-xs">
+                <ThemeSwitchButton />
+                &nbsp;
+                <DashboardButton isAuthenticated={!!isAuthenticated} />
+                <div className="col-xs-1" />
+              </div>
+            </nav>
+          </aside>
+          {children}
+          <footer>
+            <div className="col-lg-8 col-lg-offset-3">
+              <a
+                rel="noreferrer"
+                target="_blank"
+                href="https://www.trooper.be/nl/trooperverenigingen/taradance/"
+              >
+                <img src="/banner/trooper.png" alt="Trooper Banner" />
+              </a>
+            </div>
+          </footer>
+          <Toaster position="bottom-center" reverseOrder={true} />
+        </ThemeProvider>
       </body>
-    </ThemeProvider>
+    </html>
   );
 }
