@@ -30,11 +30,11 @@ export default function Home() {
           />
 
           <div className="p1">
-            <Link href={"/login"}>
+            <Link href={"/agenda/boek-ons"}>
               <button>BOEK ONS</button>
             </Link>
             &nbsp;
-            <Link href={"/login"}>
+            <Link href={"/danslessen/inschrijven"}>
               <button className="outline">SCHRIJF JE IN</button>
             </Link>
           </div>
