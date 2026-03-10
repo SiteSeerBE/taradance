@@ -16,6 +16,8 @@ const Inschrijven = () => {
   const [lastName, setLastName] = useState("");
   const [lastNameHasError, setLastNameHasError] =
     useState<AriaInvalid>(undefined);
+  const [birthdate, setBirthdate] = useState("");
+  const [birthdateHasError, setBirthdateHasError] = useState<AriaInvalid>(undefined);
   const [email, setEmail] = useState("");
   const [emailHasError, setEmailHasError] = useState<AriaInvalid>(undefined);
   const [phone, setPhone] = useState("");
@@ -28,21 +30,28 @@ const Inschrijven = () => {
 
     setFirstNameHasError(false);
     setLastNameHasError(false);
+    setBirthdateHasError(false);
     setEmailHasError(false);
     setPhoneHasError(false);
 
     let isValid = true;
 
     const fields = [
-      { value: firstName, setError: setFirstNameHasError },
-      { value: lastName, setError: setLastNameHasError },
-      { value: email, setError: setEmailHasError },
-      { value: phone, setError: setPhoneHasError },
+      { id: "firstName", value: firstName, setError: setFirstNameHasError },
+      { id: "lastName", value: lastName, setError: setLastNameHasError },
+      { id: "email", value: email, setError: setEmailHasError },
+      { id: "phone", value: phone, setError: setPhoneHasError },
+      { id: "birthdate", value: birthdate, setError: setBirthdateHasError },
     ];
 
-    fields.forEach(({ value, setError }) => {
+    let firstInvalidFieldId: string | null = null;
+
+    fields.forEach(({ id, value, setError }) => {
       if (!value) {
         setError(true);
+        if (!firstInvalidFieldId) {
+          firstInvalidFieldId = id;
+        }
         isValid = false;
       }
     });
@@ -51,6 +60,7 @@ const Inschrijven = () => {
       axios.post("/api/send", {
         firstName,
         lastName,
+        birthdate,
         email,
         phone,
         experience,
@@ -58,6 +68,12 @@ const Inschrijven = () => {
       });
       setIsSuccess(true);
       setIsWaiting(false);
+    } else {
+      if (firstInvalidFieldId) {
+        const firstInvalidField = document.getElementById(firstInvalidFieldId);
+        firstInvalidField?.scrollIntoView({ behavior: "smooth", block: "center" });
+        firstInvalidField?.focus();
+      }
     }
     setIsWaiting(false);
     return;
@@ -66,13 +82,14 @@ const Inschrijven = () => {
   const handleReset = () => {
     setFirstName("");
     setLastName("");
+    setBirthdate("");
     setEmail("");
     setPhone("");
     setExperience("");
     setMessage("");
     setIsSuccess(false);
+    
     //  also emply form
-
     const form = document.querySelector("form");
     if (form) {
       form.reset();
@@ -92,6 +109,7 @@ const Inschrijven = () => {
             </p>
           </header>
           <form>
+            <div className="grid">
             <div className="form-group">
               <label htmlFor="firstName">
                 Voornaam*:
@@ -138,6 +156,8 @@ const Inschrijven = () => {
                 type="text"
               />
             </div>
+            </div>
+            <div className="grid">
             <div className="form-group">
               <label htmlFor="email">
                 E-mailadres*:
@@ -163,7 +183,7 @@ const Inschrijven = () => {
             </div>
             <div className="form-group">
               <label htmlFor="phone">
-                Telefoonnummer*
+                Telefoonnummer*:
                 <small
                   className={classNames("error", "float-right", {
                     show: phoneHasError,
@@ -184,6 +204,8 @@ const Inschrijven = () => {
                 type="tel"
               />
             </div>
+            </div>
+            <div className="grid">
             <div className="form-group">
               <label htmlFor="experience">Heb je al danservaring?</label>
               <input
@@ -192,6 +214,29 @@ const Inschrijven = () => {
                 onChange={(e) => setExperience(e.target.value.trim())}
                 type="text"
               />
+            </div>
+            <div className="form-group">
+              <label htmlFor="birthdate">Geboortedatum*:
+                <small
+                  className={classNames("error", "float-right", {
+                    show: birthdateHasError,
+                  })}
+                >
+                  Vul je geboortedatum in.
+                </small>
+              </label>
+              <input
+                aria-invalid={birthdateHasError}
+                id="birthdate"
+                name="birthdate"
+                onChange={(e) => (
+                  setBirthdate(e.target.value.trim()),
+                  setBirthdateHasError(undefined),
+                  setIsWaiting(false)
+                )}
+                type="date"
+              />
+            </div>
             </div>
             <div className="form-group">
               <label htmlFor="message">
