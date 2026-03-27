@@ -45,6 +45,11 @@ const BoekOns = () => {
       { id: "email", value: email, setError: setEmailHasError },
       { id: "phone", value: phone, setError: setPhoneHasError },
       { id: "eventDate", value: eventDate, setError: setEventDateHasError },
+      {
+        id: "organization",
+        value: organization,
+        setError: setOrganizationHasError,
+      },
     ];
 
     let firstInvalidFieldId: string | null = null;
@@ -60,7 +65,7 @@ const BoekOns = () => {
     });
 
     if (isValid) {
-      axios.post("/api/send/inschrijven", {
+      axios.post("/api/send/boek-ons", {
         firstName,
         lastName,
         organization,
@@ -74,7 +79,10 @@ const BoekOns = () => {
     } else {
       if (firstInvalidFieldId) {
         const firstInvalidField = document.getElementById(firstInvalidFieldId);
-        firstInvalidField?.scrollIntoView({ behavior: "smooth", block: "center" });
+        firstInvalidField?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
         firstInvalidField?.focus();
       }
     }
@@ -105,61 +113,73 @@ const BoekOns = () => {
           <header>
             <h1>Boek ons</h1>
             <p>
-                Wil je ons boeken voor een event, workshop of iets anders? Vul dan onderstaand formulier in en we nemen zo snel mogelijk contact met je op!
+              Wil je ons boeken voor een event, workshop of iets anders? Vul dan
+              onderstaand formulier in en we nemen zo snel mogelijk contact met
+              je op!
             </p>
           </header>
           <form>
             <div className="grid">
+              <div className="form-group">
+                <label htmlFor="firstName">
+                  Voornaam*:
+                  <small
+                    className={classNames("error", "float-right", {
+                      show: firstNameHasError,
+                    })}
+                  >
+                    Vul je voornaam in.
+                  </small>
+                </label>
+                <input
+                  aria-invalid={firstNameHasError}
+                  id="firstName"
+                  name="firstName"
+                  onChange={(e) => (
+                    setFirstName(e.target.value.trim()),
+                    setFirstNameHasError(undefined),
+                    setIsWaiting(false)
+                  )}
+                  type="text"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="lastName">
+                  Familienaam*:
+                  <small
+                    className={classNames("error", "float-right", {
+                      show: lastNameHasError,
+                    })}
+                  >
+                    Vul je familienaam in.
+                  </small>
+                </label>
+                <input
+                  aria-invalid={lastNameHasError}
+                  id="lastName"
+                  name="lastName"
+                  onChange={(e) => (
+                    setLastName(e.target.value.trim()),
+                    setLastNameHasError(undefined),
+                    setIsWaiting(false)
+                  )}
+                  type="text"
+                />
+              </div>
+            </div>
             <div className="form-group">
-              <label htmlFor="firstName">
-                Voornaam*:
+              <label htmlFor="organization">
+                Organisatie*:
                 <small
                   className={classNames("error", "float-right", {
-                    show: firstNameHasError,
+                    show: organizationHasError,
                   })}
                 >
-                  Vul je voornaam in.
+                  Vul je organisatie in.
                 </small>
               </label>
               <input
-                aria-invalid={firstNameHasError}
-                id="firstName"
-                name="firstName"
-                onChange={(e) => (
-                  setFirstName(e.target.value.trim()),
-                  setFirstNameHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="lastName">
-                Familienaam*:
-                <small
-                  className={classNames("error", "float-right", {
-                    show: lastNameHasError,
-                  })}
-                >
-                  Vul je familienaam in.
-                </small>
-              </label>
-              <input
-                aria-invalid={lastNameHasError}
-                id="lastName"
-                name="lastName"
-                onChange={(e) => (
-                  setLastName(e.target.value.trim()),
-                  setLastNameHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                type="text"
-              />
-            </div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="organization">Organisatie*:</label>
-              <input
+                aria-invalid={organizationHasError}
                 id="organization"
                 name="organization"
                 onChange={(e) => (
@@ -171,79 +191,78 @@ const BoekOns = () => {
               />
             </div>
             <div className="grid">
-            <div className="form-group">
-              <label htmlFor="email">
-                E-mailadres*:
-                <small
-                  className={classNames("error", "float-right", {
-                    show: emailHasError,
-                  })}
-                >
-                  Vul je e-mailadres in.
-                </small>
-              </label>
-              <input
-                aria-invalid={emailHasError}
-                id="email"
-                name="email"
-                onChange={(e) => (
-                  setEmail(e.target.value.trim()),
-                  setEmailHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                type="email"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="phone">
-                Telefoonnummer*:
-                <small
-                  className={classNames("error", "float-right", {
-                    show: phoneHasError,
-                  })}
-                >
-                  Vul je telefoonnummer in.
-                </small>
-              </label>
-              <input
-                aria-invalid={phoneHasError}
-                id="phone"
-                name="phone"
-                onChange={(e) => (
-                  setPhone(e.target.value.trim()),
-                  setPhoneHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                type="tel"
-              />
-            </div>
-            </div>
-            <div className="form-group">
-                <label htmlFor="eventDate">Datum event*:
-                <small
+              <div className="form-group">
+                <label htmlFor="email">
+                  E-mailadres*:
+                  <small
                     className={classNames("error", "float-right", {
-                    show: eventDateHasError,
+                      show: emailHasError,
                     })}
-                >
-                    Vul de datum van het event in.
-                </small>
+                  >
+                    Vul je e-mailadres in.
+                  </small>
                 </label>
                 <input
+                  aria-invalid={emailHasError}
+                  id="email"
+                  name="email"
+                  onChange={(e) => (
+                    setEmail(e.target.value.trim()),
+                    setEmailHasError(undefined),
+                    setIsWaiting(false)
+                  )}
+                  type="email"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phone">
+                  Telefoonnummer*:
+                  <small
+                    className={classNames("error", "float-right", {
+                      show: phoneHasError,
+                    })}
+                  >
+                    Vul je telefoonnummer in.
+                  </small>
+                </label>
+                <input
+                  aria-invalid={phoneHasError}
+                  id="phone"
+                  name="phone"
+                  onChange={(e) => (
+                    setPhone(e.target.value.trim()),
+                    setPhoneHasError(undefined),
+                    setIsWaiting(false)
+                  )}
+                  type="tel"
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="eventDate">
+                Datum event*:
+                <small
+                  className={classNames("error", "float-right", {
+                    show: eventDateHasError,
+                  })}
+                >
+                  Vul de datum van het event in.
+                </small>
+              </label>
+              <input
                 aria-invalid={eventDateHasError}
                 id="eventDate"
                 name="eventDate"
                 onChange={(e) => (
-                    setEventDate(e.target.value.trim()),
-                    setEventDateHasError(undefined),
-                    setIsWaiting(false)
+                  setEventDate(e.target.value.trim()),
+                  setEventDateHasError(undefined),
+                  setIsWaiting(false)
                 )}
                 type="date"
-                />
+              />
             </div>
             <div className="form-group">
-              <label htmlFor="message">
-                Wat kunnen we voor je doen?
-              </label>
+              <label htmlFor="message">Wat kunnen we voor je doen?</label>
               <textarea
                 id="message"
                 name="message"
@@ -256,7 +275,8 @@ const BoekOns = () => {
           {isSuccess ? (
             <footer className="row">
               <p className="col-sm-7 col-md-8 col-lg-9">
-                Bedankt voor je interesse! We nemen zo snel mogelijk contact met je op.
+                Bedankt voor je interesse! We nemen zo snel mogelijk contact met
+                je op.
               </p>
               <button
                 className="col-sm-5 col-md-4 col-lg-3 secondary"
