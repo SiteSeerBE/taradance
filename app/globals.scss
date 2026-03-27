@@ -309,7 +309,7 @@ nav[aria-label="breadcrumb"] li {
   color: white;
   padding: 0.5em 1.5em;
   position: absolute;
-  top: 2em;
+  bottom: 2em;
   left: -1.5em;
   &.update {
     background-color: $secondary-color;

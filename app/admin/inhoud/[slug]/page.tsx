@@ -7,7 +7,7 @@ export default async function NewsEdit({ params }: { params: Params }) {
   const { slug } = await params;
   const content = await prisma.page.findUnique({
     where: { slug },
-    include: { parts: true },
+    include: { parts: { orderBy: { orderId: "asc" } } },
   });
   return <PageUpdateForm page={content} />;
 }
