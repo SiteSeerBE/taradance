@@ -4,7 +4,7 @@ import { getLogtoId } from "./lib/auth";
 
 const protectedRoutes = ["/admin", "/dashboard", "/afmelden"];
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
 
   const isAuthenticated = await getLogtoId();
