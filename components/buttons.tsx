@@ -21,8 +21,8 @@ const DashboardButton: React.FC<{ isAuthenticated: boolean }> = ({
   isAuthenticated: boolean;
 }) => {
   return (
-    <Link href={`/dashboard`}>
-      <button className={classNames({ secondary: !isAuthenticated })}>
+    <a target="_blank" href="https://starter.swingit.be/s521/">
+      <button>
         <Image
           src="/icons/account-circle.svg"
           width={24}
@@ -30,7 +30,7 @@ const DashboardButton: React.FC<{ isAuthenticated: boolean }> = ({
           alt="Dashboard"
         />
       </button>
-    </Link>
+    </a>
   );
 };
 
