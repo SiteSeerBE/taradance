@@ -118,12 +118,20 @@ model Event {
   date           DateTime
   important      Boolean  @default(false)
   location       String?
-  membersContent String?  @db.Text
+  membersContent String?  
   membersOnly    Boolean  @default(false)
   repeatId       String   @default(uuid())
   updatedAt      DateTime @updatedAt
+  tag            Tag?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
+  tagId          Int?
   time           String?
   title          String
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  events Event[]
 }
 
 //types
