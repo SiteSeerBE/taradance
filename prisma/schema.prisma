@@ -118,8 +118,9 @@ model Event {
   date           DateTime
   important      Boolean  @default(false)
   location       String?
-  membersContent String?  
+  membersContent String?
   membersOnly    Boolean  @default(false)
+  media          String?
   repeatId       String   @default(uuid())
   updatedAt      DateTime @updatedAt
   tag            Tag?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
@@ -129,8 +130,8 @@ model Event {
 }
 
 model Tag {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
   events Event[]
 }
 

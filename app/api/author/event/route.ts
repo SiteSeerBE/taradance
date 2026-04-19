@@ -11,17 +11,19 @@ type DeleteEventBody = {
 
 type UpsertEventBody = {
   id: number;
-  updateAll?: boolean;
   content: string;
   startDate: string;
   endDate: string;
   interval?: "Daily" | "Weekly" | "Monthly" | "Yearly";
+  important: boolean;
   location?: string | null;
   membersContent?: string | null;
-  membersOnly: boolean;
+  media?: string | null;
   repeatId?: string;
+  tagId?: number | null;
   time?: string | null;
   title: string;
+  updateAll?: boolean;
 };
 
 const getDatesForInterval = (
@@ -93,10 +95,12 @@ export async function PUT(request: Request) {
     startDate,
     endDate,
     interval,
+    important,
     location,
     membersContent,
-    membersOnly,
+    media,
     repeatId,
+    tagId,
     time,
     title,
   }: UpsertEventBody = await request.json();
@@ -106,10 +110,12 @@ export async function PUT(request: Request) {
     const data = {
       content,
       date: startDateValue,
+      important,
       location,
       membersContent,
-      membersOnly,
+      media,
       repeatId,
+      tagId,
       time,
       title,
       authorId,
@@ -137,7 +143,7 @@ export async function PUT(request: Request) {
     const endDateValue = new Date(endDate);
     const shouldCreateSeries =
       !Number.isNaN(startDateValue.getTime()) &&
-      !Number.isNaN(endDateValue.getTime()) &&
+      interval &&
       endDateValue.getTime() > startDateValue.getTime();
 
     if (shouldCreateSeries) {

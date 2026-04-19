@@ -2,6 +2,6 @@
 
 import FourOhFour from "@/components/FourOhFour";
 
-export default async function Error() {
+export default function Error() {
   return <FourOhFour />;
 }
