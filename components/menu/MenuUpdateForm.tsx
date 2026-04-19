@@ -36,7 +36,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = (
       } else if (parentId === 5) {
         newPath = `/danslessen/${props.urlSlug}`;
       } else if (parentId === 6) {
-        newPath = `/kalender/${props.urlSlug}`;
+        newPath = `/agenda/${props.urlSlug}`;
       }
       setContentPath(newPath);
     }
@@ -128,7 +128,7 @@ const MenuUpdateForm: React.FC<MenuUpdateFormProps> = (
               >
                 <option value="4">Over ons</option>
                 <option value="5">Danslessen</option>
-                <option value="6">Kalender</option>
+                <option value="6">Agenda</option>
               </select>
             </label>
           </fieldset>

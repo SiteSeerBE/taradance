@@ -16,12 +16,17 @@ const Admin: React.FC = () => {
       </header>
       <aside className="container">
         <div className="row">
-          <nav className="col-xs-12 col-md-4">
-            <ul>
-              <li>
-                <LinkButton href="/admin/gebruikers" label="Gebruikers" full />
+          <nav className="col-xs-12 col-md-12">
+            <ul className="row">
+              <li className="col-xs-12 col-md-4">
+                <LinkButton href="/admin/agenda" label="Agenda" full />
+                <LinkButton
+                  href="/admin/agenda/0"
+                  label="Evenement toevoegen"
+                  full
+                />
               </li>
-              <li>
+              <li className="col-xs-12 col-md-4">
                 <LinkButton href="/admin/nieuws" label="Nieuws" full />
                 <LinkButton
                   href="/admin/nieuws/toevoegen"
@@ -29,7 +34,7 @@ const Admin: React.FC = () => {
                   full
                 />
               </li>
-              <li>
+              <li className="col-xs-12 col-md-4">
                 <LinkButton href="/admin/inhoud" label="Inhoud" full />
                 <LinkButton
                   href="/admin/inhoud/toevoegen"
@@ -37,8 +42,11 @@ const Admin: React.FC = () => {
                   full
                 />
               </li>
-              <li>
+              <li className="col-xs-12 col-md-4">
                 <LinkButton href="/admin/menu" label="Menu" full />
+              </li>
+              <li className="col-xs-12 col-md-4">
+                <LinkButton href="/admin/gebruikers" label="Gebruikers" full />
               </li>
             </ul>
           </nav>

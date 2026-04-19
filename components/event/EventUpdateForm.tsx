@@ -43,7 +43,7 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
   const [tagId, setTagId] = useState(props.event?.tagId || null);
   const [time, setTime] = useState(props.event?.time || null);
   const [title, setTitle] = useState(props.event?.title || "");
-  const [endDate, setEndDate] = useState(initialDate);
+  const [endDate, setEndDate] = useState(startDate);
   const [updateAll, setUpdateAll] = useState(false);
   const [interval, setInterval] = useState<
     "Daily" | "Weekly" | "Monthly" | "Yearly" | undefined
@@ -137,7 +137,7 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
         error: "Er is iets misgegaan bij het bijwerken van het evenement.",
       },
     );
-    router.push("/admin/evenementen");
+    router.push("/admin/agenda");
   };
 
   return (
@@ -209,6 +209,7 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
                 value={startDate}
                 onChange={(e) => (
                   setStartDate(e.target.value),
+                  setEndDate(e.target.value),
                   setDateHasError(undefined),
                   setIsWaiting(false)
                 )}

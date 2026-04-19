@@ -1,0 +1,47 @@
+.dayItem {
+  align-items: center;
+  border: 1px solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: 4.5rem 1fr;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+}
+
+.dateSquare {
+  align-content: center;
+  aspect-ratio: 1 / 1;
+  background-color: var(--pico-primary-background);
+  border-radius: 0.35rem;
+  color: var(--pico-primary-inverse);
+  display: grid;
+  justify-items: center;
+  line-height: 1;
+  text-transform: capitalize;
+}
+
+.dayNumber {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.monthText {
+  font-size: 0.72rem;
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+.timeText {
+  font-size: 0.65rem;
+  margin-top: 0.15rem;
+  opacity: 0.85;
+}
+
+.title {
+  margin: 0;
+}
+
+.tagText {
+  opacity: 0.65;
+}
