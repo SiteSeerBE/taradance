@@ -20,6 +20,7 @@ export default async function AgendaArticle({ params }: { params: Params }) {
           important: true,
           location: true,
           media: true,
+          membersContent: true,
           time: true,
           title: true,
           tag: { select: { id: true, name: true } },
@@ -31,7 +32,7 @@ export default async function AgendaArticle({ params }: { params: Params }) {
     return <FourOhFour />;
   }
 
-  const { date, content, location, media, time, title, tag } =
+  const { date, content, location, media, membersContent, time, title, tag } =
     event;
 
   return (
@@ -50,12 +51,27 @@ export default async function AgendaArticle({ params }: { params: Params }) {
       </header>
       <div className="container">
         <h3>{title}</h3>
-        {location && <p>📍 {location}</p>}
-        {date && (
-          <p>
-            📅 {date.toLocaleDateString("nl-BE")}
-            {time && ` – ${time}`}
-          </p>
+        {(location || date || membersContent) && (
+          <article className="mb1">
+            {location && <p>📍 {location}</p>}
+            {date && (
+              <p>
+                📅 {date.toLocaleDateString("nl-BE")}
+                {time && ` – ${time}`}
+              </p>
+            )}
+            {membersContent && (
+              <p>
+                <a
+                  href={membersContent}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Inschrijven & Info
+                </a>
+              </p>
+            )}
+          </article>
         )}
         {content && (
           <div
