@@ -21,8 +21,8 @@ const DashboardButton: React.FC<{ isAuthenticated: boolean }> = ({
   isAuthenticated: boolean;
 }) => {
   return (
-    <a target="_blank" href="https://starter.swingit.be/s521/">
-      <button>
+    <Link href={`/dashboard`}>
+      <button className={classNames({ secondary: !isAuthenticated })}>
         <Image
           src="/icons/account-circle.svg"
           width={24}
@@ -30,7 +30,7 @@ const DashboardButton: React.FC<{ isAuthenticated: boolean }> = ({
           alt="Dashboard"
         />
       </button>
-    </a>
+    </Link>
   );
 };
 
@@ -39,9 +39,7 @@ const ThemeSwitchButton = () => {
   return (
     <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
       <Image
-        src={
-          theme === "light" ? "/icons/light.svg" : ("/icons/dark.svg" as string)
-        }
+        src={theme === "light" ? "/icons/light.svg" : "/icons/dark.svg"}
         width={24}
         height={24}
         alt="Theme Toggle"
