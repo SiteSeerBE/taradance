@@ -9,6 +9,7 @@ type DeleteMediaBody = {
 type UpsertMediaBody = {
   id?: number;
   date: string;
+  imagePath: string;
   path: string;
   membersPath?: string | null;
   tagId?: number | null;
@@ -40,12 +41,13 @@ export async function PUT(request: Request) {
     );
   }
 
-  const { id, date, path, membersPath, tagId, title }: UpsertMediaBody =
+  const { id, date, imagePath, path, membersPath, tagId, title }: UpsertMediaBody =
     await request.json();
 
   try {
     const data = {
       date: new Date(date),
+      imagePath,
       path,
       membersPath,
       tagId,
