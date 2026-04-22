@@ -13,20 +13,32 @@ datasource db {
   provider = "postgresql"
 }
 
-// users
-model User {
-  id        String    @id @default(cuid())
-  firstName String?
-  lastName  String?
-  logtoId   String    @unique @default(cuid())
-  email     String?
-  role      RoleType?
-  pages     Page[]
-  groups    Group[]
-  news      News[]
-  parts     Part[]
-  events    Event[]
-  media     Media[]
+model Button {
+  id     Int    @id @default(autoincrement())
+  href   String
+  label  String
+  homeId Int
+  home   Home   @relation(fields: [homeId], references: [id], onDelete: Cascade)
+}
+
+model Event {
+  id             Int      @id @default(autoincrement())
+  author         User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId       String?
+  content        String   @db.Text
+  createdAt      DateTime @default(now())
+  date           DateTime
+  important      Boolean  @default(false)
+  location       String?
+  membersContent String?
+  membersOnly    Boolean  @default(false)
+  media          String?
+  repeatId       String   @default(uuid())
+  updatedAt      DateTime @updatedAt
+  tag            Tag?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
+  tagId          Int?
+  time           String?
+  title          String
 }
 
 model Group {
@@ -34,15 +46,6 @@ model Group {
   name  String
   shoes String
   users User[]
-}
-
-//content
-model Button {
-  id     Int    @id @default(autoincrement())
-  href   String
-  label  String
-  homeId Int
-  home   Home   @relation(fields: [homeId], references: [id], onDelete: Cascade)
 }
 
 model Home {
@@ -61,11 +64,12 @@ model Media {
   id          Int      @id @default(autoincrement())
   author      User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
   authorId    String?
-  content     String   @db.Text
   createdAt   DateTime @default(now())
-  orderId     Int      @default(0)
-  path        String
+  date        DateTime
   membersPath String?
+  path        String
+  tag         Tag?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
+  tagId       Int?
   title       String
   updatedAt   DateTime @updatedAt
 }
@@ -123,34 +127,30 @@ model Part {
   updatedAt     DateTime @updatedAt
 }
 
-model Event {
-  id             Int      @id @default(autoincrement())
-  author         User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  authorId       String?
-  content        String   @db.Text
-  createdAt      DateTime @default(now())
-  date           DateTime
-  important      Boolean  @default(false)
-  location       String?
-  membersContent String?
-  membersOnly    Boolean  @default(false)
-  media          String?
-  repeatId       String   @default(uuid())
-  updatedAt      DateTime @updatedAt
-  tag            Tag?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
-  tagId          Int?
-  time           String?
-  title          String
-}
-
 model Tag {
   id     Int     @id @default(autoincrement())
   name   String  @unique
   color  String?
   events Event[]
+  media  Media[]
 }
 
-//types
+model User {
+  id        String    @id @default(cuid())
+  firstName String?
+  lastName  String?
+  logtoId   String    @unique @default(cuid())
+  email     String?
+  role      RoleType?
+  pages     Page[]
+  groups    Group[]
+  news      News[]
+  parts     Part[]
+  events    Event[]
+  media     Media[]
+}
+
+// types
 enum RoleType {
   ADMIN
   DANSER
