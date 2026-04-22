@@ -26,6 +26,7 @@ model User {
   news      News[]
   parts     Part[]
   events    Event[]
+  media     Media[]
 }
 
 model Group {
@@ -54,6 +55,19 @@ model Home {
   published Boolean  @default(true)
   title     String
   updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id          Int      @id @default(autoincrement())
+  author      User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorId    String?
+  content     String   @db.Text
+  createdAt   DateTime @default(now())
+  orderId     Int      @default(0)
+  path        String
+  membersPath String?
+  title       String
+  updatedAt   DateTime @updatedAt
 }
 
 model Menu {
