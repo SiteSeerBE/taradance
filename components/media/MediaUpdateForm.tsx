@@ -228,7 +228,7 @@ const MediaUpdateForm: React.FC<MediaUpdateFormProps> = (
                         <progress value={progress} max="100" />
                     </label>
                     <label>
-                        Link naar media
+                        Link naar highlights
                         <input
                             autoComplete="off"
                             value={path}
