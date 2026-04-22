@@ -66,8 +66,9 @@ model Media {
   authorId    String?
   createdAt   DateTime @default(now())
   date        DateTime
+  imagePath   String
   membersPath String?
-  path        String
+  path        String?
   tag         Tag?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
   tagId       Int?
   title       String
