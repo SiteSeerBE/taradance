@@ -30,7 +30,7 @@ model Event {
   date           DateTime
   important      Boolean  @default(false)
   location       String?
-  membersContent String?
+  membersContent String?  @db.Text
   membersOnly    Boolean  @default(false)
   media          String?
   repeatId       String   @default(uuid())

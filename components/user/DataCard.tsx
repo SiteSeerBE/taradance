@@ -31,11 +31,21 @@ const DataCard: React.FC<Props> = ({
           {userData.role ? userData.role : "Wacht op goedkeuring teacher"}
         </p>
         <footer className="grid overflow-auto">
-          {userData.role === "ADMIN" ? (
-            <LinkButton label="Administratie" href="/admin" full />
-          ) : (
-            <div className="hidden-xs">&nbsp;</div>
-          )}
+            {(() => {
+            switch (userData.role) {
+              case "ADMIN":
+              return (
+                <>
+                  <LinkButton label="Administratie" href="/admin" full />
+                  <LinkButton label="Danser" href="/danser" full />
+                </>
+              );
+              case "DANSER":
+              return <LinkButton label="Danser dashboard" href="/danser" full />;
+              default:
+              return <div className="hidden-xs">&nbsp;</div>;
+            }
+            })()}
           <div className="hidden-xs">&nbsp;</div>
           <button
             className="secondary"

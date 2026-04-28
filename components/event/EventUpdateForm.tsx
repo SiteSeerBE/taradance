@@ -288,7 +288,7 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
             </fieldset>
           </fieldset>
           <label>
-            Tekst
+            Publieke tekst
             <MDEditor
               commands={[
                 commands.title,
@@ -311,6 +311,30 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
               value={content}
             />
           </label>
+          <label>
+            Enkel leden tekst
+            <MDEditor
+              commands={[
+                commands.title,
+                commands.bold,
+                commands.italic,
+                commands.hr,
+                commands.quote,
+                commands.divider,
+                commands.orderedListCommand,
+                commands.unorderedListCommand,
+                commands.link,
+                commands.table,
+                commands.divider,
+                commands.help,
+              ]}
+              onChange={(val) => {
+                setMembersContent(val || "");
+              }}
+              preview="edit"
+              value={membersContent}
+            />
+          </label>
           <label className="mt1">
             Locatie
             <input
@@ -324,17 +348,6 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
             <small>
               Tip: schrijf de locatie volledig, gescheiden met comma&apos;s
             </small>
-          </label>
-          <label>
-            Link naar SwingIT
-            <input
-              autoComplete="off"
-              value={membersContent}
-              onChange={(e) => setMembersContent(e.target.value)}
-              name="membersContent"
-              placeholder="Link naar de ledeninformatie"
-              type="url"
-            />
           </label>
           <label>
             Beeld
