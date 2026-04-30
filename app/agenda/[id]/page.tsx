@@ -1,13 +1,14 @@
 import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 import FourOhFour from "@/components/FourOhFour";
 import ImageSet from "@/components/ImageSet";
-import Link from "next/link";
+import { getUserCredentials } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { marked } from "marked";
 
 type Params = Promise<{ id: string }>;
 
 export default async function AgendaArticle({ params }: { params: Params }) {      
+  const user = await getUserCredentials();
   const { id } = await params;
   const eventId = Number.parseInt(id, 10);
 
@@ -20,7 +21,7 @@ export default async function AgendaArticle({ params }: { params: Params }) {
           important: true,
           location: true,
           media: true,
-          membersContent: true,
+          membersContent: Boolean(user && user.role !== "XXX"),
           time: true,
           title: true,
           tag: { select: { id: true, name: true } },
@@ -62,13 +63,7 @@ export default async function AgendaArticle({ params }: { params: Params }) {
             )}
             {membersContent && (
               <p>
-                <a
-                  href={membersContent}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Inschrijven & Info
-                </a>
+                🔒 {membersContent}
               </p>
             )}
           </article>

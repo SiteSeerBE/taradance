@@ -39,6 +39,9 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
   const [membersContent, setMembersContent] = useState(
     props.event?.membersContent || "",
   );
+  const [membersOnly, setMembersOnly] = useState(
+    props.event?.membersOnly || false,
+  );
   const [media, setMedia] = useState(props.event?.media || "");
   const [tagId, setTagId] = useState(props.event?.tagId || null);
   const [time, setTime] = useState(props.event?.time || null);
@@ -124,6 +127,7 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
         important,
         location,
         membersContent,
+        membersOnly,
         media,
         repeatId,
         tagId,
@@ -384,7 +388,16 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
             <progress value={progress} max="100" />
           </label>
           <fieldset className="grid">
-            <div />
+            <label>
+              <input
+                checked={membersOnly}
+                onChange={(e) => setMembersOnly(e.target.checked)}
+                role="switch"
+                type="checkbox"
+                disabled={updateAll}
+              />
+              Alleen voor leden
+            </label>
             <label>
               <input
                 checked={important}

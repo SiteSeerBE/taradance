@@ -18,6 +18,7 @@ type UpsertEventBody = {
   important: boolean;
   location?: string | null;
   membersContent?: string | null;
+  membersOnly?: boolean;
   media?: string | null;
   repeatId?: string;
   tagId?: number | null;
@@ -98,6 +99,7 @@ export async function PUT(request: Request) {
     important,
     location,
     membersContent,
+    membersOnly,
     media,
     repeatId,
     tagId,
@@ -113,6 +115,7 @@ export async function PUT(request: Request) {
       important,
       location,
       membersContent,
+      membersOnly,
       media,
       repeatId,
       tagId,

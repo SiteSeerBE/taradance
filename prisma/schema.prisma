@@ -156,4 +156,5 @@ enum RoleType {
   ADMIN
   DANSER
   SCHRIJVER
+  XXX
 }
