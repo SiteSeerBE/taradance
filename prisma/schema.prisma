@@ -33,12 +33,14 @@ model Event {
   membersContent String?  @db.Text
   membersOnly    Boolean  @default(false)
   media          String?
+  paying         Boolean  @default(false)
   repeatId       String   @default(uuid())
-  updatedAt      DateTime @updatedAt
   tag            Tag?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
   tagId          Int?
-  time           String?
+  timeStart      String?
+  timeEnd        String?
   title          String
+  updatedAt      DateTime @updatedAt
 }
 
 model Group {
