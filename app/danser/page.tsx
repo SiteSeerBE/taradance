@@ -53,6 +53,13 @@ const Danser: React.FC = () => {
                                       </button>
                                 </a>
 							</li>
+                            <li className="col-xs-12 col-md-4">
+                                <a href="/api/music" target="_blank" rel="noopener noreferrer">
+								<button className="w-full">
+                                        Music
+                                      </button>
+                                </a>
+							</li>
 						</ul>
 					</nav>
 				</div>
