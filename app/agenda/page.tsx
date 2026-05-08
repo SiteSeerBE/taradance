@@ -15,7 +15,7 @@ const Agenda: React.FC<{ searchParams: SearchParams }> = async ({ searchParams }
                 date: true,
                 id: true,
                 tag: { select: { name: true, color: true } },
-                time: true,
+                timeStart: true,
                 title: true,
             },
         }),

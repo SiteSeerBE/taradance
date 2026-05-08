@@ -22,7 +22,8 @@ export default async function AgendaArticle({ params }: { params: Params }) {
           location: true,
           media: true,
           membersContent: Boolean(user && user.role !== "XXX"),
-          time: true,
+          timeStart: true,
+          timeEnd: true,
           title: true,
           tag: { select: { id: true, name: true } },
         },
@@ -33,7 +34,7 @@ export default async function AgendaArticle({ params }: { params: Params }) {
     return <FourOhFour />;
   }
 
-  const { date, content, location, media, membersContent, time, title, tag } =
+  const { date, content, location, media, membersContent, timeStart, timeEnd, title, tag } =
     event;
 
   return (
@@ -58,7 +59,7 @@ export default async function AgendaArticle({ params }: { params: Params }) {
             {date && (
               <p>
                 📅 {date.toLocaleDateString("nl-BE")}
-                {time && ` – ${time}`}
+                {timeStart && ` – ${timeStart}`}{timeEnd && ` tot ${timeEnd}`}
               </p>
             )}
             {membersContent && (

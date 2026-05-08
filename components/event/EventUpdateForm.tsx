@@ -44,7 +44,7 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
   );
   const [media, setMedia] = useState(props.event?.media || "");
   const [tagId, setTagId] = useState(props.event?.tagId || null);
-  const [time, setTime] = useState(props.event?.time || null);
+  const [timeStart, setTimeStart] = useState(props.event?.timeStart || null);
   const [title, setTitle] = useState(props.event?.title || "");
   const [endDate, setEndDate] = useState(startDate);
   const [updateAll, setUpdateAll] = useState(false);
@@ -131,7 +131,7 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
         media,
         repeatId,
         tagId,
-        time,
+        timeStart,
         title,
         updateAll,
       }),
@@ -225,9 +225,9 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
               Tijd
               <input
                 autoComplete="off"
-                value={time || ""}
-                onChange={(e) => setTime(e.target.value)}
-                name="time"
+                  value={timeStart || ""}
+                  onChange={(e) => setTimeStart(e.target.value)}
+                  name="timeStart"
                 type="time"
               />
             </label>

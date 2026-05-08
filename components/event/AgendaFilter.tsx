@@ -7,7 +7,7 @@ import DayItem from "./DayItem";
 type EventItem = {
   id: number;
   date: Date;
-  time?: string | null;
+    timeStart?: string | null;
   title: string;
   tag?: { name: string; color?: string | null } | null;
 };
@@ -55,7 +55,7 @@ const AgendaFilter: React.FC<AgendaFilterProps> = ({ events, initialTag = null, 
         <div className="row">
           {filtered.map((item) => (
             <Link key={item.id} href={`/agenda/${item.id}`} className="col-xs-12 col-md-6">
-              <DayItem date={item.date} tag={item.tag?.name} tagColor={item.tag?.color} time={item.time} title={item.title} />
+              <DayItem date={item.date} tag={item.tag?.name} tagColor={item.tag?.color} timeStart={item.timeStart} title={item.title} />
             </Link>
           ))}
         </div>

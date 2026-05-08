@@ -22,7 +22,7 @@ type UpsertEventBody = {
   media?: string | null;
   repeatId?: string;
   tagId?: number | null;
-  time?: string | null;
+    timeStart?: string | null;
   title: string;
   updateAll?: boolean;
 };
@@ -103,7 +103,7 @@ export async function PUT(request: Request) {
     media,
     repeatId,
     tagId,
-    time,
+    timeStart,
     title,
   }: UpsertEventBody = await request.json();
 
@@ -119,7 +119,7 @@ export async function PUT(request: Request) {
       media,
       repeatId,
       tagId,
-      time,
+      timeStart,
       title,
       authorId,
     };

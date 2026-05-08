@@ -4,7 +4,7 @@ const DayItem = (props: {
   date: Date;
   tag?: string | null;
   tagColor?: string | null;
-  time?: string | null;
+    timeStart?: string | null;
   title: string;
 }) => {
   const dayNumber = props.date.toLocaleDateString("nl-BE", { day: "2-digit" });
@@ -18,7 +18,7 @@ const DayItem = (props: {
       >
         <span className={styles.dayNumber}>{dayNumber}</span>
         <span className={styles.monthText}>{monthText}</span>
-        {props.time && <span className={styles.timeText}>{props.time}</span>}
+        {props.timeStart && <span className={styles.timeText}>{props.timeStart}</span>}
       </div>
       <div>
         <h5 className={styles.title}>{props.title}</h5>
