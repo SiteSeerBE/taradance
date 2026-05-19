@@ -6,11 +6,11 @@ const Fotos: React.FC = async () => {
     <>
       <header className="container mt1">
         <hgroup>
-          <h1>Foto&apos;s en Video&apos;s</h1>
+          <h1>Foto&apos;s</h1>
           <Breadcrumbs>
             <Breadcrumb href="/">Taradance</Breadcrumb>
-            <Breadcrumb href="/inhoud">Inhoud</Breadcrumb>
-            <Breadcrumb>Foto&apos;s en Video&apos;s</Breadcrumb>
+            <Breadcrumb href="/over-ons">Over Ons</Breadcrumb>
+            <Breadcrumb>Foto&apos;s</Breadcrumb>
           </Breadcrumbs>
         </hgroup>
       </header>
