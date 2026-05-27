@@ -33,7 +33,7 @@ const Danser: React.FC = () => {
                                 </a>
 							</li>
                             <li className="col-xs-12 col-md-4">
-                                <a href="https://www.irishdanceshop.com/tara-dance-academy/" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.irishdanceshop.com/product-category/sportswear-for-school/schools-p-z/tara-dance-academy/" target="_blank" rel="noopener noreferrer">
 								<button className="w-full">
                                         Taradance goodies
                                       </button>
