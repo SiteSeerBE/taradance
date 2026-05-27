@@ -82,6 +82,7 @@ nav[aria-label="breadcrumb"] li {
 .menu {
   box-shadow: $shadow;
   display: flex;
+  align-items: flex-end;
   justify-content: space-between;
   padding: 1em;
   position: sticky;
@@ -170,7 +171,7 @@ nav[aria-label="breadcrumb"] li {
     overflow: hidden;
     padding: 1em;
     position: absolute;
-    top: 5em;
+    top: 6.5em;
     right: 0px;
     left: 0px;
 
@@ -376,6 +377,9 @@ input.error {
 [data-theme="light"] {
   .bg {
     background-color: white;
+  }
+  .taraLogo {
+    filter: brightness(0) saturate(100%) invert(32%) sepia(30%) saturate(2964%) hue-rotate(131deg) brightness(91%) contrast(101%);
   }
 }
 [data-theme="dark"] {

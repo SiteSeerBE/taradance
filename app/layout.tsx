@@ -17,6 +17,9 @@ const raleway = Raleway({ weight: ["400", "500"], subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Taradance | Irish Dance | Kapelle-op-den-Bos",
   description: "School voor Ierse dans in Kapelle-op-den-Bos",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default async function RootLayout({
@@ -32,7 +35,7 @@ export default async function RootLayout({
       </head>
       <body className={raleway.className}>
         <ThemeProvider>
-          <div className="col-lg-8 col-lg-offset-2">
+          <div className="col-xs-col-sm-8 col-sm-offset-2">
             <a
               rel="noreferrer"
               target="_blank"
@@ -43,7 +46,7 @@ export default async function RootLayout({
           </div>
           <header className="bg menu">
             <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
-              <img src="/taradance.svg" width={150} alt="NextSpace Logo" />
+              <img className="taraLogo" src="/taradance.svg" width={150} alt="Taradance Logo" />
             </Link>
             <div className="nav-container">
               <MegaMenu />
@@ -90,7 +93,7 @@ export default async function RootLayout({
           </aside>
           {children}
           <footer>
-            <div className="col-lg-8 col-lg-offset-3">
+            <div className="col-sm-8 col-sm-offset-2">
               <a
                 rel="noreferrer"
                 target="_blank"
