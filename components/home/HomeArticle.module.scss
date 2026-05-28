@@ -21,6 +21,15 @@
   z-index: 2;
 }
 
+.bg-1,
+.bg-2,
+.bg-3,
+.bg-4 {
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 @media only screen and (min-width: 48em) {
   .fixedBg {
     background-attachment: fixed;
@@ -36,7 +45,7 @@
   background-image: url("https://ik.imagekit.io/taradance/tr:w-768/home/les.jpg");
 }
 .bg-3 {
-  background-image: url("https://ik.imagekit.io/taradance/tr:w-768/home/show.webp");
+  background-image: url("https://ik.imagekit.io/taradance/tr:w-768/home/hill.webp");
 }
 .bg-4 {
   background-image: url("https://ik.imagekit.io/taradance/tr:w-768/home/competities.jpg");
@@ -51,8 +60,7 @@
     background-image: url("https://ik.imagekit.io/taradance/tr:w-1088/home/les.jpg");
   }
   .bg-3 {
-    background-image: url("https://ik.imagekit.io/taradance/tr:w-1088/home/show.webp");
-  }
+    background-image: url("https://ik.imagekit.io/taradance/tr:w-1088/home/hill.webp");  }
   .bg-4 {
     background-image: url("https://ik.imagekit.io/taradance/tr:w-1088/home/competities.jpg");
   }
@@ -66,8 +74,7 @@
     background-image: url("https://ik.imagekit.io/taradance/tr:w-1280/home/les.jpg");
   }
   .bg-3 {
-    background-image: url("https://ik.imagekit.io/taradance/tr:w-1280/home/show.webp");
-  }
+    background-image: url("https://ik.imagekit.io/taradance/tr:w-1280/home/hill.webp");  }
   .bg-4 {
     background-image: url("https://ik.imagekit.io/taradance/tr:w-1280/home/competities.jpg");
   }
@@ -81,8 +88,7 @@
     background-image: url("https://ik.imagekit.io/taradance/tr:w-2240/home/les.jpg");
   }
   .bg-3 {
-    background-image: url("https://ik.imagekit.io/taradance/tr:w-2240/home/show.webp");
-  }
+    background-image: url("https://ik.imagekit.io/taradance/tr:w-2240/home/hill.webp");  }
   .bg-4 {
     background-image: url("https://ik.imagekit.io/taradance/tr:w-2280/home/competities.jpg");
   }
@@ -96,7 +102,8 @@
     background-image: url("https://ik.imagekit.io/taradance/tr:w-3440/home/les.jpg");
   }
   .bg-3 {
-    background-image: url("https://ik.imagekit.io/taradance/tr:w-3440/home/show.webp");
+    background-image: url("https://ik.imagekit.io/taradance/tr:w-3440/home/hill.webp");
+    background-position: bottom center;
   }
   .bg-4 {
     background-image: url("https://ik.imagekit.io/taradance/tr:w-3340/home/competities.jpg");
