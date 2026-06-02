@@ -7,6 +7,7 @@ const DayItem = (props: {
     timeStart?: string | null;
   title: string;
 }) => {
+  const weekday = props.date.toLocaleDateString("nl-BE", { weekday: "long" });
   const dayNumber = props.date.toLocaleDateString("nl-BE", { day: "2-digit" });
   const monthText = props.date.toLocaleDateString("nl-BE", { month: "long" });
   return (
@@ -16,6 +17,7 @@ const DayItem = (props: {
         aria-label={props.date.toLocaleDateString("nl-BE")}
         style={props.tagColor ? { backgroundColor: props.tagColor } : undefined}
       >
+        <span className={styles.monthText}>{weekday}</span>
         <span className={styles.dayNumber}>{dayNumber}</span>
         <span className={styles.monthText}>{monthText}</span>
         {props.timeStart && <span className={styles.timeText}>{props.timeStart}</span>}
