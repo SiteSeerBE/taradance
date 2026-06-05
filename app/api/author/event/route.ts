@@ -124,10 +124,24 @@ export async function PUT(request: Request) {
       authorId,
     };
 
+    const updateAllData = {
+      content,
+      important,
+      location,
+      membersContent,
+      membersOnly,
+      media,
+      repeatId,
+      tagId,
+      timeStart,
+      title,
+      authorId,
+    };
+
     if (updateAll && repeatId) {
       const record = await prisma.event.updateMany({
-        data,
-        where: { repeatId },
+        data: updateAllData,
+        where: { repeatId, changed: false },
       });
 
       return NextResponse.json(record);
@@ -136,7 +150,10 @@ export async function PUT(request: Request) {
     if (id) {
       const record = await prisma.event.upsert({
         create: data,
-        update: data,
+        update: {
+          ...data,
+          changed: true,
+        },
         where: { id },
       });
 

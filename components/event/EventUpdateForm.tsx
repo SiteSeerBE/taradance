@@ -243,6 +243,7 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
                 name="endDate"
                 type="date"
               />
+              <small>Maak een nieuw event als je het wil laten herhalen.</small>
             </label>
             <fieldset>
               <label>
@@ -417,7 +418,7 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
                 }}
                 role="switch"
                 type="checkbox"
-                disabled={!props.event?.id}
+                disabled={!props.event?.id || props.event?.changed}
               />
               Toepassen op gekoppelde events
             </label>

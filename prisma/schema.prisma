@@ -28,12 +28,15 @@ model Event {
   content        String   @db.Text
   createdAt      DateTime @default(now())
   date           DateTime
+  changed        Boolean  @default(false)
   important      Boolean  @default(false)
   location       String?
   membersContent String?  @db.Text
   membersOnly    Boolean  @default(false)
   media          String?
   paying         Boolean  @default(false)
+  product        Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productId      Int?
   repeatId       String   @default(uuid())
   tag            Tag?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
   tagId          Int?
@@ -127,6 +130,18 @@ model Part {
   orderId       Int      @default(100)
   page          Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
   pageId        Int
+  updatedAt     DateTime @updatedAt
+}
+
+model Product {
+  id            Int      @id @default(autoincrement())
+  availableFrom DateTime
+  availableTo   DateTime
+  createdAt     DateTime @default(now())
+  description   String   @db.Text
+  Events        Event[]
+  name          String
+  price         Float
   updatedAt     DateTime @updatedAt
 }
 
