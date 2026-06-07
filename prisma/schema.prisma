@@ -35,8 +35,6 @@ model Event {
   membersOnly    Boolean  @default(false)
   media          String?
   paying         Boolean  @default(false)
-  product        Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
-  productId      Int?
   repeatId       String   @default(uuid())
   tag            Tag?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
   tagId          Int?
@@ -139,7 +137,6 @@ model Product {
   availableTo   DateTime
   createdAt     DateTime @default(now())
   description   String   @db.Text
-  Events        Event[]
   name          String
   price         Float
   updatedAt     DateTime @updatedAt
