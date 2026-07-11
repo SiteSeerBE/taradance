@@ -20,11 +20,29 @@ type UpsertEventBody = {
   membersContent?: string | null;
   membersOnly?: boolean;
   media?: string | null;
+  productId?: number | null;
   repeatId?: string;
   tagId?: number | null;
-    timeStart?: string | null;
+  timeStart?: string | null;
   title: string;
   updateAll?: boolean;
+};
+
+const syncProductSeries = async (
+  repeatId: string,
+  productId?: number | null,
+) => {
+  await prisma.product.updateMany({
+    data: { repeatId: null },
+    where: { repeatId },
+  });
+
+  if (productId) {
+    await prisma.product.update({
+      data: { repeatId },
+      where: { id: productId },
+    });
+  }
 };
 
 const getDatesForInterval = (
@@ -101,6 +119,7 @@ export async function PUT(request: Request) {
     membersContent,
     membersOnly,
     media,
+    productId,
     repeatId,
     tagId,
     timeStart,
@@ -144,6 +163,8 @@ export async function PUT(request: Request) {
         where: { repeatId, changed: false },
       });
 
+      await syncProductSeries(repeatId, productId);
+
       return NextResponse.json(record);
     }
 
@@ -156,6 +177,8 @@ export async function PUT(request: Request) {
         },
         where: { id },
       });
+
+      await syncProductSeries(record.repeatId, productId);
 
       return NextResponse.json(record);
     }
@@ -187,12 +210,16 @@ export async function PUT(request: Request) {
         }),
       ]);
 
+      await syncProductSeries(sharedRepeatId, productId);
+
       return NextResponse.json(record);
     }
 
     const record = await prisma.event.create({
       data,
     });
+
+    await syncProductSeries(record.repeatId, productId);
 
     return NextResponse.json(record);
   } catch (error) {

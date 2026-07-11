@@ -52,6 +52,14 @@ const Admin: React.FC = () => {
                 <LinkButton href="/admin/media" label="Media" full />
                 <LinkButton href="/admin/media/0" label="Media toevoegen" full />
               </li>
+              <li className="col-xs-12 col-md-4">
+                <LinkButton href="/admin/product" label="Producten" full />
+                <LinkButton
+                  href="/admin/product/0"
+                  label="Product toevoegen"
+                  full
+                />
+              </li>
             </ul>
           </nav>
         </div>
