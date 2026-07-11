@@ -19,7 +19,7 @@ const Login: React.FC = () => {
         <h2>Dansers</h2>
         <p>
           Wanneer je je als danser aanmeldt, kan je je persoonlijke agenda en
-          intern nieuws van Tarandace bekijken.
+          intern nieuws van Taradance bekijken.
         </p>
         <footer className="flex-right">
           <SignIn
