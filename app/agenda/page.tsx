@@ -1,41 +1,62 @@
 // page that shows the agenda using DayItem component
+import PropTypes from "prop-types";
 import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 import AgendaFilter from "@/components/event/AgendaFilter";
 import { prisma } from "@/lib/prisma";
 
 type SearchParams = Promise<{ tag?: string }>;
 
-const Agenda: React.FC<{ searchParams: SearchParams }> = async ({ searchParams }) => {
-    const { tag } = await searchParams;
-    const initialTag = tag ? Number.parseInt(tag, 10) : null;
-    const [events, tags] = await Promise.all([
-        prisma.event.findMany({
-            orderBy: { date: "asc" },
-            select: {
-                date: true,
-                id: true,
-                tag: { select: { name: true, color: true } },
-                timeStart: true,
-                title: true,
-            },
-        }),
-        prisma.tag.findMany({ orderBy: { name: "asc" } }),
-    ]);
+const SearchParamsProp = PropTypes.oneOfType([
+  PropTypes.instanceOf(Promise),
+  PropTypes.shape({
+    tag: PropTypes.string,
+  }),
+]) as PropTypes.Requireable<SearchParams>;
 
-    return (
-        <>
-            <header className="container mt1">
-                <hgroup>
-                    <h1>Agenda</h1>
-                    <Breadcrumbs>
-                        <Breadcrumb href="/">Taradance</Breadcrumb>
-                        <Breadcrumb>Agenda</Breadcrumb>
-                    </Breadcrumbs>
-                </hgroup>
-            </header>
-            <AgendaFilter events={events} initialTag={initialTag} tags={tags} />
-        </>
-    );
-}
+const Agenda: React.FC<{ searchParams: SearchParams }> = async ({
+  searchParams,
+}) => {
+  const { tag } = await searchParams;
+  const initialTag = tag ? Number.parseInt(tag, 10) : null;
+  const [events, tags] = await Promise.all([
+    prisma.event.findMany({
+      orderBy: { date: "asc" },
+      select: {
+        date: true,
+        id: true,
+        tag: { select: { name: true, color: true } },
+        timeStart: true,
+        title: true,
+      },
+    }),
+    prisma.tag.findMany({
+      where: {
+        events: {
+          some: {},
+        },
+      },
+      orderBy: { name: "asc" },
+    }),
+  ]);
+
+  return (
+    <>
+      <header className="container mt1">
+        <hgroup>
+          <h1>Agenda</h1>
+          <Breadcrumbs>
+            <Breadcrumb href="/">Taradance</Breadcrumb>
+            <Breadcrumb>Agenda</Breadcrumb>
+          </Breadcrumbs>
+        </hgroup>
+      </header>
+      <AgendaFilter events={events} initialTag={initialTag} tags={tags} />
+    </>
+  );
+};
+
+Agenda.propTypes = {
+  searchParams: SearchParamsProp.isRequired,
+};
 
 export default Agenda;

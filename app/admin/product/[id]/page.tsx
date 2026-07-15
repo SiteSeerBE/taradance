@@ -10,6 +10,26 @@ export default async function ProductEdit({ params }: { params: Params }) {
     ? null
     : await prisma.product.findUnique({ where: { id: productId } });
   const tags = await prisma.tag.findMany();
+  const events = await prisma.event.findMany({
+    distinct: ["repeatId"],
+    orderBy: { date: "asc" },
+    select: {
+      repeatId: true,
+      title: true,
+      date: true,
+    },
+  });
 
-  return <ProductUpdateForm product={product} tags={tags} />;
+  const agendaItems = events.map((event) => ({
+    repeatId: event.repeatId,
+    label: `${event.title} (${event.date.toLocaleDateString("nl-BE")})`,
+  }));
+
+  return (
+    <ProductUpdateForm
+      product={product}
+      tags={tags}
+      agendaItems={agendaItems}
+    />
+  );
 }

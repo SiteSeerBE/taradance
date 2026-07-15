@@ -13,6 +13,7 @@ type UpsertProductBody = {
   price: number;
   availableFrom: string;
   availableTo: string;
+  repeatId?: string | null;
   tagId?: number | null;
 };
 
@@ -42,8 +43,16 @@ export async function PUT(request: Request) {
     );
   }
 
-  const { id, name, description, price, availableFrom, availableTo, tagId }: UpsertProductBody =
-    await request.json();
+  const {
+    id,
+    name,
+    description,
+    price,
+    availableFrom,
+    availableTo,
+    repeatId,
+    tagId,
+  }: UpsertProductBody = await request.json();
 
   try {
     const data = {
@@ -52,6 +61,7 @@ export async function PUT(request: Request) {
       price,
       availableFrom: new Date(availableFrom),
       availableTo: new Date(availableTo),
+      repeatId: repeatId || null,
       tagId,
     };
 

@@ -21,8 +21,6 @@ type EventWithTagFields = Event & {
 
 type EventUpdateFormProps = {
   event?: EventWithTagFields | null;
-  products?: Array<{ id: number; name: string }>;
-  initialProductId?: number | null;
   tags?: TagOption[];
 };
 
@@ -45,9 +43,6 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
     props.event?.membersOnly || false,
   );
   const [media, setMedia] = useState(props.event?.media || "");
-  const [productId, setProductId] = useState<number | null>(
-    props.initialProductId || null,
-  );
   const [tagId, setTagId] = useState(props.event?.tagId || null);
   const [timeStart, setTimeStart] = useState(props.event?.timeStart || null);
   const [title, setTitle] = useState(props.event?.title || "");
@@ -134,7 +129,6 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
         membersContent,
         membersOnly,
         media,
-        productId,
         repeatId,
         tagId,
         timeStart,
@@ -202,23 +196,6 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
                 ))}
               </select>
             </label>
-            <label>
-              Product
-              <select
-                value={productId || ""}
-                onChange={(e) =>
-                  setProductId(e.target.value ? Number(e.target.value) : null)
-                }
-                name="productId"
-              >
-                <option value="">Geen product</option>
-                {props.products?.map((product) => (
-                  <option key={product.id} value={product.id}>
-                    {product.name}
-                  </option>
-                ))}
-              </select>
-            </label>
           </fieldset>
           <fieldset className="grid">
             <label>
@@ -248,9 +225,9 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
               Tijd
               <input
                 autoComplete="off"
-                  value={timeStart || ""}
-                  onChange={(e) => setTimeStart(e.target.value)}
-                  name="timeStart"
+                value={timeStart || ""}
+                onChange={(e) => setTimeStart(e.target.value)}
+                name="timeStart"
                 type="time"
               />
             </label>

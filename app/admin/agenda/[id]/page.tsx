@@ -10,28 +10,5 @@ export default async function EventEdit({ params }: { params: Params }) {
     ? null
     : await prisma.event.findUnique({ where: { id: eventId } });
   const tags = await prisma.tag.findMany();
-  const products = await prisma.product.findMany({
-    orderBy: { name: "asc" },
-    select: {
-      id: true,
-      name: true,
-      repeatId: true,
-    },
-  });
-
-  const initialProductId = event
-    ? products.find((product) => product.repeatId === event.repeatId)?.id ?? null
-    : null;
-
-  return (
-    <EventUpdateForm
-      event={event}
-      tags={tags}
-      products={products.map(({ id: productId, name }) => ({
-        id: productId,
-        name,
-      }))}
-      initialProductId={initialProductId}
-    />
-  );
+  return <EventUpdateForm event={event} tags={tags} />;
 }
