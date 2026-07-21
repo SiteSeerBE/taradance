@@ -379,12 +379,19 @@ input.error {
     background-color: white;
   }
   .taraLogo {
-    filter: brightness(0) saturate(100%) invert(32%) sepia(30%) saturate(2964%) hue-rotate(131deg) brightness(91%) contrast(101%);
+    filter: brightness(0) saturate(100%) invert(32%) sepia(30%) saturate(2964%)
+      hue-rotate(131deg) brightness(91%) contrast(101%);
+  }
+  .icon-themed {
+    filter: brightness(0);
   }
 }
 [data-theme="dark"] {
   .bg {
     background-color: #13161e;
+  }
+  .icon-themed {
+    filter: brightness(0) invert(1);
   }
 }
 .bg-black {

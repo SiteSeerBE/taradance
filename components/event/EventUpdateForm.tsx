@@ -316,6 +316,9 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
               value={content}
             />
           </label>
+          <small>
+            Tip 1: gebruik #### voor een titel, dat past beter in het ontwerp.
+          </small>
           <label>
             Enkel leden tekst
             <MDEditor
@@ -340,6 +343,17 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
               value={membersContent}
             />
           </label>
+          <small>
+            Tip 2: Als je een tabel wilt maken, gebruik{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://codeshack.io/markdown-table-generator/"
+            >
+              Markdown table generator
+            </a>
+            .
+          </small>
           <label className="mt1">
             Locatie
             <input

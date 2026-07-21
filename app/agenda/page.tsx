@@ -28,14 +28,19 @@ const Agenda: React.FC<{ searchParams: SearchParams }> = async ({
         timeStart: true,
         title: true,
       },
+      where: {
+        date: {
+          gte: new Date(),
+        },
+      },
     }),
     prisma.tag.findMany({
+      orderBy: { name: "asc" },
       where: {
         events: {
           some: {},
         },
       },
-      orderBy: { name: "asc" },
     }),
   ]);
 
