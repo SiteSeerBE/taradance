@@ -10,8 +10,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@imagekit/next": "^2.0.0",
-    "@logto/next": "^4.2.2",
+    "@imagekit/next": "^2.1.5",
+    "@logto/next": "^4.2.10",
     "@picocss/pico": "^2.1.1",
     "@prisma/adapter-pg": "^7.5.0",
     "@prisma/client": "^7.5.0",
