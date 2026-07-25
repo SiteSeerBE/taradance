@@ -105,6 +105,7 @@ const Gebruikers: React.FC = () => {
                     Rol <span>&nbsp;&#9662;&nbsp;</span>
                   </a>
                 </th>
+                <th>Acties</th>
               </tr>
             </thead>
             <tbody>
@@ -120,6 +121,9 @@ const Gebruikers: React.FC = () => {
                         id={user.id}
                       />
                     )}
+                  </td>
+                  <td>
+                    <a href={`/admin/gebruikers/${user.id}`}>Bekijk</a>
                   </td>
                 </tr>
               ))}
