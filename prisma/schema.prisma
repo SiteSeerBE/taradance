@@ -156,19 +156,22 @@ model Tag {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  firstName    String?
-  lastName     String?
-  logtoId      String        @unique @default(cuid())
-  email        String?
-  role         RoleType?
-  pages        Page[]
-  groups       Group[]
-  news         News[]
-  parts        Part[]
-  events       Event[]
-  media        Media[]
-  userProducts UserProduct[]
+  id              String        @id @default(cuid())
+  firstName       String?
+  lastName        String?
+  logtoId         String        @unique @default(cuid())
+  email           String?
+  role            RoleType?
+  pages           Page[]
+  groups          Group[]
+  news            News[]
+  parts           Part[]
+  events          Event[]
+  media           Media[]
+  userProducts    UserProduct[]
+  parentAccountId String?
+  parentAccount   User?         @relation("UserToUser", fields: [parentAccountId], references: [id])
+  childAccounts   User[]        @relation("UserToUser")
 }
 
 model UserProduct {
