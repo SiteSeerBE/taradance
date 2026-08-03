@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import axios from "axios";
 import classNames from "classnames";
-import { IKUpload } from "imagekitio-react";
+import { IKUpload } from "@imagekit/react";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

@@ -11,12 +11,12 @@ import { dateFormFormat, getSlug, isImageKitUrl } from "@/lib/helpers";
 import axios from "axios";
 import type { News } from "@prisma/client";
 import toast from "react-hot-toast";
-import { IKUpload } from "imagekitio-react";
+import { IKUpload } from "@imagekit/react";
 
 type NewsUpdateFormProps = { news?: News | null };
 
 const NewsUpdateForm: React.FC<NewsUpdateFormProps> = (
-  props: NewsUpdateFormProps
+  props: NewsUpdateFormProps,
 ) => {
   const router = useRouter();
 
@@ -24,14 +24,14 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = (
   const [content, setContent] = useState(props.news?.content || "");
   const [date, setDate] = useState(
     (props.news?.date && dateFormFormat(props.news.date)) ||
-      new Date().toISOString().split("T")[0]
+      new Date().toISOString().split("T")[0],
   );
   const [media, setMedia] = useState(props.news?.media || "");
   const [isAnnouncement, setAnnouncement] = useState(
-    props.news?.isAnnouncement || false
+    props.news?.isAnnouncement || false,
   );
   const [isPublished, setIsPublished] = useState(
-    props.news?.isPublished || false
+    props.news?.isPublished || false,
   );
   const [slug, setSlug] = useState(props.news?.slug || "");
   const [title, setTitle] = useState(props.news?.title || "");
@@ -57,7 +57,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = (
         // If the server response is not successful, extract the error text for debugging.
         const errorText = await response.text();
         throw new Error(
-          `Request failed with status ${response.status}: ${errorText}`
+          `Request failed with status ${response.status}: ${errorText}`,
         );
       }
 
@@ -87,7 +87,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = (
         setIsWaiting(false);
       }
     }, 500),
-    []
+    [],
   );
 
   const handleSubmit = async () => {
@@ -137,7 +137,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = (
           loading: "Opslaan...",
           success: "Artikel opgeslagen",
           error: "Er ging iets mis.",
-        }
+        },
       );
     }
   };
@@ -231,7 +231,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = (
                   }}
                   onUploadProgress={(progress) => {
                     const progressPercentage = Math.round(
-                      (progress.loaded / progress.total) * 100
+                      (progress.loaded / progress.total) * 100,
                     );
                     setProgress(progressPercentage);
                   }}
@@ -384,7 +384,7 @@ const NewsUpdateForm: React.FC<NewsUpdateFormProps> = (
                       loading: "Verwijderen...",
                       success: "Artikel verwijderd",
                       error: "Er ging iets mis.",
-                    }
+                    },
                   );
                 }}
               >

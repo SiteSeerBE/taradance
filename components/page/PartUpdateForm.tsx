@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Part } from "@prisma/client";
 import MDEditor, { commands } from "@uiw/react-md-editor";
-import { IKUpload } from "imagekitio-react";
+import { IKUpload } from "@imagekit/react";
 
 // Props for a single paragraph editor
 type Props = {
@@ -33,7 +33,7 @@ function PartUpdateForm({
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(
-          `Request failed with status ${response.status}: ${errorText}`
+          `Request failed with status ${response.status}: ${errorText}`,
         );
       }
       const data = await response.json();
@@ -67,8 +67,8 @@ function PartUpdateForm({
         onChange={(val) => {
           setParts((prevParts) =>
             prevParts.map((part) =>
-              part.orderId === orderId ? { ...part, content: val || "" } : part
-            )
+              part.orderId === orderId ? { ...part, content: val || "" } : part,
+            ),
           );
         }}
         preview="edit"
@@ -99,14 +99,14 @@ function PartUpdateForm({
                 prevParts.map((part) =>
                   part.orderId === orderId
                     ? { ...part, mediaPath: data.url || "" }
-                    : part
-                )
+                    : part,
+                ),
               );
               setIsWaiting(false);
             }}
             onUploadProgress={(progress) => {
               const progressPercentage = Math.round(
-                (progress.loaded / progress.total) * 100
+                (progress.loaded / progress.total) * 100,
               );
               setProgress(progressPercentage);
             }}
@@ -131,8 +131,8 @@ function PartUpdateForm({
                 prevParts.map((part) =>
                   part.orderId === orderId
                     ? { ...part, mediaLocation: 0 }
-                    : part
-                )
+                    : part,
+                ),
               )
             }
           />
@@ -150,8 +150,8 @@ function PartUpdateForm({
                 prevParts.map((part) =>
                   part.orderId === orderId
                     ? { ...part, mediaLocation: 1 }
-                    : part
-                )
+                    : part,
+                ),
               )
             }
           />
@@ -169,8 +169,8 @@ function PartUpdateForm({
                 prevParts.map((part) =>
                   part.orderId === orderId
                     ? { ...part, mediaLocation: 2 }
-                    : part
-                )
+                    : part,
+                ),
               )
             }
           />
