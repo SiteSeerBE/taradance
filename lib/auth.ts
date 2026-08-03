@@ -4,8 +4,8 @@ import { prisma } from "./prisma";
 import { RoleType } from "@prisma/client";
 
 const getLogtoId = async () => {
-  if (process.env.BACKDOOR_ROLE) {
-    return process.env.BACKDOOR_ROLE === "ADMIN" ? process.env.ADMIN_LOGTO_ID : process.env.DANSER_LOGTO_ID;
+  if (process.env.BACKDOOR_LOGTOID) {
+    return process.env.BACKDOOR_LOGTOID;
   }
   const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
   if (!isAuthenticated || !claims) {
@@ -15,10 +15,10 @@ const getLogtoId = async () => {
 };
 
 const getUserIdForRole = async (role: RoleType[]) => {
-  if (process.env.BACKDOOR_ROLE) {
-    return process.env.BACKDOOR_ROLE === "ADMIN" ? process.env.ADMIN_USER_ID : process.env.DANSER_USER_ID;
-  }
-  const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
+  const { isAuthenticated, claims } = process.env.BACKDOOR_LOGTOID
+    ? { isAuthenticated: true, claims: { sub: process.env.BACKDOOR_LOGTOID } }
+    : await getLogtoContext(logtoConfig);
+
   if (!isAuthenticated || !claims) {
     return null;
   }
@@ -39,16 +39,9 @@ const getUserIdForRole = async (role: RoleType[]) => {
 };
 
 const getUserCredentials = async () => {
-  if (process.env.BACKDOOR_ROLE) {
-    return {
-      id: process.env.BACKROOR_ROLE == "ADMIN" ? process.env.ADMIN_USER_ID : process.env.DANSER_USER_ID,
-      email: "backdoor@taradance.be",
-      firstName: "Iwan",
-      lastName: "Lemmens",
-      role: process.env.BACKDOOR_ROLE,
-    };
-  }
-  const { isAuthenticated, claims } = await getLogtoContext(logtoConfig);
+    const { isAuthenticated, claims } = process.env.BACKDOOR_LOGTOID
+    ? { isAuthenticated: true, claims: { sub: process.env.BACKDOOR_LOGTOID } }
+    : await getLogtoContext(logtoConfig);
   if (!isAuthenticated || !claims) {
     return null;
   }
