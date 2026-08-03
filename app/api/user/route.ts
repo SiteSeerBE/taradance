@@ -1,14 +1,34 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import type { User } from "@prisma/client";
-import { getLogtoId, getUserCredentials } from "@/lib/auth";
+import { getLogtoId } from "@/lib/auth";
 
 export async function GET() {
-  const record = await getUserCredentials();
-  if (record) {
-    return NextResponse.json(record);
-  } else {
+  const logtoId = await getLogtoId();
+  if (!logtoId) {
     return NextResponse.json({ error: "User not logged in" }, { status: 403 });
+  }
+
+  try {
+    const record = await prisma.user.upsert({
+      where: { logtoId },
+      update: {},
+      create: {
+        logtoId,
+        role: "XXX",
+      },
+      select: {
+        id: true,
+        email: true,
+        firstName: true,
+        lastName: true,
+        role: true,
+      },
+    });
+
+    return NextResponse.json(record);
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
   }
 }
 
@@ -38,7 +58,7 @@ export async function POST(request: Request) {
   } else {
     return NextResponse.json(
       { error: "Missing required fields" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 }
