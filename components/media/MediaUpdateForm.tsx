@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import classNames from "classnames";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { IKUpload } from "@imagekit/react";
+import { upload } from "@imagekit/react";
 import type { Media, Tag } from "@prisma/client";
 import { dateFormFormat } from "@/lib/helpers";
 import type { AriaInvalid } from "@/lib/dataTypes";
@@ -59,6 +59,35 @@ const MediaUpdateForm: React.FC<MediaUpdateFormProps> = (
     } catch (error) {
       console.error("Authentication error:", error);
       throw new Error("Authentication request failed");
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsWaiting(true);
+    setProgress(0);
+    try {
+      const { signature, expire, token, publicKey } = await authenticator();
+      const response = await upload({
+        file,
+        fileName: file.name,
+        folder: "/media",
+        publicKey,
+        signature,
+        expire,
+        token,
+        onProgress: (event) => {
+          setProgress(Math.round((event.loaded / event.total) * 100));
+        },
+      });
+      setImagePath(response.url || "");
+      setImagePathHasError(undefined);
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error("Uploaden van het beeld is mislukt.");
+    } finally {
+      setIsWaiting(false);
     }
   };
 
@@ -202,28 +231,10 @@ const MediaUpdateForm: React.FC<MediaUpdateFormProps> = (
                 placeholder="Kies bestand"
                 type="url"
               />
-              <IKUpload
-                urlEndpoint="https://ik.imagekit.io/taradance/media"
-                publicKey="public_tdITXb95HoA/x0wYx7MSmjW6AC8="
-                folder="/media"
-                authenticator={authenticator}
-                onUploadStart={() => {
-                  setIsWaiting(true);
-                }}
-                onSuccess={(data) => {
-                  setImagePath(data.url);
-                  setImagePathHasError(undefined);
-                  setIsWaiting(false);
-                }}
-                onError={() => {
-                  setIsWaiting(false);
-                }}
-                onUploadProgress={(uploadProgress) => {
-                  const progressPercentage = Math.round(
-                    (uploadProgress.loaded / uploadProgress.total) * 100,
-                  );
-                  setProgress(progressPercentage);
-                }}
+              <input
+                accept="image/*"
+                onChange={handleFileChange}
+                type="file"
               />
             </fieldset>
             <progress value={progress} max="100" />

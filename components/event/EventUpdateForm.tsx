@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import axios from "axios";
 import classNames from "classnames";
-import { IKUpload } from "@imagekit/react";
+import { upload } from "@imagekit/react";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -91,6 +91,34 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
       // Log the original error for debugging before rethrowing a new error.
       console.error("Authentication error:", error);
       throw new Error("Authentication request failed");
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsWaiting(true);
+    setProgress(0);
+    try {
+      const { signature, expire, token, publicKey } = await authenticator();
+      const response = await upload({
+        file,
+        fileName: file.name,
+        folder: "/nieuws",
+        publicKey,
+        signature,
+        expire,
+        token,
+        onProgress: (event) => {
+          setProgress(Math.round((event.loaded / event.total) * 100));
+        },
+      });
+      setMedia(response.url || "");
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error("Uploaden van het beeld is mislukt.");
+    } finally {
+      setIsWaiting(false);
     }
   };
 
@@ -380,24 +408,10 @@ const EventUpdateForm: React.FC<EventUpdateFormProps> = (
                 placeholder="Link naar de media"
                 type="url"
               />
-              <IKUpload
-                urlEndpoint="https://ik.imagekit.io/taradance/nieuws"
-                publicKey="public_tdITXb95HoA/x0wYx7MSmjW6AC8="
-                folder="/nieuws"
-                authenticator={authenticator}
-                onUploadStart={() => {
-                  setIsWaiting(true);
-                }}
-                onSuccess={(data) => {
-                  setMedia(data.url);
-                  setIsWaiting(false);
-                }}
-                onUploadProgress={(progress) => {
-                  const progressPercentage = Math.round(
-                    (progress.loaded / progress.total) * 100,
-                  );
-                  setProgress(progressPercentage);
-                }}
+              <input
+                accept="image/*"
+                onChange={handleFileChange}
+                type="file"
               />
             </fieldset>
             <progress value={progress} max="100" />
