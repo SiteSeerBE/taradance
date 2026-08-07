@@ -63,21 +63,6 @@ model Home {
   updatedAt DateTime @updatedAt
 }
 
-model Media {
-  id          Int      @id @default(autoincrement())
-  author      User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  authorId    String?
-  createdAt   DateTime @default(now())
-  date        DateTime
-  imagePath   String
-  membersPath String?
-  path        String?
-  tag         Tag?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
-  tagId       Int?
-  title       String
-  updatedAt   DateTime @updatedAt
-}
-
 model Menu {
   id          Int      @id @default(autoincrement())
   children    Menu[]   @relation("MenuToMenu")
@@ -150,7 +135,6 @@ model Tag {
   id       Int       @id @default(autoincrement())
   color    String?
   events   Event[]
-  media    Media[]
   name     String    @unique
   products Product[]
 }
@@ -167,7 +151,6 @@ model User {
   news            News[]
   parts           Part[]
   events          Event[]
-  media           Media[]
   userProducts    UserProduct[] @relation("UserProductPayedBy")
   userProductsFor UserProduct[] @relation("UserProductPayedFor")
   parentAccountId String?
