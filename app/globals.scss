@@ -41,6 +41,12 @@ button {
   text-wrap: nowrap;
 }
 
+details[open] {
+  button {
+    margin-bottom: 1em;
+  }
+}
+
 html {
   overflow-x: hidden;
 }

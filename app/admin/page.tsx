@@ -14,56 +14,37 @@ const Admin: React.FC = () => {
           </Breadcrumbs>
         </hgroup>
       </header>
-      <aside className="container">
+      <div className="container">
         <div className="row">
-          <nav className="col-xs-12 col-md-12">
-            <ul className="row">
-              <li className="col-xs-12 col-md-4">
-                <LinkButton href="/admin/agenda" label="Agenda" full />
-                <LinkButton
-                  href="/admin/agenda/0"
-                  label="Evenement toevoegen"
-                  full
-                />
-              </li>
-              <li className="col-xs-12 col-md-4">
-                <LinkButton href="/admin/nieuws" label="Nieuws" full />
-                <LinkButton
-                  href="/admin/nieuws/toevoegen"
-                  label="Nieuws toevoegen"
-                  full
-                />
-              </li>
-              <li className="col-xs-12 col-md-4">
-                <LinkButton href="/admin/inhoud" label="Inhoud" full />
-                <LinkButton
-                  href="/admin/inhoud/toevoegen"
-                  label="Inhoud toevoegen"
-                  full
-                />
-              </li>
-              <li className="col-xs-12 col-md-4">
-                <LinkButton href="/admin/menu" label="Menu" full />
-              </li>
-              <li className="col-xs-12 col-md-4">
-                <LinkButton href="/admin/gebruikers" label="Gebruikers" full />
-              </li>
-              <li className="col-xs-12 col-md-4">
-                <LinkButton href="/admin/media" label="Media" full />
-                <LinkButton href="/admin/media/0" label="Media toevoegen" full />
-              </li>
-              <li className="col-xs-12 col-md-4">
-                <LinkButton href="/admin/product" label="Producten" full />
-                <LinkButton
-                  href="/admin/product/0"
-                  label="Product toevoegen"
-                  full
-                />
-              </li>
-            </ul>
-          </nav>
+          <details
+            name="admin-overview"
+            className="col-xs-12 col-sm-6 col-md-4"
+          >
+            <summary role="button">Overzicht</summary>
+            <LinkButton href="/admin/agenda" label="Agenda" full />
+            <LinkButton href="/admin/nieuws" label="Nieuws" full />
+            <LinkButton href="/admin/menu" label="Menu" full />
+            <LinkButton href="/admin/product" label="Producten" full />
+            <LinkButton href="/admin/inhoud" label="Paginas" full />
+          </details>
+          <details name="admin-new" className="col-xs-12 col-sm-6 col-md-4">
+            <summary role="button">Toevoegen</summary>
+            <LinkButton href="/admin/agenda/0" label="Agenda item" full />
+            <LinkButton
+              href="/admin/nieuws/toevoegen"
+              label="Nieuws item"
+              full
+            />
+            <LinkButton href="/admin/menu/0" label="Menu item" full />
+            <LinkButton href="/admin/product/0" label="Product" full />
+            <LinkButton href="/admin/inhoud/toevoegen" label="Pagina" full />
+          </details>
+          <details name="admin-members" className="col-xs-12 col-sm-6 col-md-4">
+            <summary role="button">Ledenbeheer</summary>
+            <LinkButton href="/admin/gebruikers" label="Gebruikers" full />
+          </details>
         </div>
-      </aside>
+      </div>
     </>
   );
 };
