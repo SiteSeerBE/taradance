@@ -85,6 +85,65 @@ nav[aria-label="breadcrumb"] li {
   z-index: 999;
 }
 
+body > footer {
+  background-color: $taradance-color;
+  padding-top: 2em;
+  position: relative;
+  // Scopes the pseudo-element's z-index below to this element only, so it
+  // can sit behind footer's own content without affecting the rest of the page.
+  isolation: isolate;
+
+  // The decorative swan icon, recolored to an exact hex via mask-image
+  // instead of filter — filter would also recolor the footer's text/links.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: #0a583d;
+    -webkit-mask-image: url("/favicon.png");
+    mask-image: url("/favicon.png");
+    -webkit-mask-position: top 0% right 25%;
+    mask-position: top 0% right 25%;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  a,
+  p {
+    color: white;
+    margin: 0;
+  }
+
+  .footer__sitemap {
+    margin: 3em 0em;
+    ul {
+      list-style: none;
+      margin: 0.5em 0 0;
+      padding: 0;
+
+      li {
+        display: block;
+        margin-bottom: 0.25em;
+      }
+    }
+  }
+
+  .footer__copyright {
+    opacity: 0.7;
+    padding-bottom: 1em;
+    text-align: center;
+  }
+
+  // Overrides the teal .taraLogo filter for this one instance only.
+  .taraLogo.footer__logo {
+    filter: brightness(0);
+  }
+}
+
 .menu {
   box-shadow: $shadow;
   display: flex;

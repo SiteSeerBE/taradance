@@ -5,6 +5,7 @@ import Link from "next/link";
 import MegaMenu from "@/components/menu/MegaMenu";
 import MobileNavigationDrawer from "@/components/menu/MobileNavigationDrawer";
 import OpenDrawer from "@/components/menu/OpenDrawer";
+import SiteFooter from "@/components/menu/SiteFooter";
 import ThemeProvider from "./context/theme-provider";
 import type { Metadata } from "next";
 import { DashboardButton, ThemeSwitchButton } from "@/components/buttons";
@@ -46,7 +47,12 @@ export default async function RootLayout({
           </div>
           <header className="bg menu">
             <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
-              <img className="taraLogo" src="/taradance.svg" width={150} alt="Taradance Logo" />
+              <img
+                className="taraLogo"
+                src="/taradance.svg"
+                width={150}
+                alt="Taradance Logo"
+              />
             </Link>
             <div className="nav-container">
               <MegaMenu />
@@ -93,6 +99,9 @@ export default async function RootLayout({
           </aside>
           {children}
           <footer>
+            <div className="container">
+              <SiteFooter />
+            </div>
             <div className="col-sm-8 col-sm-offset-2">
               <a
                 rel="noreferrer"
@@ -102,6 +111,9 @@ export default async function RootLayout({
                 <img src="/banner/trooper.png" alt="Trooper Banner" />
               </a>
             </div>
+            <p className="container footer__copyright">
+              &copy; {new Date().getFullYear()} Taradance
+            </p>
           </footer>
           <Toaster position="bottom-center" reverseOrder={true} />
         </ThemeProvider>
