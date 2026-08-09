@@ -2,13 +2,15 @@ import ChangeRole from "@/components/admin/ChangeRole";
 import ChildAccounts from "@/components/admin/ChildAccounts";
 import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 import FourOhFour from "@/components/FourOhFour";
+import OrderList from "@/components/product/OrderList";
 import { prisma } from "@/lib/prisma";
-import type { User } from "@prisma/client";
+import type { Product, User, UserProduct } from "@prisma/client";
 import Link from "next/link";
 
 type UsersWithChildren = User & {
     childAccounts?: User[];
     parentAccount?: User | null;
+    userProductsFor?: (UserProduct & { product: Product })[];
 };
 
 const Gebruiker = async (props: { params: Promise<{ id: string }> }) => {
@@ -17,6 +19,10 @@ const Gebruiker = async (props: { params: Promise<{ id: string }> }) => {
         include: {
             childAccounts: true,
             parentAccount: true,
+            userProductsFor: {
+                orderBy: { createdAt: "desc" },
+                include: { product: true },
+            },
         },
         where: {
             id: params.id,
@@ -59,6 +65,8 @@ const UserAdmin = ({ user }: { user: UsersWithChildren }) => {
                     </div>
                     <ChildAccounts childAccounts={user.childAccounts || []} userId={user.id} />
                 </div>
+                <h3>Lessen</h3>
+                <OrderList orders={user.userProductsFor || []} />
             </article>
         </div>
     );

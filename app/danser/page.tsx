@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 
 const Danser: React.FC = () => {
@@ -17,6 +18,11 @@ const Danser: React.FC = () => {
         <div className="row">
           <nav className="col-xs-12 col-md-12">
             <ul className="row">
+              <li className="col-xs-12 col-md-4">
+                <Link href="/danser/mijn-lessen">
+                  <button className="w-full">Mijn lessen</button>
+                </Link>
+              </li>
               <li className="col-xs-12 col-md-4">
                 <a
                   href="https://docs.google.com/spreadsheets/d/1lOSgYU2uFdPcX33Et3zgQUAd1qHNgs44DDJU1o_iQ6c/edit?gid=0#gid=0"

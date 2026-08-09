@@ -42,6 +42,7 @@ const Admin: React.FC = () => {
           <details name="admin-members" className="col-xs-12 col-sm-6 col-md-4">
             <summary role="button">Ledenbeheer</summary>
             <LinkButton href="/admin/gebruikers" label="Gebruikers" full />
+            <LinkButton href="/admin/dansers" label="Dansers" full />
           </details>
         </div>
       </div>
