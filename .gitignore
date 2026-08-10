@@ -72,3 +72,6 @@ out/
 # Ignore Next.js telemetry
 .next-telemetry/
 .vercel
+
+# Ignore TypeScript incremental build cache
+*.tsbuildinfo
