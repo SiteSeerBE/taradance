@@ -48,12 +48,12 @@ const Bestellen = async () => {
     },
   });
   if (currentOrder.length == 0) {
-    return <OrderStepOne />;
+    return <OrderStepOne logtoId={logtoId} />;
   }
   return <OrderStepTwo currentOrder={currentOrder} logtoId={logtoId} />;
 };
 
-const OrderStepOne = async () => {
+const OrderStepOne = async ({ logtoId }: { logtoId: string }) => {
   const availableProducts = await prisma.product.findMany({
     select: {
       id: true,
@@ -69,9 +69,29 @@ const OrderStepOne = async () => {
         gte: new Date(),
       },
     },
+    orderBy: {
+      name: "asc",
+    },
   });
 
-  return <ProductTable products={availableProducts} />;
+  // people this user can order for: themselves and their children
+  const orderForUsers = await prisma.user.findMany({
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+    },
+    where: {
+      OR: [{ parentAccount: { logtoId } }, { logtoId }],
+    },
+    orderBy: {
+      parentAccountId: "desc",
+    },
+  });
+
+  return (
+    <ProductTable products={availableProducts} orderForUsers={orderForUsers} />
+  );
 };
 
 const OrderStepTwo = async ({

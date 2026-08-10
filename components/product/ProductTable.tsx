@@ -7,12 +7,14 @@ import type { Product } from "@prisma/client";
 
 interface ProductTableProps {
     products: ({ id: number; price: number } & Partial<Product>)[];
+    orderForUsers: { id: string; firstName: string | null; lastName: string | null }[];
 }
 
-const ProductTable = ({ products }: ProductTableProps) => {
+const ProductTable = ({ products, orderForUsers }: ProductTableProps) => {
     const router = useRouter();
     const [quantities, setQuantities] = useState<Map<number, number>>(new Map());
     const [isLoading, setIsLoading] = useState(false);
+    const maxQuantity = Math.max(orderForUsers.length, 1);
 
     const updateQuantity = (productId: number, newQuantity: number) => {
         const newQuantities = new Map(quantities);
@@ -56,8 +58,15 @@ const ProductTable = ({ products }: ProductTableProps) => {
                     <header>
                         <hgroup>
                             <h1>Bestellen</h1>
-                            <p>Bestel in 3 stappen.</p>
+                            <p>Jij kan bestellen voor:</p>
                         </hgroup>
+                        <ul>
+                            {orderForUsers.map((user) => (
+                                <li key={user.id}>
+                                    {user.firstName} {user.lastName}
+                                </li>
+                            ))}
+                        </ul>
                     </header>
                     <table className="table striped">
                         <thead>
@@ -79,12 +88,9 @@ const ProductTable = ({ products }: ProductTableProps) => {
                                                 style={{ minWidth: "5em" }}
                                                 value={quantity}
                                             >
-                                                <option value={0}>0</option>
-                                                <option value={1}>1</option>
-                                                <option value={2}>2</option>
-                                                <option value={3}>3</option>
-                                                <option value={4}>4</option>
-                                                <option value={5}>5</option>
+                                                {Array.from({ length: maxQuantity + 1 }, (_, n) => n).map((n) => (
+                                                    <option key={n} value={n}>{n}</option>
+                                                ))}
                                             </select>
                                         </td>
                                         <td>
