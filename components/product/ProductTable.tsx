@@ -8,9 +8,10 @@ import type { Product } from "@prisma/client";
 interface ProductTableProps {
     products: ({ id: number; price: number } & Partial<Product>)[];
     orderForUsers: { id: string; firstName: string | null; lastName: string | null }[];
+    existingOrders: { productId: number; payedForUserId: string | null }[];
 }
 
-const ProductTable = ({ products, orderForUsers }: ProductTableProps) => {
+const ProductTable = ({ products, orderForUsers, existingOrders }: ProductTableProps) => {
     const router = useRouter();
     const [quantities, setQuantities] = useState<Map<number, number>>(new Map());
     const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +25,12 @@ const ProductTable = ({ products, orderForUsers }: ProductTableProps) => {
             newQuantities.set(productId, newQuantity);
         }
         setQuantities(newQuantities);
+    };
+
+    const alreadyOrderedFor = (productId: number) => {
+        return orderForUsers.filter((user) =>
+            existingOrders.some((order) => order.productId === productId && order.payedForUserId === user.id)
+        );
     };
 
     const calculateTotal = () => {
@@ -79,6 +86,7 @@ const ProductTable = ({ products, orderForUsers }: ProductTableProps) => {
                         <tbody>
                             {products.map((product) => {
                                 const quantity = quantities.get(product.id) || 0;
+                                const alreadyOrderedUsers = alreadyOrderedFor(product.id);
                                 return (
                                     <tr key={product.id}>
                                         <td>
@@ -96,6 +104,14 @@ const ProductTable = ({ products, orderForUsers }: ProductTableProps) => {
                                         <td>
                                             <b>{product.name}</b>
                                             <p>{product.description}</p>
+                                            {alreadyOrderedUsers.length > 0 && (
+                                                <p style={{ color: "#b45309" }}>
+                                                    ⚠️ Je hebt dit al besteld voor{" "}
+                                                    {alreadyOrderedUsers
+                                                        .map((user) => `${user.firstName} ${user.lastName}`)
+                                                        .join(", ")}
+                                                </p>
+                                            )}
                                         </td>
                                         <td className="right">€&nbsp;{product.price.toFixed(2)}</td>
                                     </tr>

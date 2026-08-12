@@ -89,8 +89,27 @@ const OrderStepOne = async ({ logtoId }: { logtoId: string }) => {
     },
   });
 
+  // products already ordered for these people, in the same window as availableProducts
+  const existingOrders = await prisma.userProduct.findMany({
+    select: {
+      productId: true,
+      payedForUserId: true,
+    },
+    where: {
+      payedForUserId: { in: orderForUsers.map((user) => user.id) },
+      product: {
+        availableFrom: { lte: new Date() },
+        availableTo: { gte: new Date() },
+      },
+    },
+  });
+
   return (
-    <ProductTable products={availableProducts} orderForUsers={orderForUsers} />
+    <ProductTable
+      products={availableProducts}
+      orderForUsers={orderForUsers}
+      existingOrders={existingOrders}
+    />
   );
 };
 
