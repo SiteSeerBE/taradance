@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { mollieClient } from "@/lib/mollie";
+import { getMollieClient } from "@/lib/mollie";
 
 // Mollie POSTs application/x-www-form-urlencoded body: `id=tr_xxx`.
 // We must look the payment back up via the API — the webhook body itself
@@ -20,6 +20,7 @@ export async function POST(request: Request) {
         return new Response(JSON.stringify({ error: "Unknown payment" }), { status: 404 });
     }
 
+    const mollieClient = getMollieClient();
     const payment = await mollieClient.payments.get(paymentId);
 
     if (payment.status === "paid") {

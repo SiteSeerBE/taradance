@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { mollieClient } from "@/lib/mollie";
+import { getMollieClient } from "@/lib/mollie";
 import { RoleType } from "@prisma/client";
 import { getUserIdForRole } from "@/lib/auth";
 
@@ -76,6 +76,7 @@ export async function POST(request: Request) {
     const isLocal = baseUrl.includes("localhost");
 
     try {
+        const mollieClient = getMollieClient();
         const payment = await mollieClient.payments.create({
             amount: { currency: "EUR", value: total.toFixed(2) },
             description: `Taradance danslessen (${paidItems.length} item${paidItems.length > 1 ? "s" : ""})`,

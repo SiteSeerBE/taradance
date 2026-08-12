@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getLogtoId } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { mollieClient } from "@/lib/mollie";
+import { getMollieClient } from "@/lib/mollie";
 
 const StapDrie = async () => {
     const logtoId = await getLogtoId();
@@ -34,8 +34,9 @@ const StapDrie = async () => {
     // may not have landed yet even in production — check directly here so
     // the confirmation page always reflects the real payment status.
     const pendingPaymentIds = new Set(pendingItems.map((item) => item.molliePaymentId!));
+    const mollieClient = pendingPaymentIds.size > 0 ? getMollieClient() : null;
     for (const paymentId of pendingPaymentIds) {
-        const payment = await mollieClient.payments.get(paymentId);
+        const payment = await mollieClient!.payments.get(paymentId);
         if (payment.status === "paid") {
             await prisma.userProduct.updateMany({
                 where: { molliePaymentId: paymentId },
