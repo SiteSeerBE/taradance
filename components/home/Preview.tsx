@@ -28,8 +28,8 @@ const Preview = () => {
             </button>
             <h4>Dansles</h4>
             <small>
-              Kom dansen bij Taradance! Lessen voor jong en oud, beginner en
-              gevorderd.
+              Kom dansen bij Scoil Rince Celtus Belgium! Lessen voor jong en
+              oud, beginner en gevorderd.
             </small>
           </div>
           <div>

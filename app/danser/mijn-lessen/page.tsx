@@ -40,7 +40,6 @@ const MijnLessen = async () => {
         <hgroup>
           <h1>Mijn lessen</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb href="/dashboard">Dashboard</Breadcrumb>
             <Breadcrumb href="/danser">Danser</Breadcrumb>
             <Breadcrumb>Mijn lessen</Breadcrumb>

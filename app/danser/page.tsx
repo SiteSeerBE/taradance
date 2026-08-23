@@ -8,7 +8,6 @@ const Danser: React.FC = () => {
         <hgroup>
           <h1>Danser</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb href="/dashboard">Dashboard</Breadcrumb>
             <Breadcrumb>Danser</Breadcrumb>
           </Breadcrumbs>
@@ -47,7 +46,7 @@ const Danser: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <button className="w-full">Taradance goodies</button>
+                  <button className="w-full">Scoil Rince Celtus goodies</button>
                 </a>
               </li>
               <li className="col-xs-12 col-md-4">

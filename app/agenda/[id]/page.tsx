@@ -54,7 +54,6 @@ export default async function AgendaArticle({ params }: { params: Params }) {
         <hgroup>
           <h1>Agenda</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb href="/agenda">Agenda</Breadcrumb>
             {tag && (
               <Breadcrumb href={`/agenda?tag=${tag.id}`}>{tag.name}</Breadcrumb>

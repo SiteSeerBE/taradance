@@ -17,7 +17,7 @@ export default function Home() {
           "center-xs",
           "middle-xs",
           "bg-black",
-          styles.fixedBg
+          styles.fixedBg,
         )}
         style={{ position: "relative" }}
       >
@@ -25,7 +25,7 @@ export default function Home() {
         <h1>
           <ImageSet
             image="/UI/Taradance-wit.png"
-            altText="Taradance logo"
+            altText="Scoil Rince Celtus logo"
             maxViewport={1200}
           />
 

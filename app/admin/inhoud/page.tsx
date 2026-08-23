@@ -29,7 +29,6 @@ const Inhoud: React.FC = async () => {
         <hgroup>
           <h1>Inhoud</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb href="/dashboard">Dashboard</Breadcrumb>
             <Breadcrumb href="/admin">Administratie</Breadcrumb>
             <Breadcrumb>Inhoud</Breadcrumb>

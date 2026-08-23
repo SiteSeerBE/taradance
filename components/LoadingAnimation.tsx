@@ -6,7 +6,10 @@ const Loading = () => {
     <div className={styles.isLoading}>
       <div>
         <div className={styles.imageContainer}>
-          <ImageSet altText="Taradance logo" image="/UI/Taradance-zwart.png" />
+          <ImageSet
+            altText="Scoil Rince Celtus logo"
+            image="/UI/Taradance-zwart.png"
+          />
         </div>
       </div>
     </div>

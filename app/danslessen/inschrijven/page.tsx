@@ -17,7 +17,8 @@ const Inschrijven = () => {
   const [lastNameHasError, setLastNameHasError] =
     useState<AriaInvalid>(undefined);
   const [birthdate, setBirthdate] = useState("");
-  const [birthdateHasError, setBirthdateHasError] = useState<AriaInvalid>(undefined);
+  const [birthdateHasError, setBirthdateHasError] =
+    useState<AriaInvalid>(undefined);
   const [email, setEmail] = useState("");
   const [emailHasError, setEmailHasError] = useState<AriaInvalid>(undefined);
   const [phone, setPhone] = useState("");
@@ -71,7 +72,10 @@ const Inschrijven = () => {
     } else {
       if (firstInvalidFieldId) {
         const firstInvalidField = document.getElementById(firstInvalidFieldId);
-        firstInvalidField?.scrollIntoView({ behavior: "smooth", block: "center" });
+        firstInvalidField?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
         firstInvalidField?.focus();
       }
     }
@@ -88,7 +92,7 @@ const Inschrijven = () => {
     setExperience("");
     setMessage("");
     setIsSuccess(false);
-    
+
     //  also emply form
     const form = document.querySelector("form");
     if (form) {
@@ -103,140 +107,141 @@ const Inschrijven = () => {
           <header>
             <h1>Inschrijven</h1>
             <p>
-              Wil je graag een dansles volgen bij Taradance? Schrijf je dan in
-              via het onderstaande formulier. We nemen zo snel mogelijk contact
-              met je op om de details te bespreken.
+              Wil je graag een dansles volgen bij Scoil Rince Celtus Belgium?
+              Schrijf je dan in via het onderstaande formulier. We nemen zo snel
+              mogelijk contact met je op om de details te bespreken.
             </p>
           </header>
           <form>
             <div className="grid">
-            <div className="form-group">
-              <label htmlFor="firstName">
-                Voornaam*:
-                <small
-                  className={classNames("error", "float-right", {
-                    show: firstNameHasError,
-                  })}
-                >
-                  Vul je voornaam in.
-                </small>
-              </label>
-              <input
-                aria-invalid={firstNameHasError}
-                id="firstName"
-                name="firstName"
-                onChange={(e) => (
-                  setFirstName(e.target.value.trim()),
-                  setFirstNameHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                type="text"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="lastName">
-                Familienaam*:
-                <small
-                  className={classNames("error", "float-right", {
-                    show: lastNameHasError,
-                  })}
-                >
-                  Vul je familienaam in.
-                </small>
-              </label>
-              <input
-                aria-invalid={lastNameHasError}
-                id="lastName"
-                name="lastName"
-                onChange={(e) => (
-                  setLastName(e.target.value.trim()),
-                  setLastNameHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                type="text"
-              />
-            </div>
-            </div>
-            <div className="grid">
-            <div className="form-group">
-              <label htmlFor="email">
-                E-mailadres*:
-                <small
-                  className={classNames("error", "float-right", {
-                    show: emailHasError,
-                  })}
-                >
-                  Vul je e-mailadres in.
-                </small>
-              </label>
-              <input
-                aria-invalid={emailHasError}
-                id="email"
-                name="email"
-                onChange={(e) => (
-                  setEmail(e.target.value.trim()),
-                  setEmailHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                type="email"
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="phone">
-                Telefoonnummer*:
-                <small
-                  className={classNames("error", "float-right", {
-                    show: phoneHasError,
-                  })}
-                >
-                  Vul je telefoonnummer in.
-                </small>
-              </label>
-              <input
-                aria-invalid={phoneHasError}
-                id="phone"
-                name="phone"
-                onChange={(e) => (
-                  setPhone(e.target.value.trim()),
-                  setPhoneHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                type="tel"
-              />
-            </div>
+              <div className="form-group">
+                <label htmlFor="firstName">
+                  Voornaam*:
+                  <small
+                    className={classNames("error", "float-right", {
+                      show: firstNameHasError,
+                    })}
+                  >
+                    Vul je voornaam in.
+                  </small>
+                </label>
+                <input
+                  aria-invalid={firstNameHasError}
+                  id="firstName"
+                  name="firstName"
+                  onChange={(e) => (
+                    setFirstName(e.target.value.trim()),
+                    setFirstNameHasError(undefined),
+                    setIsWaiting(false)
+                  )}
+                  type="text"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="lastName">
+                  Familienaam*:
+                  <small
+                    className={classNames("error", "float-right", {
+                      show: lastNameHasError,
+                    })}
+                  >
+                    Vul je familienaam in.
+                  </small>
+                </label>
+                <input
+                  aria-invalid={lastNameHasError}
+                  id="lastName"
+                  name="lastName"
+                  onChange={(e) => (
+                    setLastName(e.target.value.trim()),
+                    setLastNameHasError(undefined),
+                    setIsWaiting(false)
+                  )}
+                  type="text"
+                />
+              </div>
             </div>
             <div className="grid">
-            <div className="form-group">
-              <label htmlFor="experience">Heb je al danservaring?</label>
-              <input
-                id="experience"
-                name="experience"
-                onChange={(e) => setExperience(e.target.value.trim())}
-                type="text"
-              />
+              <div className="form-group">
+                <label htmlFor="email">
+                  E-mailadres*:
+                  <small
+                    className={classNames("error", "float-right", {
+                      show: emailHasError,
+                    })}
+                  >
+                    Vul je e-mailadres in.
+                  </small>
+                </label>
+                <input
+                  aria-invalid={emailHasError}
+                  id="email"
+                  name="email"
+                  onChange={(e) => (
+                    setEmail(e.target.value.trim()),
+                    setEmailHasError(undefined),
+                    setIsWaiting(false)
+                  )}
+                  type="email"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phone">
+                  Telefoonnummer*:
+                  <small
+                    className={classNames("error", "float-right", {
+                      show: phoneHasError,
+                    })}
+                  >
+                    Vul je telefoonnummer in.
+                  </small>
+                </label>
+                <input
+                  aria-invalid={phoneHasError}
+                  id="phone"
+                  name="phone"
+                  onChange={(e) => (
+                    setPhone(e.target.value.trim()),
+                    setPhoneHasError(undefined),
+                    setIsWaiting(false)
+                  )}
+                  type="tel"
+                />
+              </div>
             </div>
-            <div className="form-group">
-              <label htmlFor="birthdate">Geboortedatum*:
-                <small
-                  className={classNames("error", "float-right", {
-                    show: birthdateHasError,
-                  })}
-                >
-                  Vul je geboortedatum in.
-                </small>
-              </label>
-              <input
-                aria-invalid={birthdateHasError}
-                id="birthdate"
-                name="birthdate"
-                onChange={(e) => (
-                  setBirthdate(e.target.value.trim()),
-                  setBirthdateHasError(undefined),
-                  setIsWaiting(false)
-                )}
-                type="date"
-              />
-            </div>
+            <div className="grid">
+              <div className="form-group">
+                <label htmlFor="experience">Heb je al danservaring?</label>
+                <input
+                  id="experience"
+                  name="experience"
+                  onChange={(e) => setExperience(e.target.value.trim())}
+                  type="text"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="birthdate">
+                  Geboortedatum*:
+                  <small
+                    className={classNames("error", "float-right", {
+                      show: birthdateHasError,
+                    })}
+                  >
+                    Vul je geboortedatum in.
+                  </small>
+                </label>
+                <input
+                  aria-invalid={birthdateHasError}
+                  id="birthdate"
+                  name="birthdate"
+                  onChange={(e) => (
+                    setBirthdate(e.target.value.trim()),
+                    setBirthdateHasError(undefined),
+                    setIsWaiting(false)
+                  )}
+                  type="date"
+                />
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="message">

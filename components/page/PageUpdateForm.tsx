@@ -51,7 +51,7 @@ const PageUpdateForm: React.FC<Props> = ({ page }: Props) => {
         setIsWaiting(false);
       }
     }, 500),
-    []
+    [],
   );
 
   const handleSubmit = async () => {
@@ -74,7 +74,7 @@ const PageUpdateForm: React.FC<Props> = ({ page }: Props) => {
             content,
             mediaLocation,
             mediaPath,
-          })
+          }),
         ),
       };
       console.log("Submitting page payload:", payload);
@@ -87,7 +87,7 @@ const PageUpdateForm: React.FC<Props> = ({ page }: Props) => {
           loading: "Opslaan...",
           success: "Pagina en paragrafen opgeslagen",
           error: "Er ging iets mis.",
-        }
+        },
       );
     }
   };
@@ -95,7 +95,7 @@ const PageUpdateForm: React.FC<Props> = ({ page }: Props) => {
   // Handler to remove a part by orderId
   const handleRemovePart = (orderId: number) => {
     setParts((prevParts) =>
-      prevParts.filter((part) => part.orderId !== orderId)
+      prevParts.filter((part) => part.orderId !== orderId),
     );
   };
 
@@ -111,7 +111,6 @@ const PageUpdateForm: React.FC<Props> = ({ page }: Props) => {
             menu.
           </p>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb href="/dashboard">Dashboard</Breadcrumb>
             <Breadcrumb href="/admin">Administratie</Breadcrumb>
             <Breadcrumb href="/admin/inhoud">Inhoud</Breadcrumb>
@@ -178,7 +177,7 @@ const PageUpdateForm: React.FC<Props> = ({ page }: Props) => {
               const maxOrderId = parts.reduce(
                 (max, part) =>
                   part.orderId && part.orderId > max ? part.orderId : max,
-                0
+                0,
               );
               setParts([...parts, { orderId: maxOrderId + 1 }]);
             }}
@@ -242,7 +241,7 @@ const PageUpdateForm: React.FC<Props> = ({ page }: Props) => {
                       loading: "Verwijderen...",
                       success: "Pagina verwijderd",
                       error: "Er ging iets mis.",
-                    }
+                    },
                   );
                 }}
               >

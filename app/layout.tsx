@@ -16,7 +16,7 @@ import { getLogtoId } from "@/lib/auth";
 const raleway = Raleway({ weight: ["400", "500"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Taradance | Irish Dance | Kapelle-op-den-Bos",
+  title: "Scoil Rince Celtus Belgium | Irish Dance | Kapelle-op-den-Bos",
   description: "School voor Ierse dans in Kapelle-op-den-Bos",
   icons: {
     icon: "/favicon.png",
@@ -51,7 +51,7 @@ export default async function RootLayout({
                 className="taraLogo"
                 src="/taradance.svg"
                 width={150}
-                alt="Taradance Logo"
+                alt="Scoil Rince Celtus Logo"
               />
             </Link>
             <div className="nav-container">
@@ -112,7 +112,7 @@ export default async function RootLayout({
               </a>
             </div>
             <p className="container footer__copyright">
-              &copy; {new Date().getFullYear()} Taradance
+              &copy; {new Date().getFullYear()} Scoil Rince Celtus Belgium
             </p>
           </footer>
           <Toaster position="bottom-center" reverseOrder={true} />

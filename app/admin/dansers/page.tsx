@@ -12,7 +12,9 @@ const DansersAdmin = async ({
   searchParams: SearchParams;
 }) => {
   const { productId } = await searchParams;
-  const selectedProductId = productId ? Number.parseInt(productId, 10) : undefined;
+  const selectedProductId = productId
+    ? Number.parseInt(productId, 10)
+    : undefined;
 
   const products = await prisma.product.findMany({
     orderBy: { availableFrom: "desc" },
@@ -42,13 +44,15 @@ const DansersAdmin = async ({
         <hgroup>
           <h1>Dansers</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb href="/dashboard">Dashboard</Breadcrumb>
             <Breadcrumb href="/admin">Administratie</Breadcrumb>
             <Breadcrumb>Dansers</Breadcrumb>
           </Breadcrumbs>
         </hgroup>
-        <ProductFilter products={products} selectedProductId={selectedProductId} />
+        <ProductFilter
+          products={products}
+          selectedProductId={selectedProductId}
+        />
       </header>
 
       <div className="overflow-auto">
@@ -75,9 +79,7 @@ const DansersAdmin = async ({
                   <td>{danser.email}</td>
                   <td colSpan={4}>Geen bestellingen</td>
                   <td style={{ minWidth: "60px" }}>
-                    <Link href={`/admin/gebruikers/${danser.id}`}>
-                      Bekijk
-                    </Link>
+                    <Link href={`/admin/gebruikers/${danser.id}`}>Bekijk</Link>
                   </td>
                 </tr>
               ) : (
@@ -88,10 +90,12 @@ const DansersAdmin = async ({
                     <td>{index === 0 ? danser.email : ""}</td>
                     <td>{userProduct.product.name}</td>
                     <td>
-                      {(userProduct.price ?? userProduct.product.price).toLocaleString(
-                        "nl-BE",
-                        { style: "currency", currency: "EUR" }
-                      )}
+                      {(
+                        userProduct.price ?? userProduct.product.price
+                      ).toLocaleString("nl-BE", {
+                        style: "currency",
+                        currency: "EUR",
+                      })}
                     </td>
                     <td>{userProduct.createdAt.toLocaleDateString("nl-BE")}</td>
                     <td>
@@ -115,7 +119,7 @@ const DansersAdmin = async ({
                     </td>
                   </tr>
                 ))
-              )
+              ),
             )}
           </tbody>
         </table>

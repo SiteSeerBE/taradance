@@ -15,7 +15,7 @@ export async function POST(request: Request) {
     } = await request.json();
 
     const { data, error } = await resend.emails.send({
-      from: `Taradance Website <${process.env.RESEND_FROM_EMAIL}>`,
+      from: `Scoil Rince Celtus Belgium website <${process.env.RESEND_FROM_EMAIL}>`,
       replyTo: email,
       to: [process.env.RESEND_TO_EMAIL!],
       subject: "Nieuwe boeking " + organization,

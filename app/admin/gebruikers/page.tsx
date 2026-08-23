@@ -73,7 +73,6 @@ const Gebruikers: React.FC = () => {
         <hgroup>
           <h1>Gebruikers</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb href="/dashboard">Dashboard</Breadcrumb>
             <Breadcrumb href="/admin">Administratie</Breadcrumb>
             <Breadcrumb>Gebruikers</Breadcrumb>

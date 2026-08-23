@@ -37,7 +37,6 @@ export default async function NewsArticle({ params }: { params: Params }) {
         <hgroup>
           <h1>Nieuws</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb href="/nieuws">Nieuws</Breadcrumb>
             <Breadcrumb>{title}</Breadcrumb>
           </Breadcrumbs>

@@ -19,7 +19,7 @@ const Login: React.FC = () => {
         <h2>Dansers</h2>
         <p>
           Wanneer je je als danser aanmeldt, kan je je persoonlijke agenda en
-          intern nieuws van Taradance bekijken.
+          intern nieuws van Scoil Rince Celtus Belgium bekijken.
         </p>
         <footer className="flex-right">
           <SignIn

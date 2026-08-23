@@ -50,7 +50,6 @@ const Agenda: React.FC<{ searchParams: SearchParams }> = async ({
         <hgroup>
           <h1>Agenda</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb>Agenda</Breadcrumb>
           </Breadcrumbs>
         </hgroup>

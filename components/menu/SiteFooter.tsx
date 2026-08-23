@@ -29,11 +29,12 @@ const SiteFooter = async () => {
           className="taraLogo footer__logo"
           src="/taradance.svg"
           width={150}
-          alt="Taradance Logo"
+          alt="Scoil Rince Celtus Logo"
         />
         <p>
           <small>
-            Taradance is een dansschool voor Ierse dans in Kapelle-op-den-Bos.
+            Scoil Rince Celtus Belgium is een dansschool voor Ierse dans in
+            Kapelle-op-den-Bos.
           </small>
         </p>
       </div>

@@ -21,7 +21,6 @@ const ProductAdmin: React.FC = async () => {
         <hgroup>
           <h1>Producten</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb href="/dashboard">Dashboard</Breadcrumb>
             <Breadcrumb href="/admin">Administratie</Breadcrumb>
             <Breadcrumb>Producten</Breadcrumb>

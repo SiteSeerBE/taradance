@@ -15,7 +15,6 @@ export default async function News() {
         <hgroup>
           <h1>Nieuws</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb>Nieuws</Breadcrumb>
           </Breadcrumbs>
           <hr />

@@ -8,7 +8,6 @@ const Admin: React.FC = () => {
         <hgroup>
           <h1>Administratie</h1>
           <Breadcrumbs>
-            <Breadcrumb href="/">Taradance</Breadcrumb>
             <Breadcrumb href="/dashboard">Dashboard</Breadcrumb>
             <Breadcrumb>Administratie</Breadcrumb>
           </Breadcrumbs>
