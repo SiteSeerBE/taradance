@@ -19,10 +19,20 @@
 }
 .imageContainer {
   width: 50%;
+
+  img {
+    animation: spin 5s linear infinite;
+  }
 }
 
 @keyframes shine {
   to {
     background-position-x: -200%;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

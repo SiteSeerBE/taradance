@@ -27,7 +27,7 @@ const SiteFooter = async () => {
       <div>
         <img
           className="taraLogo footer__logo"
-          src="/taradance.svg"
+          src="/src_with_words.svg"
           width={150}
           alt="Scoil Rince Celtus Logo"
         />

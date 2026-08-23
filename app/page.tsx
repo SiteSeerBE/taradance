@@ -1,7 +1,6 @@
 import styles from "./page.module.scss";
 import classNames from "classnames";
 import HomeArticles from "@/components/home/HomeArticles";
-import ImageSet from "@/components/ImageSet";
 import NewsList from "@/components/news/NewsList";
 import Link from "next/link";
 import VideoPlayer from "@/components/VideoPlayer";
@@ -23,10 +22,10 @@ export default function Home() {
       >
         <VideoPlayer />
         <h1>
-          <ImageSet
-            image="/UI/Taradance-wit.png"
-            altText="Scoil Rince Celtus logo"
-            maxViewport={1200}
+          <img
+            style={{ width: "100%" }}
+            src="/src_with_words.svg"
+            alt="Scoil Rince Celtus Logo"
           />
 
           <div className="p1">

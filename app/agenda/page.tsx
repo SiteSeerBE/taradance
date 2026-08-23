@@ -1,6 +1,5 @@
 // page that shows the agenda using DayItem component
 import PropTypes from "prop-types";
-import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 import AgendaFilter from "@/components/event/AgendaFilter";
 import { prisma } from "@/lib/prisma";
 
@@ -49,9 +48,6 @@ const Agenda: React.FC<{ searchParams: SearchParams }> = async ({
       <header className="container mt1">
         <hgroup>
           <h1>Agenda</h1>
-          <Breadcrumbs>
-            <Breadcrumb>Agenda</Breadcrumb>
-          </Breadcrumbs>
         </hgroup>
       </header>
       <AgendaFilter events={events} initialTag={initialTag} tags={tags} />

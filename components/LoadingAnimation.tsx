@@ -1,14 +1,13 @@
-import React from "react";
 import styles from "./LoadingAnimation.module.scss";
-import ImageSet from "./ImageSet";
 const Loading = () => {
   return (
     <div className={styles.isLoading}>
       <div>
         <div className={styles.imageContainer}>
-          <ImageSet
-            altText="Scoil Rince Celtus logo"
-            image="/UI/Taradance-zwart.png"
+          <img
+            width="25%"
+            alt="Scoil Rince Celtus logo"
+            src="/src_with_words.svg"
           />
         </div>
       </div>

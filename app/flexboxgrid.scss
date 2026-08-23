@@ -571,6 +571,9 @@
     -webkit-box-ordinal-group: 2;
     order: 1;
   }
+  .visible-md {
+    display: block;
+  }
 }
 @media only screen and (min-width: 80em) {
   .container {

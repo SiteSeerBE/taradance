@@ -30,22 +30,33 @@ const DataCard: React.FC<Props> = ({
           <b>Rol</b>:{" "}
           {userData.role ? userData.role : "Wacht op goedkeuring teacher"}
         </p>
+        <div className="col-sm-8 col-sm-offset-2">
+          <a
+            rel="noreferrer"
+            target="_blank"
+            href="https://www.trooper.be/nl/trooperverenigingen/taradance/"
+          >
+            <img src="/banner/trooper.png" alt="Trooper Banner" />
+          </a>
+        </div>
         <footer className="grid overflow-auto">
-            {(() => {
+          {(() => {
             switch (userData.role) {
               case "ADMIN":
-              return (
-                <>
-                  <LinkButton label="Administratie" href="/admin" full />
-                  <LinkButton label="Danser" href="/danser" full />
-                </>
-              );
+                return (
+                  <>
+                    <LinkButton label="Administratie" href="/admin" full />
+                    <LinkButton label="Danser" href="/danser" full />
+                  </>
+                );
               case "DANSER":
-              return <LinkButton label="Danser dashboard" href="/danser" full />;
+                return (
+                  <LinkButton label="Danser dashboard" href="/danser" full />
+                );
               default:
-              return <div className="hidden-xs">&nbsp;</div>;
+                return <div className="hidden-xs">&nbsp;</div>;
             }
-            })()}
+          })()}
           <div className="hidden-xs">&nbsp;</div>
           <button
             className="secondary"

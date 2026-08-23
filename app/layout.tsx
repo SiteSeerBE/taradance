@@ -36,23 +36,21 @@ export default async function RootLayout({
       </head>
       <body className={raleway.className}>
         <ThemeProvider>
-          <div className="col-xs-col-sm-8 col-sm-offset-2">
-            <a
-              rel="noreferrer"
-              target="_blank"
-              href="https://www.trooper.be/nl/trooperverenigingen/taradance/"
-            >
-              <img src="/banner/delhaize.png" alt="Delhaize Banner" />
-            </a>
-          </div>
           <header className="bg menu">
-            <Link style={{ display: "flex", alignItems: "center" }} href={"/"}>
+            <Link href={"/"} style={{ display: "flex", alignItems: "center" }}>
               <img
                 className="taraLogo"
-                src="/taradance.svg"
+                src="/src_no_words.svg"
                 width={150}
                 alt="Scoil Rince Celtus Logo"
               />
+              <div
+                style={{ marginTop: "15px" }}
+                className="hidden-sm visible-md"
+              >
+                <h4>Scoil Rince Celtus Belgium</h4>
+                <h5>School voor Ierse dans</h5>
+              </div>
             </Link>
             <div className="nav-container">
               <MegaMenu />
@@ -101,15 +99,6 @@ export default async function RootLayout({
           <footer>
             <div className="container">
               <SiteFooter />
-            </div>
-            <div className="col-sm-8 col-sm-offset-2">
-              <a
-                rel="noreferrer"
-                target="_blank"
-                href="https://www.trooper.be/nl/trooperverenigingen/taradance/"
-              >
-                <img src="/banner/trooper.png" alt="Trooper Banner" />
-              </a>
             </div>
             <p className="container footer__copyright">
               &copy; {new Date().getFullYear()} Scoil Rince Celtus Belgium
