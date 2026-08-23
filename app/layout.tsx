@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title: "Scoil Rince Celtus Belgium | Irish Dance | Kapelle-op-den-Bos",
   description: "School voor Ierse dans in Kapelle-op-den-Bos",
   icons: {
-    icon: "/favicon.png",
+    icon: "/src_no_words.svg",
   },
 };
 
@@ -42,10 +42,7 @@ export default async function RootLayout({
               width={150}
               alt="Scoil Rince Celtus Logo"
             />
-            <div
-              style={{ marginTop: "15px" }}
-              className="hidden-sm visible-md"
-            >
+            <div style={{ marginTop: "15px" }} className="hidden-sm visible-md">
               <h4>Scoil Rince Celtus Belgium</h4>
               <h5>School voor Ierse dans</h5>
             </div>
@@ -60,12 +57,7 @@ export default async function RootLayout({
           </div>
           <div className="hidden-sm last-xs">
             <label className="hamburger" htmlFor="aside">
-              <Image
-                src="/icons/menu.svg"
-                width={46}
-                height={46}
-                alt="Menu"
-              />
+              <Image src="/icons/menu.svg" width={46} height={46} alt="Menu" />
             </label>
           </div>
         </header>

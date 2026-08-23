@@ -2,7 +2,6 @@ import { Breadcrumb, Breadcrumbs } from "@/components/breadcrumbs";
 import FourOhFour from "@/components/FourOhFour";
 import ImageSet from "@/components/ImageSet";
 import { prisma } from "@/lib/prisma";
-import classNames from "classnames";
 import { marked } from "marked";
 
 type Params = Promise<{ slug: string }>;
@@ -45,11 +44,7 @@ export default async function NewsArticle({ params }: { params: Params }) {
       </header>
       <div className="container">
         <div className="relative center image100">
-          <span
-            className={classNames("dateBox", {
-              update: date && date > new Date(),
-            })}
-          >
+          <span className="dateBox">
             {!isAnnouncement
               ? date?.toLocaleDateString("nl-BE")
               : "AANKONDIGING"}
