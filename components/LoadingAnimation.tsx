@@ -5,7 +5,7 @@ const Loading = () => {
       <div>
         <div className={styles.imageContainer}>
           <img
-            width="25%"
+            width="50%"
             alt="Scoil Rince Celtus logo"
             src="/src_with_words.svg"
           />
