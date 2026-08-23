@@ -23,7 +23,7 @@ export default function Home() {
         <VideoPlayer />
         <h1>
           <img
-            style={{ width: "100%" }}
+            style={{ width: "75%" }}
             src="/src_with_words.svg"
             alt="Scoil Rince Celtus Logo"
           />
