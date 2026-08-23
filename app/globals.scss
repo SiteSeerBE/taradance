@@ -129,8 +129,7 @@ body > footer {
   z-index: 2;
 
   small {
-    // this line creates a deprication warning for scss
-    color: light-dark(#373c44, #c2c7d0);
+    color: #373c44;
   }
 
   a:first-child {
@@ -418,24 +417,14 @@ input.error {
 .right {
   text-align: right;
 }
-[data-theme="light"] {
-  footer a {
-    color: $src-grey;
-  }
-  .bg {
-    background-color: white;
-  }
-  .icon-themed {
-    filter: brightness(0);
-  }
+footer a {
+  color: $src-grey;
 }
-[data-theme="dark"] {
-  .bg {
-    background-color: #13161e;
-  }
-  .icon-themed {
-    filter: brightness(0) invert(1);
-  }
+.bg {
+  background-color: white;
+}
+.icon-themed {
+  filter: brightness(0);
 }
 .bg-black {
   background-color: black;

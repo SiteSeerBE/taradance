@@ -3,7 +3,6 @@ import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import { LinkButtonProps } from "@/lib/dataTypes";
-import { useTheme } from "@/app/context/use-theme";
 
 const LinkButton: React.FC<LinkButtonProps> = (props: LinkButtonProps) => {
   return (
@@ -34,18 +33,4 @@ const DashboardButton: React.FC<{ isAuthenticated: boolean }> = ({
   );
 };
 
-const ThemeSwitchButton = () => {
-  const { theme, setTheme } = useTheme();
-  return (
-    <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-      <Image
-        src={theme === "light" ? "/icons/light.svg" : "/icons/dark.svg"}
-        width={24}
-        height={24}
-        alt="Theme Toggle"
-      />
-    </button>
-  );
-};
-
-export { DashboardButton, LinkButton, ThemeSwitchButton };
+export { DashboardButton, LinkButton };
