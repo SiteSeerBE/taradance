@@ -21,12 +21,8 @@ export default function Home() {
         style={{ position: "relative" }}
       >
         <VideoPlayer />
-        <h1>
-          <img
-            style={{ width: "75%" }}
-            src="/src_with_words.svg"
-            alt="Scoil Rince Celtus Logo"
-          />
+        <h1 className={styles.videoLogo}>
+          <img src="/src_with_words.svg" alt="Scoil Rince Celtus Logo" />
 
           <div className="p1">
             <Link href={"/agenda/boek-ons"}>
