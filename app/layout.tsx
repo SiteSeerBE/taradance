@@ -6,6 +6,7 @@ import MegaMenu from "@/components/menu/MegaMenu";
 import MobileNavigationDrawer from "@/components/menu/MobileNavigationDrawer";
 import OpenDrawer from "@/components/menu/OpenDrawer";
 import SiteFooter from "@/components/menu/SiteFooter";
+import SiteHeader from "@/components/menu/SiteHeader";
 import type { Metadata } from "next";
 import { DashboardButton } from "@/components/buttons";
 import { Raleway } from "next/font/google";
@@ -34,7 +35,7 @@ export default async function RootLayout({
         <meta name="viewport" content="width=device-width" />
       </head>
       <body className={raleway.className}>
-        <header className="bg menu">
+        <SiteHeader>
           <Link href={"/"} style={{ display: "flex", alignItems: "center" }}>
             <img
               className="taraLogo"
@@ -42,7 +43,7 @@ export default async function RootLayout({
               width={150}
               alt="Scoil Rince Celtus Logo"
             />
-            <div style={{ marginTop: "15px" }} className="hidden-sm visible-md">
+            <div className="logoText hidden-sm visible-md">
               <h4>Scoil Rince Celtus Belgium</h4>
               <h5>School voor Ierse dans</h5>
             </div>
@@ -60,7 +61,7 @@ export default async function RootLayout({
               <Image src="/icons/menu.svg" width={46} height={46} alt="Menu" />
             </label>
           </div>
-        </header>
+        </SiteHeader>
         <OpenDrawer />
         <label htmlFor="aside" className="overlay" />
         <aside id="mobileMenu" className="bg hidden-sm">

@@ -127,9 +127,56 @@ body > footer {
   right: 0;
   left: 0;
   z-index: 2;
+  transition: padding 0.25s ease;
 
   small {
     color: #373c44;
+  }
+
+  .taraLogo {
+    transition: width 0.25s ease;
+  }
+
+  .logoText {
+    margin-top: 15px;
+    transition: margin-top 0.25s ease;
+
+    h4,
+    h5 {
+      transition:
+        font-size 0.25s ease,
+        opacity 0.2s ease,
+        max-height 0.25s ease,
+        margin 0.25s ease;
+      overflow: hidden;
+    }
+  }
+
+  &.menu--scrolled {
+    padding: 0.4em 1em;
+
+    .taraLogo {
+      width: 80px;
+    }
+
+    .logoText {
+      margin-top: 0;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      h4 {
+        font-size: 0.85rem;
+        margin: 0;
+      }
+
+      h5 {
+        opacity: 0;
+        max-height: 0;
+        margin: 0;
+      }
+    }
   }
 
   a:first-child {
@@ -207,7 +254,7 @@ body > footer {
     overflow: hidden;
     padding: 1em;
     position: absolute;
-    top: 8.3em;
+    top: 100%;
     right: 0px;
     left: 0px;
 
