@@ -29,7 +29,7 @@ export default async function RootLayout({
 }>) {
   const isAuthenticated = await getLogtoId();
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light">
       <head>
         <meta name="viewport" content="width=device-width" />
       </head>
