@@ -38,6 +38,38 @@ const SiteFooter = async () => {
           </small>
         </p>
       </div>
+      <div>
+        <strong>Socials</strong>
+        <div>
+          <small>
+            <a
+              href="https://www.facebook.com/taradancebelgium"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Facebook
+            </a>
+            <br />
+            <a
+              href="https://www.instagram.com/src.irishdancebelgium/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Instagram
+            </a>
+            <br />
+          </small>
+          <small>
+            <a
+              href="https://www.youtube.com/@TaradanceOfficial"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              YouTube
+            </a>
+          </small>
+        </div>
+      </div>
       {menuData.map(({ id, title, contentPath, children }) => (
         <div key={id}>
           <Link href={contentPath || "#"}>
